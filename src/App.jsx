@@ -1,12 +1,12 @@
-import Header from "./layouts/components/Header"
+import GlobalStyles from "./components/GlobalStyles/index.jsx";
+import Pages from "./pages/index.jsx";
 
 function App() {
-
   return (
-    <>
-      <Header/>
-    </>
-  )
+    <GlobalStyles>
+      <Pages />
+    </GlobalStyles>
+  );
 }
 
-export default App
+export default App;
