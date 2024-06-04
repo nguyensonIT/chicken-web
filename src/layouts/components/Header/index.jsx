@@ -1,8 +1,11 @@
 import { NavLink, Link } from 'react-router-dom'
 
 import logo from "../../../assets/img/Logo.png"
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+
+import Tippy from "@tippyjs/react/headless";
 
 const menus = [
     {
@@ -46,21 +49,29 @@ function Header() {
                 <p className="brand ml-[20px] text-[#FFD700] font-bold text-[20px]">VUA GÀ TƯƠI</p>
             </div>
             <div className="middle w-[50%] flex flex-col justify-center items-center">
-                <div className="">
+                <div className="flex">
                     {menus.map((menu, index) => {
 
                         if (menu.children) {
                             return (
-                                <a className="mr-[8px] p-[2px] hover:text-[#FFD700]" href={menu.href} key={index}>
-                                    {menu.name}
-                                    <FontAwesomeIcon icon={faCaretDown} className="ml-[5px] text-[12px]" />
-                                </a>
+                                <div className="relative">
+                                    <div className="popup absolute bg-[green] bottom-[-20px] ">
+                                        <h1>popup</h1>
+                                    </div>
+                                    <a 
+                                        onMouseEnter={() => document.querySelector('.popup').classList.remove('hidden')}
+                                        onMouseLeave={() => document.querySelector('.popup').classList.add('hidden')}
+                                        className="mr-[8px] p-[2px] hover:text-[#FFD700]" 
+                                        href={menu.href} key={index}>
+                                        {menu.name}
+                                        <FontAwesomeIcon icon={faCaretDown} className="ml-[5px] text-[12px]" />
+                                    </a>
+                                </div>
                             )
                         }
                         return (
-                            <a className="mr-[8px] p-[2px] hover:text-[#FFD700]" href={menu.href} key={index}>{menu.name}</a>
+                            <div><a className="mr-[8px] p-[2px] hover:text-[#FFD700]" href={menu.href} key={index}>{menu.name}</a></div>
                         )
-                        // <a className="mr-[8px] p-[2px] hover:text-[#FFD700]" href={menu.href} key={index}>{menu.name}</a>
                     })}
                 </div>
                 <div>
