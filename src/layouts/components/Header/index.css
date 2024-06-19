@@ -1,0 +1,11 @@
+
+.nav-parent:hover .active-nav{
+    display: block;
+}
+.active-nav{
+    animation: slideIn 0.5s ease-in-out;
+    display: none;
+}
+
+
+  

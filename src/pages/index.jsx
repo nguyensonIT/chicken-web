@@ -2,6 +2,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 import Home from "./Home";
 import Product from "./Product";
+import News from "./News";
+import Introduce from "./Introduce";
+import NotFound from "./NotFound";
+import HeaderOnly from "../layouts/HeaderOnly";
 
 const router = createBrowserRouter([
   {
@@ -13,10 +17,35 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/products",
+        path: "/products/all",
+        element: <Product />,
+      },
+      {
+        path: "/products/:slug",
+        element: <Product />,
+      },
+      {
+        path: "/products/category/:slug",
         element: <Product />,
       },
     ],
+  },
+  {
+    element: <HeaderOnly />,
+    children: [
+      {
+        path: "/news",
+        element: <News />,
+      },
+      {
+        path: "/introduce",
+        element: <Introduce />,
+      },
+    ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

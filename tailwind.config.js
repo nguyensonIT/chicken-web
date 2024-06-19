@@ -5,7 +5,19 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors:{
+        "bgMainColor": "#EBDFEB",
+        "bgHeaderColor": "#f8fafc",
+        "textHoverColor": "#FFD700",
+        "btnHoverColor": "#ca8a04",
+        "btnColor": "#FFD700",
+        "textEmphasizeColor": "#FF0000",
+        "bgEmphasizeColor": "#FFD700",
+        "bgThemeColor": "#e2e8f0",
+        "bgSideBarColor": "#FFFFFF",
+      }
+    },
   },
   plugins: [],
 }
