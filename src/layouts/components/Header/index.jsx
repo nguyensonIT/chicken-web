@@ -1,22 +1,20 @@
-import { menus } from "./DataMenu"
-import logo from "../../../assets/img/Logo.png"
+import { menus } from "./DataMenu";
+import logo from "../../../assets/img/Logo.png";
 
 import { NavLink, Link } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCaretDown, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
-import "./index.css"
+import "./index.css";
 
 function Header() {
-
-  // style active-nav function  
+  // style active-nav function
   const navLinkStyle = ({ isActive }) => ({
-    color: isActive ? '#FFD700' : '',
-  })
+    color: isActive ? "#FFD700" : "",
+  });
 
   return (
     <div className="h-[120px] w-full flex bg-bgHeaderColor ">
-
       {/* LEFT HEADR */}
 
       <div className="left w-[25%] flex justify-center items-center ">
@@ -51,19 +49,19 @@ function Header() {
                   </NavLink>
                   <ul className="active-nav absolute bg-[white] mt-[20px] p-[10px] shadow-md">
                     <li className="absolute h-[27px] w-full bg-[transparent]  top-[-26px] left-0"></li>
-                    <li
-                      className=
-                      "absolute top-[-5px] left-[30px] border-solid border-x-[5px] border-x-[transparent] border-b-[5px] border-b-[white] ">
-                    </li>
+                    <li className="absolute top-[-5px] left-[30px] border-solid border-x-[5px] border-x-[transparent] border-b-[5px] border-b-[white] "></li>
                     {/* map 2 */}
                     {menu.children.map((menu, index) => {
                       return (
                         <li className="whitespace-nowrap" key={index}>
-                          <Link className="block transition-[2s] hover:text-textHoverColor" to={menu.href}>
+                          <Link
+                            className="block transition-[2s] hover:text-textHoverColor"
+                            to={menu.href}
+                          >
                             {menu.name}
                           </Link>
                         </li>
-                      )
+                      );
                     })}
                   </ul>
                 </li>
@@ -97,8 +95,19 @@ function Header() {
 
       {/* RIGHT HEADER  */}
 
-      <div className="right w-[25%] flex justify-center items-center ">
-        <button className="transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 ">Đăng nhập</button>
+      <div className="right w-[25%] flex justify-around items-center ">
+        <Link
+          to={"/cart"}
+          className="relative pr-[8px] text-[18px] cursor-pointer text-cartColor"
+        >
+          <FontAwesomeIcon icon={faCartShopping} />
+          <span className="absolute block top-[-10px] right-[-8px] min-w-[20px] min-h-[20px] text-white text-[12px] flex justify-center items-center rounded-[50%] bg-textEmphasizeColor">
+            1
+          </span>
+        </Link>
+        <button className="transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 ">
+          Đăng nhập
+        </button>
       </div>
     </div>
   );

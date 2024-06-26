@@ -1,4 +1,4 @@
-export function FormatCurrency(amount) {
+export function formatCurrency(amount) {
     // Chuyển đổi số thành chuỗi và đảm bảo là chuỗi
     let strAmount = String(amount);
     
@@ -6,7 +6,7 @@ export function FormatCurrency(amount) {
     let regex = /\B(?=(\d{3})+(?!\d))/g;
     
     // Thêm dấu phẩy ngăn cách hàng nghìn và thêm ký tự 'đ' vào cuối
-    let formattedAmount = strAmount.replace(regex, ".") + "đ";
+    let formattedAmount = strAmount.replace(regex, ".");
     
     return formattedAmount;
 }

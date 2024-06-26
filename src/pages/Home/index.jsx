@@ -1,14 +1,24 @@
 // Import Swiper React components
 import banner from "../../assets/img/banner.png"
-import CardProduct from "./components/CardProduct";
+import CardProduct from "../../components/CardProduct";
 import { dataProducts } from "./components/DataProducts"
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
+import { useState } from "react";
+import DetailProductDialog from "../../components/DetailProductDialog";
 
 const Home = () => {
+  const [displayDetail, setDisplayDetail] = useState(false)
+  const [dataDetailProduct, setDataDetailProduct] = useState({})
+
+  const handleDetail = (item)=>{
+    setDisplayDetail(true)
+    setDataDetailProduct(item)
+  }
+
   return (
     <div className="p-[10px] bg-bgMainColor">
       {/* banner  */}
@@ -50,6 +60,7 @@ const Home = () => {
                       desc={item.desc}
                       price={item.price}
                       sale={item.sale}
+                      onClick={()=>handleDetail(item)}
                     />
                   )
                 })}
@@ -61,6 +72,9 @@ const Home = () => {
         }
 
       </div>
+      {displayDetail && (
+        <DetailProductDialog data={dataDetailProduct} setDisplayDetail={setDisplayDetail}/>
+      )}
     </div>
   )
 };

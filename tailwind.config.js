@@ -16,7 +16,11 @@ export default {
         "bgEmphasizeColor": "#FFD700",
         "bgThemeColor": "#e2e8f0",
         "bgSideBarColor": "#FFFFFF",
-      }
+        "bgDialogColor": "rgba(204, 204, 204, 0.5)",
+        "borderColor": "#FFD700",
+        "cartColor": "#FFA500",
+      },
+      
     },
   },
   plugins: [],

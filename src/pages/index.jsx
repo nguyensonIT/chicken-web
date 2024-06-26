@@ -6,6 +6,7 @@ import News from "./News";
 import Introduce from "./Introduce";
 import NotFound from "./NotFound";
 import HeaderOnly from "../layouts/HeaderOnly";
+import CartProduct from "./CartProduct";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/introduce",
         element: <Introduce />,
+      },
+      {
+        path: "/cart",
+        element: <CartProduct />,
       },
     ],
   },
