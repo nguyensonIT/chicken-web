@@ -2,7 +2,7 @@ export const dataProductCart = [
   {
     id: "SP123",
     name: "Gà không lối thoát",
-    desc: "Gà không lối thoát được làm từ xôi và gà",
+    desc: "Gà không lối thoát được làm từ xôi và gà hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh Gà không lối thoát được làm từ xôi và gà hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh Gà không lối thoát được làm từ xôi và gà hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
     image: "",
     altImage: "",
     price: 250000,
@@ -14,7 +14,7 @@ export const dataProductCart = [
     desc: "Gà không lối thoát được làm từ xôi và gà 2",
     image: "",
     altImage: "",
-    price: 250000,
+    price: 280000,
     sale: 10,
   },
   {
@@ -23,7 +23,6 @@ export const dataProductCart = [
     desc: "Gà không lối thoát được làm từ xôi và gà",
     image: "",
     altImage: "",
-    price: 250000,
-    sale: 10,
+    price: 160000,
   },
 ];

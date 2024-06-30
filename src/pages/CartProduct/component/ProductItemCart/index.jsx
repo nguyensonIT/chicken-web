@@ -17,15 +17,15 @@ const ProductItemCart = ({ image, name, desc, price, sale, altImage }) => {
   };
 
   return (
-    <div className="flex justify-between mb-6 rounded-lg bg-white p-6">
-      <div className="w-[80px] h-[80px] rounded-lg">
+    <div className="grid grid-cols-7 items-center mb-6 rounded-lg bg-white p-6">
+      <div className="col-span-1 w-[80px] h-[80px] rounded-lg">
         <img
           src={image || logo}
           alt={altImage || "img"}
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
-      <div className="sm:ml-4 sm:flex sm:w-full sm:justify-between">
+      <div className="col-[2/8] sm:ml-4 sm:flex sm:w-full sm:justify-between">
         <div className="mt-5 sm:mt-0">
           <h2 className="text-lg font-bold text-gray-900">{name}</h2>
           <p className="mt-1 text-xs text-gray-700">{desc}</p>
@@ -71,7 +71,9 @@ const ProductItemCart = ({ image, name, desc, price, sale, altImage }) => {
                 </span>
               </div>
             )}
-            <FontAwesomeIcon icon={faXmark} />
+            <span className="transition-[2s] cursor-pointer hover:text-textEmphasizeColor">
+              <FontAwesomeIcon icon={faXmark} />
+            </span>
           </div>
         </div>
       </div>

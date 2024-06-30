@@ -1,14 +1,18 @@
 import ReactDOM from "react-dom";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useRef, useState } from "react";
 
 import logo from "../../assets/img/Logo.png";
 import { formatCurrency } from "../FormatCurrency";
-import { useRef, useState } from "react";
+import "./style.css";
 
-function DetailProductDialog({ data, setDisplayDetail }) {
+function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
   const dialogRef = useRef(null);
   const imgRef = useRef(null);
+  const detailRef = useRef(null);
+  const detailImgRef = useRef(null);
+
   const [isDisplayImg, setIsDisplayImg] = useState(false);
   const priceParse = parseFloat(data.price);
   const priceProduct = formatCurrency(priceParse);
@@ -24,25 +28,40 @@ function DetailProductDialog({ data, setDisplayDetail }) {
 
   const handleClose = (e) => {
     if (dialogRef.current && e.target === dialogRef.current) {
-      setDisplayDetail(false);
+      detailRef.current.classList.add("isClose");
+      setTimeout(() => {
+        setDisplayDetail(false);
+      }, 300);
     }
   };
+
   const handleCloseImg = (e) => {
     if (imgRef.current && e.target === imgRef.current) {
-      setIsDisplayImg(false);
+      detailImgRef.current.classList.add("isClose");
+      setTimeout(() => {
+        setIsDisplayImg(false);
+      }, 300);
     }
   };
   const handleClickImg = () => {
     setIsDisplayImg(true);
   };
-  console.log(data);
+
+  useEffect(() => {
+    displayDetail && detailRef.current.classList.add("isDetail");
+  }, [displayDetail]);
+
+  useEffect(() => {
+    isDisplayImg && detailImgRef.current.classList.add("isDetail");
+  }, [isDisplayImg]);
+
   return ReactDOM.createPortal(
     <div
       onClick={(e) => handleClose(e)}
       ref={dialogRef}
       className="fixed z-[999] top-0 bottom-0 right-0 left-0 bg-bgDialogColor    "
     >
-      <div className="my-[80px] w-[400px] mx-auto ">
+      <div ref={detailRef} className="my-[80px] w-[400px] mx-auto ">
         <div className="flex max-w-md bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="w-1/3 flex justify-center items-center">
             <div
@@ -101,7 +120,10 @@ function DetailProductDialog({ data, setDisplayDetail }) {
           onClick={(e) => handleCloseImg(e)}
           className="absolute top-0 bottom-0 right-0 left-0 bg-bgDialogColor"
         >
-          <div className="mx-auto mt-[30px] w-[400px] h-[400px] bg-white ">
+          <div
+            ref={detailImgRef}
+            className="mx-auto mt-[30px] w-[400px] h-[400px] bg-white "
+          >
             <img
               className="w-full h-full object-cover"
               src={data.image || logo}

@@ -1,23 +1,23 @@
 // Import Swiper React components
-import banner from "../../assets/img/banner.png"
+import banner from "../../assets/img/banner.png";
 import CardProduct from "../../components/CardProduct";
-import { dataProducts } from "./components/DataProducts"
+import { dataProducts } from "./components/DataProducts";
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation, Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation, Autoplay } from "swiper/modules";
 import { useState } from "react";
 import DetailProductDialog from "../../components/DetailProductDialog";
 
 const Home = () => {
-  const [displayDetail, setDisplayDetail] = useState(false)
-  const [dataDetailProduct, setDataDetailProduct] = useState({})
+  const [displayDetail, setDisplayDetail] = useState(false);
+  const [dataDetailProduct, setDataDetailProduct] = useState({});
 
-  const handleDetail = (item)=>{
-    setDisplayDetail(true)
-    setDataDetailProduct(item)
-  }
+  const handleDetail = (item) => {
+    setDisplayDetail(true);
+    setDataDetailProduct(item);
+  };
 
   return (
     <div className="p-[10px] bg-bgMainColor">
@@ -34,9 +34,33 @@ const Home = () => {
           slidesPerView={1}
           navigation
         >
-          <SwiperSlide><div className="w-full h-[250px]"><img className="w-full h-full object-cover" src={banner} alt="banner" /></div></SwiperSlide>
-          <SwiperSlide><div className="w-full h-[250px]"><img className="w-full h-full object-cover" src={banner} alt="banner" /></div></SwiperSlide>
-          <SwiperSlide><div className="w-full h-[250px]"><img className="w-full h-full object-cover" src={banner} alt="banner" /></div></SwiperSlide>
+          <SwiperSlide>
+            <div className="w-full h-[250px]">
+              <img
+                className="w-full h-full object-cover"
+                src={banner}
+                alt="banner"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="w-full h-[250px]">
+              <img
+                className="w-full h-full object-cover"
+                src={banner}
+                alt="banner"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="w-full h-[250px]">
+              <img
+                className="w-full h-full object-cover"
+                src={banner}
+                alt="banner"
+              />
+            </div>
+          </SwiperSlide>
         </Swiper>
       </div>
       {/* content  */}
@@ -60,23 +84,24 @@ const Home = () => {
                       desc={item.desc}
                       price={item.price}
                       sale={item.sale}
-                      onClick={()=>handleDetail(item)}
+                      onClick={() => handleDetail(item)}
                     />
-                  )
+                  );
                 })}
               </div>
             </div>
-
-          )
-        })
-        }
-
+          );
+        })}
       </div>
       {displayDetail && (
-        <DetailProductDialog data={dataDetailProduct} setDisplayDetail={setDisplayDetail}/>
+        <DetailProductDialog
+          data={dataDetailProduct}
+          displayDetail={displayDetail}
+          setDisplayDetail={setDisplayDetail}
+        />
       )}
     </div>
-  )
+  );
 };
 
 export default Home;

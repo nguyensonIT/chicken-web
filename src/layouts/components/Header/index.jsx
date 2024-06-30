@@ -6,12 +6,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 
 import "./index.css";
+import { useState } from "react";
+import Login from "../../../components/Login";
 
 function Header() {
+  const [isDialog, setIsDialog] = useState(false);
   // style active-nav function
   const navLinkStyle = ({ isActive }) => ({
     color: isActive ? "#FFD700" : "",
   });
+
+  const handleDialogLogin = () => {
+    setIsDialog(true);
+  };
 
   return (
     <div className="h-[120px] w-full flex bg-bgHeaderColor ">
@@ -105,10 +112,18 @@ function Header() {
             1
           </span>
         </Link>
-        <button className="transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 ">
+        <button
+          type="button"
+          onClick={handleDialogLogin}
+          className="transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+        >
           Đăng nhập
         </button>
       </div>
+
+      {/* Dialog Login  */}
+
+      {isDialog && <Login setIsDialog={setIsDialog} />}
     </div>
   );
 }
