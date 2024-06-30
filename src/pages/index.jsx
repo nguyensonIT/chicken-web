@@ -5,8 +5,10 @@ import Product from "./Product";
 import News from "./News";
 import Introduce from "./Introduce";
 import NotFound from "./NotFound";
-import HeaderOnly from "../layouts/HeaderOnly";
+import HeaderOnlyLayout from "../layouts/HeaderOnlyLayout";
 import CartProduct from "./CartProduct";
+import AdminHome from "./AdminHome";
+import AdminLayout from "../layouts/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -32,7 +34,7 @@ const router = createBrowserRouter([
     ],
   },
   {
-    element: <HeaderOnly />,
+    element: <HeaderOnlyLayout />,
     children: [
       {
         path: "/news",
@@ -45,6 +47,15 @@ const router = createBrowserRouter([
       {
         path: "/cart",
         element: <CartProduct />,
+      },
+    ],
+  },
+  {
+    element: <AdminLayout />,
+    children: [
+      {
+        path: "/admin",
+        element: <AdminHome />,
       },
     ],
   },
