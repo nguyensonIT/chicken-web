@@ -18,22 +18,12 @@ const CartProduct = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-100 pt-10">
+    <div className="h-screen pt-10">
       <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
         <div className="h-screen overflow-scroll rounded-lg md:w-2/3">
           {/* item  */}
           {dataProductCart.map((data, index) => {
-            return (
-              <ProductItemCart
-                key={index}
-                image={data.image}
-                name={data.name}
-                desc={data.desc}
-                price={data.price}
-                sale={data.sale}
-                altImage={data.altImage}
-              />
-            );
+            return <ProductItemCart key={index} data={data} />;
           })}
         </div>
         {/* Sub total */}

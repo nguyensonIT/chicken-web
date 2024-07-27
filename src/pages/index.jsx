@@ -1,4 +1,5 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+
 import RootLayout from "../layouts/RootLayout";
 import Home from "./Home";
 import Product from "./Product";
@@ -7,8 +8,10 @@ import Introduce from "./Introduce";
 import NotFound from "./NotFound";
 import HeaderOnlyLayout from "../layouts/HeaderOnlyLayout";
 import CartProduct from "./CartProduct";
-import AdminHome from "./AdminHome";
 import AdminLayout from "../layouts/AdminLayout";
+import AdminDashboard from "./AdminDashboard";
+import AdminTable from "./AdminTable";
+import AdminBlank from "./AdminBlank";
 
 const router = createBrowserRouter([
   {
@@ -20,15 +23,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/products/all",
-        element: <Product />,
-      },
-      {
-        path: "/products/:slug",
-        element: <Product />,
-      },
-      {
-        path: "/products/category/:slug",
+        path: "/products",
         element: <Product />,
       },
     ],
@@ -55,7 +50,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <AdminHome />,
+        element: <AdminDashboard />,
+      },
+      {
+        path: "/admin/table",
+        element: <AdminTable />,
+      },
+      {
+        path: "/admin/blank",
+        element: <AdminBlank />,
       },
     ],
   },

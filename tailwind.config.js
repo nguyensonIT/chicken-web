@@ -19,6 +19,11 @@ export default {
         "bgDialogColor": "rgba(204, 204, 204, 0.5)",
         "borderColor": "#FFD700",
         "cartColor": "#FFA500",
+        "bgHoverColor": "#c0c0c0",
+
+        "bgHeaderAdminColor": "#ecf0f1",
+        "bgSideBarAdminColor": "#2c3e50",
+
       },
       
     },

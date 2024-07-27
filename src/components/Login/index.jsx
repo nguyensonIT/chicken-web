@@ -2,90 +2,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-// import { useDispatch } from "react-redux";
 
-import {
-  AppleIcon,
-  FaceBookIcon,
-  GoogleIcon,
-  InstagramIcon,
-  KakaoTalkIcon,
-  LineIcon,
-  TwisterIcon,
-  UserIcon,
-} from "../Icon";
 import "./index.css";
-import LoginWithEmail from "./component/LoginWithEmail";
-import SignupWithEmail from "../SignUp/component/SignupWithEmail";
+import { dataForm } from "../DataForm";
 
-const dataForm = [
-  {
-    footer_des: "Bạn không có tài khoản?",
-    footer_link: "Đăng ký",
-    title: "Đăng nhập",
-    data: [
-      {
-        icon: <UserIcon />,
-        name: "Số điện thoại / Tên người dùng / email",
-        detail: {
-          footer_des: "Bạn không có tài khoản?",
-          footer_link: "Đăng ký",
-          title: "Đăng nhập",
-          data: <LoginWithEmail />,
-        },
-      },
-      {
-        icon: <GoogleIcon />,
-        name: "Tiếp tục với Google",
-        disable: true,
-      },
-      {
-        icon: <FaceBookIcon />,
-        name: "Tiếp tục với Facebook",
-        disable: true,
-      },
-      {
-        icon: <TwisterIcon />,
-        name: "Tiếp tục với Twitter",
-        disable: true,
-      },
-    ],
-  },
-  {
-    footer_des: "Bạn đã có tài khoản?",
-    footer_link: "Đăng nhập",
-    title: "Đăng ký tài khoản",
-    data: [
-      {
-        icon: <UserIcon />,
-        name: "Số điện thoại hoặc email",
-        detail: {
-          footer_des: "Bạn đã có tài khoản?",
-          footer_link: "Đăng nhập",
-          title: "Đăng ký",
-          data: <SignupWithEmail />,
-        },
-      },
-      {
-        icon: <FaceBookIcon />,
-        name: "Tiếp tục với Facebook",
-        disable: true,
-      },
-      {
-        icon: <GoogleIcon />,
-        name: "Tiếp tục với Google",
-        disable: true,
-      },
-    ],
-
-    isSignUp: true,
-  },
-];
 function Login({ setIsDialog }) {
   const refDialog = useRef(null);
-  const [dataDialog, setDataDialog] = useState([dataForm[0]]);
+
   const [dataItemSignUp, setDataItemSignUp] = useState([]);
   const [isLogin, setIsLogin] = useState(false);
+  const [dataDialog, setDataDialog] = useState([dataForm[0]]);
 
   const handleCloseDialog = () => {
     refDialog.current.classList.add("isClose");
@@ -140,7 +66,11 @@ function Login({ setIsDialog }) {
                             ? "disable opacity-[0.5] pointer-events-none bg-[#f5f5f5] text-[#999]"
                             : ""
                         }`}
-                        onClick={() => handleOption(data.detail)}
+                        onClick={() => {
+                          data.handle
+                            ? data.handle()
+                            : handleOption(data.detail);
+                        }}
                       >
                         <p className="icon-option flex items-center absolute left-[12px] w-[25px]">
                           {data.icon}

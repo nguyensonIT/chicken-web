@@ -1,0 +1,23 @@
+.box-edit{
+    transform: translateY(100%);
+    transition: 0.5s;
+}
+.box-img:hover .box-edit{
+    transform: translateY(0);
+}
+
+.box-err{
+    animation: Jump 2s infinite;
+}
+
+@keyframes Jump {
+    0%{
+        transform: translateY(-20px)
+    }
+    50%{
+        transform: translateY(0px);
+    }
+    100%{
+        transform: translateY(-20px);
+    }
+}

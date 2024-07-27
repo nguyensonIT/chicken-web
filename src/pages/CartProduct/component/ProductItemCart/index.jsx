@@ -1,12 +1,20 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useRef, useState } from "react";
 
 import logo from "../../../../assets/img/Logo.png";
 import { formatCurrency } from "../../../../components/FormatCurrency";
+import BtnQuantity from "../../../../components/BtnQuantity";
+import DialogDeleteProduct from "../../../../components/DialogDeleteProduct";
 
-const ProductItemCart = ({ image, name, desc, price, sale, altImage }) => {
-  const priceParse = parseFloat(price);
-  const saleParse = parseFloat(sale);
+const ProductItemCart = ({ data }) => {
+  const refDialog = useRef(null);
+
+  const [currentValue, setCurrentValue] = useState(1);
+  const [isDialogDelete, setIsDialogDelete] = useState(false);
+
+  const priceParse = parseFloat(data?.priceProduct);
+  const saleParse = parseFloat(data?.sale);
   const priceProduct = formatCurrency(priceParse);
 
   const afterSaleProduct = () => {
@@ -16,39 +24,62 @@ const ProductItemCart = ({ image, name, desc, price, sale, altImage }) => {
     return afterPriceSale;
   };
 
+  const handleDelete = () => {
+    setIsDialogDelete(true);
+  };
+
+  const handleCloseDialog = () => {
+    refDialog.current.classList.add("isClose");
+    setTimeout(() => {
+      if (currentValue === 0) {
+        setCurrentValue(1);
+      }
+      setIsDialogDelete(false);
+    }, 300);
+  };
+
+  const handleDeleteProduct = (id) => {
+    console.log(id);
+  };
+
+  useEffect(() => {
+    if (currentValue <= 0) {
+      setIsDialogDelete(true);
+    } else {
+      setIsDialogDelete(false);
+    }
+  }, [currentValue]);
+
+  useEffect(() => {
+    isDialogDelete && refDialog.current.classList.add("isDetail");
+  }, [isDialogDelete]);
+
   return (
-    <div className="grid grid-cols-7 items-center mb-6 rounded-lg bg-white p-6">
+    <div className="grid grid-cols-7 border-[2px] border-dashed border-borderColor items-center mb-6 rounded-lg p-6">
       <div className="col-span-1 w-[80px] h-[80px] rounded-lg">
         <img
-          src={image || logo}
-          alt={altImage || "img"}
+          src={data?.imgProduct || logo}
+          alt={data?.altImage || "img"}
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
       <div className="col-[2/8] sm:ml-4 sm:flex sm:w-full sm:justify-between">
         <div className="mt-5 sm:mt-0">
-          <h2 className="text-lg font-bold text-gray-900">{name}</h2>
-          <p className="mt-1 text-xs text-gray-700">{desc}</p>
+          <h2 className="text-lg font-bold text-gray-900">
+            {data?.nameProduct}
+          </h2>
+          <p className="mt-1 italic text-[10px] text-gray-700">
+            <span className="text-[14px] italic underline">Ghi chú:</span>{" "}
+            {data?.note}
+          </p>
         </div>
         <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
-          <div className="flex items-center border-gray-100">
-            <span className="cursor-pointer rounded-l bg-gray-100 py-1 px-3.5 duration-100 hover:bg-blue-500 hover:text-blue-50">
-              {" "}
-              -{" "}
-            </span>
-            <input
-              className="h-8 w-8 border bg-white text-center text-xs outline-none"
-              type="number"
-              value="2"
-              min="1"
-            />
-            <span className="cursor-pointer rounded-r bg-gray-100 py-1 px-3 duration-100 hover:bg-blue-500 hover:text-blue-50">
-              {" "}
-              +{" "}
-            </span>
-          </div>
+          <BtnQuantity
+            currentValue={currentValue}
+            setCurrentValue={setCurrentValue}
+          />
           <div className="flex items-center space-x-4">
-            {sale ? (
+            {data?.sale ? (
               <div className="flex items-center">
                 <span className="mr-[2px] line-through text-[12px] opacity-30 italic">
                   {priceProduct}
@@ -71,12 +102,23 @@ const ProductItemCart = ({ image, name, desc, price, sale, altImage }) => {
                 </span>
               </div>
             )}
-            <span className="transition-[2s] cursor-pointer hover:text-textEmphasizeColor">
+            <span
+              onClick={handleDelete}
+              className="transition-[2s] cursor-pointer hover:text-textEmphasizeColor"
+            >
               <FontAwesomeIcon icon={faXmark} />
             </span>
           </div>
         </div>
       </div>
+      {isDialogDelete && (
+        <DialogDeleteProduct
+          title="Bạn có chắc xóa sản phẩm này khỏi giỏ hàng?"
+          handleCloseDialog={handleCloseDialog}
+          handleDeleteProduct={() => handleDeleteProduct(data.id)}
+          refDialog={refDialog}
+        />
+      )}
     </div>
   );
 };
