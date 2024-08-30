@@ -45,7 +45,7 @@ function Login({ setIsDialog }) {
   }, [dataDialog]);
 
   return ReactDOM.createPortal(
-    <div className="wrapper fixed flex justify-center items-center top-0 left-0 right-0 bottom-0 z-[9999] bg-bgDialogColor">
+    <div className="wrapper fixed flex justify-center items-center top-0 left-0 right-0 bottom-0 z-[999] bg-bgDialogColor">
       <div
         ref={refDialog}
         className="dialog flex absolute flex-col w-[auto] h-[auto] p-[48px] rounded-[8px] bg-white "

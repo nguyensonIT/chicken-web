@@ -1,23 +1,32 @@
 import {
   faChevronLeft,
+  faPenToSquare,
   faPlus,
   faSearch,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { dataOption } from "./componnents/DataProducts";
-import { dataProducts } from "../../components/FakeDataProducts";
+import { dataOption } from "./componnents/DataOptions";
 import ItemProductRow from "./componnents/ItemProductRow";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import PopupWrapper from "../../components/PopupWrapper";
 import EditProduct from "./componnents/EditProduct";
+import * as handleProductsService from "../../services/handleProductsService";
+import { useHandleContext } from "../../contexts/UserProvider";
+import EditCategory from "./componnents/EditCategory";
 
 const AdminTable = () => {
+  const { productContext, handleTakeInFoBtnProductContext } =
+    useHandleContext();
+
   const [isPopup, setIsPopup] = useState(false);
   const [isPopupEdit, setIsPopupEdit] = useState(false);
+  const [isPopupEditCategory, setIsPopupEditCategory] = useState(false);
   const [option, setOption] = useState(dataOption);
   const [dataEdit, setDataEdit] = useState([]);
+
+  const [dataProductsAPI, setDataProductsAPI] = useState([]);
 
   const refDialog = useRef(null);
   const refDialogEdit = useRef(null);
@@ -25,10 +34,15 @@ const AdminTable = () => {
   const handleEditProduct = (data) => {
     setDataEdit(data);
     setIsPopupEdit(true);
+    handleTakeInFoBtnProductContext(data, data.isActive);
   };
 
   const handleCreateNew = () => {
     setIsPopup(true);
+  };
+
+  const handleTurnOnOffEditCategory = () => {
+    setIsPopupEditCategory(true);
   };
 
   const handleCloseDialog = () => {
@@ -46,6 +60,13 @@ const AdminTable = () => {
     }, 300);
   };
 
+  const handleCloseDialogEditCategory = () => {
+    refDialogEdit.current.classList.add("isClose");
+    setTimeout(() => {
+      setIsPopupEditCategory(false);
+    }, 300);
+  };
+
   const handlePrev = () => {
     setOption(dataOption);
   };
@@ -55,11 +76,27 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
+    console.log("Goi lai API");
+    if (isPopup) {
+      handleCloseDialog();
+    }
+    handleProductsService
+      .getAllProducts()
+      .then((data) => {
+        setDataProductsAPI(data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [productContext]);
+
+  useEffect(() => {
     isPopup && refDialog.current.classList.add("isDetail");
   }, [isPopup]);
   useEffect(() => {
     isPopupEdit && refDialogEdit.current.classList.add("isDetail");
   }, [isPopupEdit]);
+  useEffect(() => {
+    isPopupEditCategory && refDialogEdit.current.classList.add("isDetail");
+  }, [isPopupEditCategory]);
   return (
     <div className="max-w-full">
       <h1 className="text-[32px] font-bold text-center">Quản lý sản phẩm</h1>
@@ -78,7 +115,9 @@ const AdminTable = () => {
             />
           </div>
           {/* Create new  */}
+
           <div className="relative mt-1">
+            {/* Button Create new  */}
             <button
               onClick={handleCreateNew}
               type="button"
@@ -86,8 +125,18 @@ const AdminTable = () => {
             >
               <FontAwesomeIcon icon={faPlus} className="text-[12px]" /> Tạo mới
             </button>
+            {/* Button Edit  */}
+            <button
+              onClick={handleTurnOnOffEditCategory}
+              type="button"
+              className="inline-block ml-[20px] rounded bg-btnColor px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-sm transition duration-150 ease-in-out hover:bg-btnHoverColor hover:shadow-md focus:outline-none focus:ring-0 motion-reduce:transition-none "
+            >
+              <FontAwesomeIcon icon={faPenToSquare} className="text-[12px]" />{" "}
+              Chỉnh sửa danh mục
+            </button>
           </div>
         </div>
+        {/* Form Create  */}
         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -100,7 +149,7 @@ const AdminTable = () => {
             </tr>
           </thead>
           <tbody>
-            {dataProducts.map((data, index) => {
+            {dataProductsAPI.map((data, index) => {
               return (
                 <React.Fragment key={index}>
                   <tr className="border border-b-borderColor">
@@ -184,10 +233,30 @@ const AdminTable = () => {
       {isPopupEdit && (
         <PopupWrapper>
           <div ref={refDialogEdit} className="relative my-[40px] mx-[40px]">
-            <EditProduct data={dataEdit} />
+            <EditProduct data={dataEdit} handleClose={handleCloseDialogEdit} />
             {/* close popup  */}
             <div
               onClick={handleCloseDialogEdit}
+              className="close-dialog absolute w-[40px] h-[40px] right-[16px] top-[18px] flex items-center justify-center rounded-[50%] z-10 bg-bgDialogColor hover:bg-bgHoverColor transition-all cursor-pointer"
+            >
+              <FontAwesomeIcon
+                icon={faXmark}
+                className="icon-close-dialog text-[22px]"
+              />
+            </div>
+          </div>
+        </PopupWrapper>
+      )}
+
+      {/* popup edit category  */}
+
+      {isPopupEditCategory && (
+        <PopupWrapper>
+          <div ref={refDialogEdit} className="relative my-[40px] mx-[40px]">
+            <EditCategory />
+            {/* close popup  */}
+            <div
+              onClick={handleCloseDialogEditCategory}
               className="close-dialog absolute w-[40px] h-[40px] right-[16px] top-[18px] flex items-center justify-center rounded-[50%] z-10 bg-bgDialogColor hover:bg-bgHoverColor transition-all cursor-pointer"
             >
               <FontAwesomeIcon

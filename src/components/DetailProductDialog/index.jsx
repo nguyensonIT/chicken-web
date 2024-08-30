@@ -82,7 +82,7 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
                 className="max-w-[120px] max-h-[120px] p-[5px] border-solid border-[1px] border-borderColor cursor-pointer"
               >
                 <img
-                  src={data.imageProduct || logo}
+                  src={data.imgProduct || logo}
                   alt="img"
                   className="w-full h-full object-cover"
                 />
@@ -158,7 +158,7 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
           >
             <img
               className="w-full h-full object-cover"
-              src={data.image || logo}
+              src={data.imgProduct || logo}
               alt={data.altImg || "img"}
             />
           </div>

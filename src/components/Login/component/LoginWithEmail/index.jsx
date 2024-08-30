@@ -1,24 +1,60 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSpinner,
+  faTriangleExclamation,
+} from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 
 import "./index.css";
 import { EyeIcon, EyeSlashIcon } from "../../../Icon";
+import * as loginService from "../../../../services/loginService";
 
 function LoginWithEmail() {
   const [isLoading, setIsLoading] = useState(false);
   const [isEyePassword, setIsEyePassword] = useState(false);
-  const [errLabel, setErrLabel] = useState("");
+  const [errLabel, setErrLabel] = useState("hdiwi");
 
   const handleChangeEyePassword = () => {
     setIsEyePassword(!isEyePassword);
   };
-  const { register, handleSubmit, watch } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleLogin = () => {
+  const handleLogin = (data) => {
     setIsLoading(true);
-    console.log("hihihi");
+    loginService
+      .login(data)
+      .then((res) => {
+        console.log(res);
+
+        if (res?.data?.status === 201) {
+          localStorage.setItem("authToken", res.data.token);
+          toast.success("Đăng nhập thành công!");
+          setIsLoading(false);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
+        if (res?.response?.status === 401) {
+          toast.warn(
+            "Thông tin tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại!"
+          );
+        }
+        if (res?.response?.status === 500) {
+          toast.error("Server bị lỗi. Vui lòng thử lại!");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
   return (
     <div className="wrapper">
@@ -26,23 +62,33 @@ function LoginWithEmail() {
         className="form-login flex flex-col"
         onSubmit={handleSubmit(handleLogin)}
       >
-        <label className="lable-login font-semibold text-[16px]">
-          Email hoặc Username
+        <label className="lable-login font-semibold text-[14px]">
+          Nhập Email của bạn
         </label>
-        <div className="inp-login relative h-[44px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] pl-[12px] border-none outline-none bg-transparent"
+            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type="text"
-            placeholder="Email hoặc Username"
-            {...register("username")}
+            placeholder="Nhập email của bạn"
+            {...register("username", {
+              required: {
+                value: true,
+                message: "Vui lòng nhập email!",
+              },
+            })}
           />
         </div>
-        <div className="inp-login relative h-[44px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] pl-[12px] border-none outline-none bg-transparent"
+            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type={isEyePassword ? "text" : "password"}
-            placeholder="Password"
-            {...register("password")}
+            placeholder="Mật khẩu"
+            {...register("password", {
+              required: {
+                value: true,
+                message: "Vui lòng nhập mật khẩu!",
+              },
+            })}
           />
           <div
             className="icon-eye flex absolute top-[50%] right-[15px] translate-y-[-50%] cursor-pointer "
@@ -55,9 +101,33 @@ function LoginWithEmail() {
             )}
           </div>
         </div>
-        <label className="err-label text-[12px] text-textEmphasizeColor no-underline my-[9px] mx-0 hover:underline">
-          {errLabel}
-        </label>
+
+        {/* BOX ERROR  */}
+        <div className="box-error mt-[8px]">
+          {errors.username?.message && (
+            <div className="wrapper-error flex items-center">
+              <FontAwesomeIcon
+                icon={faTriangleExclamation}
+                className="icon-error text-[1.2rem] text-textEmphasizeColor ml-[5px]"
+              />
+              <label className="label-error block text-[12px] text-textEmphasizeColor ml-[5px]">
+                {errors.username?.message}
+              </label>
+            </div>
+          )}
+          {errors.password?.message && (
+            <div className="wrapper-error flex items-center">
+              <FontAwesomeIcon
+                icon={faTriangleExclamation}
+                className="icon-error text-[1.2rem] text-textEmphasizeColor ml-[5px]"
+              />
+              <label className="label-error block text-[12px] text-textEmphasizeColor ml-[5px]">
+                {errors.password?.message}
+              </label>
+            </div>
+          )}
+        </div>
+
         <div>
           <a
             href="#"

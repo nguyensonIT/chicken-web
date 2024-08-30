@@ -12,7 +12,7 @@ export const dataForm = [
     data: [
       {
         icon: <UserIcon />,
-        name: "Số điện thoại / Tên người dùng / email",
+        name: "Đăng nhập với Email",
         detail: {
           footer_des: "Bạn không có tài khoản?",
           footer_link: "Đăng ký",
@@ -45,7 +45,7 @@ export const dataForm = [
     data: [
       {
         icon: <UserIcon />,
-        name: "Số điện thoại hoặc email",
+        name: "Đăng ký với Email",
         detail: {
           footer_des: "Bạn đã có tài khoản?",
           footer_link: "Đăng nhập",

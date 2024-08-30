@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import ReactDOM from "react-dom";
 
 import { getAuth } from "firebase/auth";
 
@@ -25,7 +26,12 @@ export const auth = getAuth(app);
 function App() {
   return (
     <GlobalStyles>
-      <ToastContainer />
+      {ReactDOM.createPortal(
+        <div className="z-[9999]">
+          <ToastContainer />
+        </div>,
+        document.body
+      )}
       <Pages />
     </GlobalStyles>
   );

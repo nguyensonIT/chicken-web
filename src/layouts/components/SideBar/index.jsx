@@ -1,10 +1,18 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList } from "@fortawesome/free-solid-svg-icons";
 
-import { dataProducts } from "../../../components/FakeDataProducts";
 import Category from "./components/Category";
+import { useEffect, useState } from "react";
+import * as handleProductsService from "../../../services/handleProductsService";
 
 const SideBar = () => {
+  const [dataApiProducts, setDataApiProducts] = useState([]);
+
+  useEffect(() => {
+    handleProductsService
+      .getAllProducts()
+      .then((res) => setDataApiProducts(res.data));
+  }, []);
   return (
     <div className="flex flex-col h-[100%] bg-bgSideBarColor">
       {/* Title */}
@@ -17,7 +25,7 @@ const SideBar = () => {
       </div>
       {/* list  */}
       <div className="flex flex-col px-[10px] pt-[10px]">
-        {dataProducts.map((item, index) => {
+        {dataApiProducts.map((item, index) => {
           return (
             <Category
               className={"py-[2px]"}

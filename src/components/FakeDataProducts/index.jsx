@@ -12,7 +12,10 @@ export const dataProducts = [
         priceProduct: 160000,
         descProduct:
           "Gà rán ròn, Gà rán ròn, Gà rán ròn, Gà rán ròn, Gà rán ròn, Gà rán ròn, ",
-        category: "Các món gà",
+        category: {
+          idCategory: 123,
+          nameCategory: "Các món gà",
+        },
         isActive: true,
         sale: 10,
         newProduct: true,
@@ -24,7 +27,10 @@ export const dataProducts = [
         nameProduct: "Gà luộc",
         priceProduct: 160000,
         descProduct: "Gà luộc thơm ngon",
-        category: "Các món gà",
+        category: {
+          idCategory: 123,
+          nameCategory: "Các món gà",
+        },
         isActive: false,
         sale: 0,
         newProduct: true,
@@ -36,7 +42,10 @@ export const dataProducts = [
         nameProduct: "Gà rang gừng",
         priceProduct: 180000,
         descProduct: "Gà rang gừng thơm ngon",
-        category: "Các món gà",
+        category: {
+          idCategory: 123,
+          nameCategory: "Các món gà",
+        },
         isActive: false,
         sale: 0,
         newProduct: true,

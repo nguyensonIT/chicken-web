@@ -1,17 +1,24 @@
-import { dataProducts } from "../../../../../../components/FakeDataProducts";
+import { useEffect, useState } from "react";
+import * as handleCategoryService from "../../../../../../services/handleCategoryService";
 
-const SelectCategory = ({ onChange, optionCategory }) => {
+const SelectCategory = ({ onChange, categoryID }) => {
+  const [category, setCategory] = useState([]);
+
+  useEffect(() => {
+    handleCategoryService.getAllCategory().then((res) => setCategory(res.data));
+  }, []);
+
   return (
     <select
-      value={optionCategory}
+      value={categoryID}
       onChange={(e) => onChange(e)}
       className="outline-none cursor-pointer"
     >
       <option value="">---Chọn danh mục---</option>
-      {dataProducts ? (
-        dataProducts.map((item, index) => {
+      {category ? (
+        category.map((item, index) => {
           return (
-            <option key={index} value={item?.nameCategory}>
+            <option key={index} value={item._id}>
               {item.nameCategory}
             </option>
           );

@@ -1,6 +1,8 @@
+import { useState } from "react";
 import BtnTurnOn from "../../../../components/BtnTurnOn";
 
 const ItemProductRow = ({ data, onClick }) => {
+  const [isTurnLive, setIsTurnLive] = useState(true);
   return (
     <>
       <tr
@@ -18,7 +20,7 @@ const ItemProductRow = ({ data, onClick }) => {
         <td className="px-6 py-4">{data.priceProduct}</td>
         <td className="px-6 py-4 text-right">
           {/* btn dark mode  */}
-          <BtnTurnOn data={data} />
+          <BtnTurnOn data={data} isTurnLive={isTurnLive} />
         </td>
       </tr>
     </>

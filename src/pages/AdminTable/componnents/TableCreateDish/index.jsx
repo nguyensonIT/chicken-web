@@ -1,19 +1,28 @@
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import { UploadImage } from "../../../../components/Icon";
 import BtnTurnOn from "../../../../components/BtnTurnOn";
 import "./styles.css";
 import { showFileImg } from "../../../../components/Function";
 import SelectCategory from "./component/SelectCategory";
-import DialogDeleteProduct from "../../../../components/DialogDeleteProduct";
+import DialogDeleteProduct from "../../../../components/DialogQuestionYesNo";
+import * as handleProductsService from "../../../../services/handleProductsService";
+import { useHandleContext } from "../../../../contexts/UserProvider";
 
-const TableCreateDish = ({ data = {} }) => {
+const TableCreateDish = ({ data = {}, handleClose }) => {
   const [dataProduct, setDataProduct] = useState(data);
 
+  const [token, setToken] = useState(
+    localStorage.getItem("authToken") || undefined
+  );
+
+  const { handleProductContext, inFoProductContext } = useHandleContext();
+
+  const [isDialogCreate, setIsDialogCreate] = useState(
+    Object.keys(data).length === 0
+  );
   const [isDialogDeleteProduct, setDialogDeleteProduct] = useState(false);
 
   const [idProduct, setIdProduct] = useState(data?.idProduct || "");
@@ -21,7 +30,7 @@ const TableCreateDish = ({ data = {} }) => {
   const [priceProduct, setPriceProduct] = useState(data?.priceProduct || "");
   const [descProduct, setDescProduct] = useState(data?.descProduct || "");
   const [srcImg, setSrcImg] = useState(data?.imgProduct || "");
-  const [optionCategory, setOptionCategory] = useState(data?.category || "");
+  const [categoryID, setCategoryID] = useState(data?.idCategory || "");
 
   const [errCategory, setErrCategory] = useState(null);
   const [errImage, setErrImage] = useState(null);
@@ -34,7 +43,7 @@ const TableCreateDish = ({ data = {} }) => {
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -43,7 +52,6 @@ const TableCreateDish = ({ data = {} }) => {
       descProduct,
       idProduct,
       srcImg,
-      optionCategory,
     },
   });
 
@@ -53,6 +61,7 @@ const TableCreateDish = ({ data = {} }) => {
 
   const handleChangeFile = (e) => {
     const file = e.target.files[0];
+
     showFileImg(file, (err, fileUrl) => {
       if (fileUrl) {
         setSrcImg(fileUrl);
@@ -64,27 +73,7 @@ const TableCreateDish = ({ data = {} }) => {
   };
 
   const handleSelectCategory = (e) => {
-    setOptionCategory(e.target.value);
-  };
-
-  const handleBtnSubmit = (data) => {
-    if (optionCategory === "") {
-      setErrCategory("Chọn danh mục đã!");
-      setErrImage(null);
-    } else if (srcImg === "") {
-      console.log("lỗi ảnh");
-      setErrImage("Tải ảnh lên bạn ơi!");
-      setErrCategory(null);
-    } else {
-      setErrCategory(null);
-      setErrImage(null);
-      console.log({ ...data, srcImg, optionCategory });
-    }
-  };
-
-  const handleTurnOnDialogDelete = (e) => {
-    e.preventDefault();
-    setDialogDeleteProduct(true);
+    setCategoryID(e.target.value);
   };
 
   const handleCloseDialog = () => {
@@ -94,8 +83,127 @@ const TableCreateDish = ({ data = {} }) => {
     }, 300);
   };
 
+  const handleCreateProduct = (dataForm) => {
+    const priceValidate = parseInt(dataForm.priceProduct);
+
+    if (categoryID === "") {
+      setErrCategory("Chọn danh mục đã!");
+      setErrImage(null);
+    } else if (srcImg === "") {
+      setErrImage("Tải ảnh lên bạn ơi!");
+      setErrCategory(null);
+    } else {
+      setErrCategory(null);
+      setErrImage(null);
+      const newProduct = {
+        imgProduct: srcImg,
+        nameProduct: dataForm.nameProduct,
+        priceProduct: priceValidate,
+        descProduct: dataForm.descProduct,
+        category: categoryID,
+      };
+
+      const dataPost = {
+        token,
+        body: newProduct,
+      };
+
+      handleProductsService.postProduct(dataPost).then((res) => {
+        if (res.status === 201) {
+          toast.success("Tạo món thành công!");
+          reset();
+          setSrcImg("");
+          setCategoryID("");
+          handleProductContext(newProduct);
+        }
+        if (res.status === 400) {
+          toast.warn("Tạo món thất bại. Vui lòng thử lại!");
+        }
+      });
+    }
+  };
+
+  const handleUpdateProduct = (dataUpdate) => {
+    const priceValidate = parseInt(dataUpdate.priceProduct);
+
+    if (categoryID === "") {
+      setErrCategory("Chọn danh mục đã!");
+      setErrImage(null);
+    } else if (srcImg === "") {
+      setErrImage("Tải ảnh lên bạn ơi!");
+      setErrCategory(null);
+    } else {
+      setErrCategory(null);
+      setErrImage(null);
+
+      const newProduct = {
+        imgProduct: srcImg,
+        nameProduct: dataUpdate.nameProduct,
+        priceProduct: priceValidate,
+        descProduct: dataUpdate.descProduct,
+        category: categoryID,
+        isActive: inFoProductContext.isNewActive,
+      };
+
+      const dataPost = {
+        id: idProduct,
+        token,
+        body: newProduct,
+      };
+      handleProductsService.updateProduct(dataPost).then((res) => {
+        switch (res.status) {
+          case 200:
+            toast.success("Cập nhật món ăn thành công!");
+            handleProductContext(dataPost);
+            handleClose();
+            break;
+          case 404:
+            toast.warn("Không có sản phẩm này!");
+            break;
+          case 400:
+            toast.error("Cập nhật thất bại. Vui lòng thử lại!");
+            break;
+          default:
+            toast.error(
+              "Đã xảy ra lỗi không xác định. Vui lòng đăng nhập lại!"
+            );
+            break;
+        }
+      });
+    }
+  };
+
+  const handleBtnSubmit = (data) => {
+    if (isDialogCreate) {
+      handleCreateProduct(data);
+    } else {
+      handleUpdateProduct(data);
+    }
+  };
+
+  const handleTurnOnDialogDelete = (e) => {
+    e.preventDefault();
+    setDialogDeleteProduct(true);
+  };
+
   const handleDeleteProduct = (id) => {
-    console.log(id);
+    handleProductsService.deleteProduct(token, id).then((res) => {
+      if (res?.response?.status === 401) {
+        toast.error("Vui lòng đăng nhập!");
+      }
+      if (res?.response?.status === 404) {
+        toast.warn("Không tìm thấy sản phẩm cần xóa!");
+      }
+      if (res?.response?.status === 500) {
+        toast.error("Server đang bận. Vui lòng thử lại!");
+      }
+      if (res.status === 200) {
+        toast.success("Đã xóa sản phẩm!");
+        handleProductContext(id);
+        handleCloseDialog();
+        handleClose();
+      }
+    });
   };
 
   useEffect(() => {
@@ -232,7 +340,7 @@ const TableCreateDish = ({ data = {} }) => {
             </td>
             <td>
               <SelectCategory
-                optionCategory={optionCategory}
+                categoryID={categoryID}
                 onChange={handleSelectCategory}
               />
             </td>
@@ -265,8 +373,10 @@ const TableCreateDish = ({ data = {} }) => {
       {isDialogDeleteProduct && (
         <DialogDeleteProduct
           title="Bạn có chắc muốn xóa sản phẩm này?"
-          handleDeleteProduct={() => handleDeleteProduct(idProduct)}
-          handleCloseDialog={handleCloseDialog}
+          textNo="Hủy"
+          textYes="Đồng ý"
+          handleYes={() => handleDeleteProduct(idProduct)}
+          handleNo={handleCloseDialog}
           refDialog={refDialog}
         />
       )}

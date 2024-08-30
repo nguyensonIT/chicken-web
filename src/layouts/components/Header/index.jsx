@@ -1,24 +1,115 @@
-import { menus } from "./DataMenu";
+import { listMenuAvatar, menus } from "./DataMenu";
 import logo from "../../../assets/img/Logo.png";
 
 import { NavLink, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCaretRight,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
 
 import "./index.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Login from "../../../components/Login";
+import { useHandleContext } from "../../../contexts/UserProvider";
+import DialogQuestionYesNo from "../../../components/DialogQuestionYesNo";
 
 function Header() {
+  const { user } = useHandleContext();
+
+  const refDialog = useRef(null);
+
+  const [token, setToken] = useState(localStorage.getItem("authToken") || "");
   const [isDialog, setIsDialog] = useState(false);
+  const [isDialogLogout, setIsDialogLogout] = useState(false);
+
+  const [menuAvatar, setMenuAvatar] = useState(listMenuAvatar);
+
+  // data function action
+
+  const handleDialogLogout = () => {
+    if (isDialogLogout) {
+      refDialog.current.classList.add("isClose");
+      setTimeout(() => {
+        setIsDialogLogout(false);
+      }, 300);
+    } else {
+      setIsDialogLogout(true);
+    }
+  };
+
+  const handleDarkMode = (data) => {
+    console.log(data);
+  };
+
+  const handleLanguage = (data) => {
+    setMenuAvatar(data.children);
+  };
+  const handleEnglish = () => {
+    console.log("Tiếng anh");
+  };
+  const handleVietnamese = () => {
+    console.log("Tiếng việt");
+  };
+
+  // action handle
+  const action = [
+    {
+      id: 1,
+      handle: handleDialogLogout,
+    },
+    {
+      id: 2,
+      handle: handleDarkMode,
+    },
+    {
+      id: 3,
+      handle: handleLanguage,
+    },
+    {
+      id: 4,
+      handle: handleEnglish,
+    },
+    {
+      id: 5,
+      handle: handleVietnamese,
+    },
+  ];
+
   // style active-nav function
   const navLinkStyle = ({ isActive }) => ({
     color: isActive ? "#FFD700" : "",
   });
 
+  const handleClickOption = (data) => {
+    action.forEach((item) => {
+      if (item.id === data.id) {
+        return item.handle(data);
+      }
+    });
+  };
+
   const handleDialogLogin = () => {
     setIsDialog(true);
   };
+
+  const handleLogout = () => {
+    refDialog.current.classList.add("isClose");
+    setTimeout(() => {
+      setIsDialogLogout(false);
+    }, 400);
+    localStorage.clear();
+    window.location.reload();
+  };
+
+  const hanldeMouseLeave = () => {
+    setMenuAvatar(listMenuAvatar);
+  };
+
+  useEffect(() => {
+    isDialogLogout && refDialog.current.classList.add("isDetail");
+  }, [isDialogLogout]);
 
   return (
     <div className="h-[120px] w-full flex bg-bgHeaderColor ">
@@ -62,9 +153,13 @@ function Header() {
                       return (
                         <li className="whitespace-nowrap" key={index}>
                           <Link
-                            className="block transition-[2s] hover:text-textHoverColor"
+                            className="tag-link block transition-[2s] hover:text-textHoverColor"
                             to={menu.href}
                           >
+                            <FontAwesomeIcon
+                              className="icon-right text-[12px] mr-[5px]"
+                              icon={faCaretRight}
+                            />
                             {menu.name}
                           </Link>
                         </li>
@@ -112,18 +207,61 @@ function Header() {
             1
           </span>
         </Link>
-        <button
-          type="button"
-          onClick={handleDialogLogin}
-          className="transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
-        >
-          Đăng nhập
-        </button>
+        {/* login  */}
+        <div>
+          {token ? (
+            <div className="box-user relative box_img flex justify-center items-center cursor-pointer">
+              <p className="font-bold text-[12px]  mr-[10px]">{user?.name}</p>
+              <img
+                className="w-[40px] h-[40px] rounded-[50%]"
+                src={user?.picture || logo}
+                alt="avatar"
+              />
+              <ul
+                onMouseLeave={hanldeMouseLeave}
+                className="box-user-option py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid"
+              >
+                {menuAvatar.map((item, index) => {
+                  return (
+                    <li
+                      key={index}
+                      className="flex justify-between items-center my-[5px] py-[5px] px-[10px] hover:bg-bgHoverColor"
+                      onClick={() => handleClickOption(item)}
+                    >
+                      <p className="text-[12px] mr-[10px] text-nowrap">
+                        {item.option}
+                      </p>
+                      <div className="block">{item?.icon}</div>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={handleDialogLogin}
+              className="transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+            >
+              Đăng nhập
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Dialog Login  */}
-
       {isDialog && <Login setIsDialog={setIsDialog} />}
+      {/* Dialog Logout  */}
+      {isDialogLogout && (
+        <DialogQuestionYesNo
+          refDialog={refDialog}
+          title="Bạn có chắc muốn đăng xuất không"
+          textNo="Hủy"
+          textYes="Đăng xuất"
+          handleYes={handleLogout}
+          handleNo={handleDialogLogout}
+        />
+      )}
     </div>
   );
 }

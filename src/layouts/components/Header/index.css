@@ -1,10 +1,33 @@
 
 .nav-parent:hover .active-nav{
-    display: block;
+    opacity: 1;
+    transform: scaleY(1);
 }
 .active-nav{
-    animation: slideIn 0.5s ease-in-out;
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: all .2s;
+}
+
+.box-user-option {
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: all .2s;
+}
+
+.box-user:hover .box-user-option {
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.icon-right{
     display: none;
+}
+
+.tag-link:hover .icon-right{
+    display: inline-block;
 }
 
 

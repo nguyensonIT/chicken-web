@@ -1,50 +1,75 @@
 import { useEffect, useState } from "react";
 
-import { dataProducts } from "../../components/FakeDataProducts";
 import { useSearchParams } from "react-router-dom";
 import CardProduct from "../../components/CardProduct";
+import * as handleProductsService from "../../services/handleProductsService";
 
 const Product = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const [dataProduct, setDataProduct] = useState(dataProducts);
+  const [dataApiProducts, setDataApiProducts] = useState([]);
   const [dataPageProducts, setDataPageProducts] = useState([]);
   const [nameCategory, setNameCategory] = useState();
 
+  const fncTakeData = (products) => {
+    const category = searchParams.get("category");
+    let filteredProducts = [];
+    let categoryName = "";
+
+    switch (category) {
+      case "new":
+        filteredProducts = products
+          .flatMap((item) => item?.products || [])
+          .filter((product) => product?.newProduct);
+        categoryName = "Các món mới";
+        break;
+      case "hot":
+        filteredProducts = products
+          .flatMap((item) => item?.products || [])
+          .filter((product) => product?.hotProduct);
+        categoryName = "Món ăn được mua nhiều nhất";
+        break;
+      case "sale":
+        filteredProducts = products
+          .flatMap((item) => item?.products || [])
+          .filter((product) => product?.sale);
+        categoryName = "Món ăn đang được giảm giá";
+        break;
+      case "alls":
+        filteredProducts = products.flatMap((item) => item?.products || []);
+        categoryName = "Tất cả các món ăn";
+        break;
+      default:
+        const selectedCategory = products.find(
+          (data) => category === String(data.idCategory)
+        );
+        if (selectedCategory) {
+          filteredProducts = selectedCategory.products || [];
+          categoryName = selectedCategory.nameCategory;
+        }
+        break;
+    }
+
+    setDataPageProducts(filteredProducts);
+    setNameCategory(categoryName);
+  };
+
   useEffect(() => {
-    dataProduct.forEach((data) => {
-      if (searchParams.get("category") === String(data.idCategory)) {
-        setDataPageProducts(data.products);
-        setNameCategory(data.nameCategory);
-      }
-    });
-    if (searchParams.get("category") === "new") {
-      const productNew = dataProduct
-        .flatMap((item) => item?.products)
-        .filter((product) => product?.newProduct);
-      setDataPageProducts(productNew);
-      setNameCategory("Các món mới");
+    handleProductsService
+      .getAllProducts()
+      .then((res) => {
+        setDataApiProducts(res.data);
+        fncTakeData(res.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if (dataApiProducts.length > 0) {
+      fncTakeData(dataApiProducts);
     }
-    if (searchParams.get("category") === "hot") {
-      const productNew = dataProduct
-        .flatMap((item) => item?.products)
-        .filter((product) => product?.hotProduct);
-      setDataPageProducts(productNew);
-      setNameCategory("Món ăn được mua nhiều nhất");
-    }
-    if (searchParams.get("category") === "sale") {
-      const productNew = dataProduct
-        .flatMap((item) => item?.products)
-        .filter((product) => product?.sale);
-      setDataPageProducts(productNew);
-      setNameCategory("Món ăn đang được giảm giá");
-    }
-    if (searchParams.get("category") === "alls") {
-      const productNew = dataProduct.flatMap((item) => item?.products);
-      setDataPageProducts(productNew);
-      setNameCategory("Tất cả các món ăn");
-    }
-  }, [searchParams.get("category")]);
+  }, [searchParams, dataApiProducts]);
+
   return (
     <div className="px-[20px] py-[10px] bg-bgMainColor">
       <div className="pt-[10px]">

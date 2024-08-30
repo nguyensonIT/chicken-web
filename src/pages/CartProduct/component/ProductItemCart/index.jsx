@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import logo from "../../../../assets/img/Logo.png";
 import { formatCurrency } from "../../../../components/FormatCurrency";
 import BtnQuantity from "../../../../components/BtnQuantity";
-import DialogDeleteProduct from "../../../../components/DialogDeleteProduct";
+import DialogDeleteProduct from "../../../../components/DialogQuestionYesNo";
 
 const ProductItemCart = ({ data }) => {
   const refDialog = useRef(null);
@@ -114,9 +114,11 @@ const ProductItemCart = ({ data }) => {
       {isDialogDelete && (
         <DialogDeleteProduct
           title="Bạn có chắc xóa sản phẩm này khỏi giỏ hàng?"
-          handleCloseDialog={handleCloseDialog}
-          handleDeleteProduct={() => handleDeleteProduct(data.id)}
+          handleNo={handleCloseDialog}
+          handleYes={() => handleDeleteProduct(data.id)}
           refDialog={refDialog}
+          textNo="Hủy"
+          textYes="Đồng ý"
         />
       )}
     </div>
