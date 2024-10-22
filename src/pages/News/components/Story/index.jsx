@@ -7,6 +7,7 @@ import imgErr from "../../../../assets/img/Logo.png";
 import "./styles.css";
 import { useHandleContext } from "../../../../contexts/UserProvider";
 import * as handlePostService from "../../../../services/handlePostService";
+import { toast } from "react-toastify";
 
 const Story = ({
   isStoryDetail = false,
@@ -15,13 +16,7 @@ const Story = ({
   handleDetailImg,
   handleComment,
 }) => {
-  const {
-    user,
-    isLikedPostContext,
-    setIsLikedPostContext,
-    qntLikePostContext,
-    setQntLikePostContext,
-  } = useHandleContext();
+  const { user } = useHandleContext();
 
   const textRef = useRef(null);
   const [isClamped, setIsClamped] = useState(false);
@@ -39,7 +34,6 @@ const Story = ({
         0
       )
   );
-  const [idPost, setIdPost] = useState("");
 
   //Fnc call api like post
   const fncCallApiLikePost = () => {
@@ -51,12 +45,8 @@ const Story = ({
         .then((res) => {
           if (res.status === 200) {
             if (res.data.likedBy.some((item) => item === user.id)) {
-              setQntLikePostContext(res.data.likedBy.length);
-              setIsLikedPostContext(true);
               setQntLike((prev) => prev + 1);
             } else {
-              setIsLikedPostContext(false);
-              setQntLikePostContext(res.data.likedBy.length);
               setQntLike((prev) => prev - 1);
             }
           }
@@ -82,23 +72,8 @@ const Story = ({
 
   //handle Like Post
   const handleLikePost = () => {
-    setIdPost(data._id);
     fncCallApiLikePost();
   };
-
-  useEffect(() => {
-    console.log(idPost);
-
-    if (
-      data._id === idPost &&
-      isStoryDetail &&
-      isLikedPostContext !== null &&
-      qntLikePostContext !== null
-    ) {
-      setIsLikePost(isLikedPostContext);
-      setQntLike(qntLikePostContext);
-    }
-  }, [isLikedPostContext, qntLikePostContext]);
 
   useEffect(() => {
     const lineHeight = parseFloat(getComputedStyle(textRef.current).lineHeight);

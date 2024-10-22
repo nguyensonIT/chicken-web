@@ -23,9 +23,6 @@ const UserProvider = ({ children }) => {
         0
     );
   const [takeIdLikePostContext, setTakeIdLikePostContext] = useState("");
-  //Context Like Post
-  const [isLikedPostContext, setIsLikedPostContext] = useState(null);
-  const [qntLikePostContext, setQntLikePostContext] = useState(null);
 
   //có thể render lại trang order admin
   const handTakeDataSubId = (id) => {
@@ -58,10 +55,6 @@ const UserProvider = ({ children }) => {
         renderPopupNotifyAdminContext,
         selectedProductsContext,
         takeIdLikePostContext,
-        isLikedPostContext,
-        qntLikePostContext,
-        setQntLikePostContext,
-        setIsLikedPostContext,
         setTakeIdLikePostContext,
         setSelectedProductsContext,
         handleRenderNotifyAdminContext,
