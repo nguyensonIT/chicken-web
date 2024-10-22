@@ -2,13 +2,19 @@ import ReactDOM from "react-dom";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 import logo from "../../assets/img/Logo.png";
 import { formatCurrency } from "../FormatCurrency";
 import "./style.css";
 import BtnQuantity from "../BtnQuantity";
+import { handleAddCartWithQuantityFnc } from "../Function";
+import { useHandleContext } from "../../contexts/UserProvider";
 
 function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
+  const { setQuantityProductInCartContext } = useHandleContext();
+  const cartData = JSON.parse(localStorage.getItem("productsInCart")) || [];
+
   const dialogRef = useRef(null);
   const imgRef = useRef(null);
   const detailRef = useRef(null);
@@ -19,6 +25,11 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
   const priceProduct = formatCurrency(priceParse);
 
   const [currentValue, setCurrentValue] = useState(1);
+  const [note, setNote] = useState("");
+
+  const handleChangeNote = (e) => {
+    setNote(e.target.value);
+  };
 
   const afterSaleProduct = () => {
     const saleParse = parseFloat(data.sale);
@@ -48,6 +59,21 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
   };
   const handleClickImg = () => {
     setIsDisplayImg(true);
+  };
+
+  const handleAddCart = (data) => {
+    handleAddCartWithQuantityFnc(data, currentValue, note);
+    const productIndex = cartData.findIndex(
+      (item) => item.idProduct === data.idProduct
+    );
+    if (productIndex === -1) {
+      setQuantityProductInCartContext((prev) => prev + 1);
+    }
+    toast.success("Đã thêm vào giỏ hàng!");
+    detailRef.current.classList.add("isClose");
+    setTimeout(() => {
+      setDisplayDetail(false);
+    }, 300);
   };
 
   useEffect(() => {
@@ -132,12 +158,17 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
             <div className="w-full my-[20px]">
               <span className="italic underline">Ghi chú:</span>
               <textarea
+                value={note}
+                onChange={handleChangeNote}
                 className="w-full px-[10px] py-[10px] mt-[10px] italic text-[12px] outline-none border border-borderColor rounded-md"
                 rows="2"
                 placeholder="VD: Không cay,..."
               ></textarea>
             </div>
-            <button className="px-3 py-2 transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white text-xs font-bold uppercase rounded">
+            <button
+              onClick={() => handleAddCart(data)}
+              className="px-3 py-2 transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white text-xs font-bold uppercase rounded"
+            >
               <span className="mr-[4px]">
                 <FontAwesomeIcon icon={faCartPlus} />
               </span>

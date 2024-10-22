@@ -8,6 +8,7 @@ const AdminSideBar = () => {
   const handleClick = (data) => {
     setHref(data.href);
   };
+
   return (
     <div className="h-[100%] bg-gradient-to-r from-[#2c3e50] to-[#34495e] text-white">
       <div className="relative h-[200px] pt-[20px] flex flex-col justify-center items-center border-b-2">

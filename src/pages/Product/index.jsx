@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
-
 import { useSearchParams } from "react-router-dom";
+
 import CardProduct from "../../components/CardProduct";
 import * as handleProductsService from "../../services/handleProductsService";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Product = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [dataAllsProductsArranged, setDataAllsProductsArranged] = useState([]);
   const [dataApiProducts, setDataApiProducts] = useState([]);
   const [dataPageProducts, setDataPageProducts] = useState([]);
-  const [nameCategory, setNameCategory] = useState();
+  const [nameCategory, setNameCategory] = useState("");
+
+  const [isProductSale, setIsProductSale] = useState(null);
+  const [isProductHot, setIsProductHot] = useState(null);
+  const [isProductNew, setIsProductNew] = useState(null);
+  const [isAllsProduct, setIsAllsProduct] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const fncTakeData = (products) => {
     const category = searchParams.get("category");
@@ -21,66 +30,141 @@ const Product = () => {
         filteredProducts = products
           .flatMap((item) => item?.products || [])
           .filter((product) => product?.newProduct);
-        categoryName = "Các món mới";
+        categoryName = {
+          title: "Các món mới",
+          titleNotProduct: "Hiện chưa có sản phẩm mới ",
+        };
         break;
       case "hot":
         filteredProducts = products
           .flatMap((item) => item?.products || [])
           .filter((product) => product?.hotProduct);
-        categoryName = "Món ăn được mua nhiều nhất";
+        categoryName = {
+          title: "Món ăn được mua nhiều nhất",
+          titleNotProduct: "Đang cập nhật món ăn được mua nhiều nhất",
+        };
         break;
       case "sale":
         filteredProducts = products
           .flatMap((item) => item?.products || [])
           .filter((product) => product?.sale);
-        categoryName = "Món ăn đang được giảm giá";
+        categoryName = {
+          title: "Món ăn đang được giảm giá",
+          titleNotProduct: "Hiện tại chưa có món nào được giảm giá",
+        };
         break;
       case "alls":
-        filteredProducts = products.flatMap((item) => item?.products || []);
-        categoryName = "Tất cả các món ăn";
+        filteredProducts = [];
+        categoryName = { title: "Tất cả các món ăn" };
         break;
       default:
         const selectedCategory = products.find(
           (data) => category === String(data.idCategory)
         );
+
         if (selectedCategory) {
           filteredProducts = selectedCategory.products || [];
-          categoryName = selectedCategory.nameCategory;
+          categoryName = { title: `${selectedCategory.nameCategory}` };
+        }
+        if (!selectedCategory) {
+          filteredProducts = [];
+          categoryName = { title: "Danh mục hiện không có sản phẩm!" };
         }
         break;
     }
-
     setDataPageProducts(filteredProducts);
     setNameCategory(categoryName);
   };
 
+  const fncCheckTitle = (dataApiProducts) => {
+    const allProducts = dataApiProducts.flatMap(
+      (category) => category.products
+    );
+    // Kiểm tra sale
+    const isSale = allProducts.some((product) => product.sale > 0);
+    setIsProductSale(isSale);
+
+    //Kiểm tra hot product
+    const isHotProduct = allProducts.some(
+      (product) => product.hotProduct === true
+    );
+    setIsProductHot(isHotProduct);
+
+    //Kiểm tra new product
+    const isNewProduct = allProducts.some(
+      (product) => product.newProduct === true
+    );
+    setIsProductNew(isNewProduct);
+  };
+
   useEffect(() => {
+    setIsLoading(true);
     handleProductsService
       .getAllProducts()
       .then((res) => {
         setDataApiProducts(res.data);
         fncTakeData(res.data);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   useEffect(() => {
-    if (dataApiProducts.length > 0) {
-      fncTakeData(dataApiProducts);
+    if (searchParams.get("category") === "alls") {
+      const newProducts = dataApiProducts.sort((a, b) => a.order - b.order);
+      setDataAllsProductsArranged(newProducts);
+      setIsAllsProduct(true);
+    } else {
+      setIsAllsProduct(false);
     }
+    fncTakeData(dataApiProducts);
+    fncCheckTitle(dataApiProducts);
   }, [searchParams, dataApiProducts]);
 
   return (
     <div className="px-[20px] py-[10px] bg-bgMainColor">
       <div className="pt-[10px]">
         <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
-          {nameCategory}
+          {nameCategory.title}
         </h1>
-        <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
-          {dataPageProducts?.map((data, index) => {
-            return <CardProduct key={index} data={data} />;
-          })}
-        </div>
+        {searchParams.get("category") === "sale" && isProductSale === false && (
+          <h1 className="text-center">{nameCategory.titleNotProduct}</h1>
+        )}
+        {searchParams.get("category") === "hot" && isProductHot === false && (
+          <h1 className="text-center">{nameCategory.titleNotProduct}</h1>
+        )}
+        {searchParams.get("category") === "new" && isProductNew === false && (
+          <h1 className="text-center">{nameCategory.titleNotProduct}</h1>
+        )}
+        {isLoading && (
+          <div className="w-full text-center">
+            <FontAwesomeIcon className="loading" icon={faSpinner} />
+          </div>
+        )}
+        {!isAllsProduct ? (
+          <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
+            {dataPageProducts?.map((data, index) => {
+              return <CardProduct key={index} data={data} />;
+            })}
+          </div>
+        ) : (
+          dataAllsProductsArranged?.map((data, index) => {
+            return (
+              <div key={index} className="">
+                <h1 className="text-[24px] text-textEmphasizeColor py-[15px] font-bold">
+                  {data.nameCategory}
+                </h1>
+                <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
+                  {data.products.map((data, index) => {
+                    return <CardProduct key={index} data={data} />;
+                  })}
+                </div>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

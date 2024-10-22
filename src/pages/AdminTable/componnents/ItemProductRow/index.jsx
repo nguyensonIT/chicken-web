@@ -1,5 +1,6 @@
 import { useState } from "react";
 import BtnTurnOn from "../../../../components/BtnTurnOn";
+import { formatCurrency } from "../../../../components/FormatCurrency";
 
 const ItemProductRow = ({ data, onClick }) => {
   const [isTurnLive, setIsTurnLive] = useState(true);
@@ -17,7 +18,7 @@ const ItemProductRow = ({ data, onClick }) => {
           <img className="w-[40px] h-[40px]" src={data.imgProduct} alt="img" />
         </td>
         <td className="px-6 py-4">{data.nameProduct}</td>
-        <td className="px-6 py-4">{data.priceProduct}</td>
+        <td className="px-6 py-4">{formatCurrency(data.priceProduct)}</td>
         <td className="px-6 py-4 text-right">
           {/* btn dark mode  */}
           <BtnTurnOn data={data} isTurnLive={isTurnLive} />

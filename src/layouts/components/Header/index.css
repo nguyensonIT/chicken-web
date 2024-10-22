@@ -10,6 +10,15 @@
     transition: all .2s;
 }
 
+.icon-right{
+    display: none;
+}
+
+.tag-link:hover .icon-right{
+    display: inline-block;
+}
+
+
 .box-user-option {
     opacity: 0;
     transform: scaleY(0);
@@ -20,14 +29,6 @@
 .box-user:hover .box-user-option {
     opacity: 1;
     transform: scaleY(1);
-}
-
-.icon-right{
-    display: none;
-}
-
-.tag-link:hover .icon-right{
-    display: inline-block;
 }
 
 

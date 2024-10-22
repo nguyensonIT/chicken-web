@@ -14,7 +14,6 @@ import * as loginService from "../../../../services/loginService";
 function LoginWithEmail() {
   const [isLoading, setIsLoading] = useState(false);
   const [isEyePassword, setIsEyePassword] = useState(false);
-  const [errLabel, setErrLabel] = useState("hdiwi");
 
   const handleChangeEyePassword = () => {
     setIsEyePassword(!isEyePassword);
@@ -30,8 +29,6 @@ function LoginWithEmail() {
     loginService
       .login(data)
       .then((res) => {
-        console.log(res);
-
         if (res?.data?.status === 201) {
           localStorage.setItem("authToken", res.data.token);
           toast.success("Đăng nhập thành công!");

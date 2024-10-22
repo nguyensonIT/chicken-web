@@ -1,0 +1,14 @@
+.item-order{
+    animation: colorChange infinite 2.5s ease-in-out;
+}
+
+@keyframes colorChange {
+    from{
+        background-color: white;
+        border-color: #f9fafb;
+    }
+    to{
+        background-color: #ffd700;
+        border-color: #ffd700;
+    }
+}

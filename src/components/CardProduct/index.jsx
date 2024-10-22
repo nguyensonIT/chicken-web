@@ -1,15 +1,21 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import { formatCurrency } from "../FormatCurrency";
 import logo from "../../assets/img/Logo.png";
 import "./index.css";
-import { useEffect, useState } from "react";
 import DetailProductDialog from "../DetailProductDialog";
+import { useHandleContext } from "../../contexts/UserProvider";
+import { handleAddCartFnc } from "../Function";
 
 const CardProduct = ({ data }) => {
   const [dataItemProduct, setDataItemProduct] = useState(data || []);
   const [displayDetail, setDisplayDetail] = useState(false);
+
+  const { setQuantityProductInCartContext } = useHandleContext();
+  const cartData = JSON.parse(localStorage.getItem("productsInCart")) || [];
 
   const priceParse = parseFloat(dataItemProduct?.priceProduct);
   const priceProduct = formatCurrency(priceParse);
@@ -27,6 +33,18 @@ const CardProduct = ({ data }) => {
     return afterPriceSale;
   };
 
+  const handleAddCart = (e, data) => {
+    e.stopPropagation();
+    handleAddCartFnc(data);
+    const productIndex = cartData.findIndex(
+      (item) => item.idProduct === data.idProduct
+    );
+    if (productIndex === -1) {
+      setQuantityProductInCartContext((prev) => prev + 1);
+    }
+    toast.success("Đã thêm vào giỏ hàng!");
+  };
+
   useEffect(() => {
     setDataItemProduct(data);
   }, [data]);
@@ -34,13 +52,15 @@ const CardProduct = ({ data }) => {
   return (
     <div
       onClick={handleDetail}
-      className="card-wrap cursor-pointer border-transparent border-[2px] hover:border-textHoverColor hover:border-solid relative rounded-md grid grid-cols-3 gap-[8px] p-[12px] bg-white"
+      className={`${
+        data.isActive === false && "pointer-events-none opacity-[0.6]"
+      } card-wrap relative cursor-pointer border-transparent border-[2px] hover:border-textHoverColor hover:border-solid relative rounded-md grid grid-cols-3 gap-[8px] p-[12px] bg-white`}
     >
       <div className="image-product flex justify-center items-center relative col-span-1 overflow-hidden">
         <img
           className="w-[70px] h-[70px] rounded-md object-cover"
           src={dataItemProduct?.imgProduct || logo}
-          alt={dataItemProduct?.altImg || "image"}
+          alt={dataItemProduct?.nameProduct || "image"}
         />
       </div>
       <div className="content col-span-2 flex flex-col justify-between ">
@@ -75,6 +95,7 @@ const CardProduct = ({ data }) => {
         )}
       </div>
       <button
+        onClick={(e) => handleAddCart(e, data)}
         type="button"
         className="absolute hover:bg-btnHoverColor transition-[2s] flex justify-center items-center bg-btnColor text-[16px] text-[white] rounded-[50%] right-[12px] bottom-[12px] w-[22px] h-[22px]"
       >
@@ -87,6 +108,12 @@ const CardProduct = ({ data }) => {
           displayDetail={displayDetail}
           setDisplayDetail={setDisplayDetail}
         />
+      )}
+      {/* hiện tem hết hàng */}
+      {data.isActive === false && (
+        <span className="absolute px-[8px] py-[3px] bg-[#E6E6FA] left-[-20px] rotate-[-45deg] text-[12px] font-bold">
+          Hết hàng
+        </span>
       )}
     </div>
   );

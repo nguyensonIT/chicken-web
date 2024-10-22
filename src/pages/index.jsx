@@ -11,7 +11,10 @@ import CartProduct from "./CartProduct";
 import AdminLayout from "../layouts/AdminLayout";
 import AdminDashboard from "./AdminDashboard";
 import AdminTable from "./AdminTable";
-import AdminBlank from "./AdminBlank";
+import AdminOrderCustomers from "./AdminOrderCustomers";
+import OrderTracking from "./OrderTracking";
+import PrivateRoute from "../routes/PrivateRoute";
+import AdminArticle from "./AdminArticle";
 
 const router = createBrowserRouter([
   {
@@ -43,6 +46,10 @@ const router = createBrowserRouter([
         path: "/cart",
         element: <CartProduct />,
       },
+      {
+        path: "/order-tracking",
+        element: <OrderTracking />,
+      },
     ],
   },
   {
@@ -50,15 +57,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
-        element: <AdminDashboard />,
+        element: <PrivateRoute element={<AdminDashboard />} />,
       },
       {
         path: "/admin/table",
-        element: <AdminTable />,
+        element: <PrivateRoute element={<AdminTable />} />,
       },
       {
-        path: "/admin/blank",
-        element: <AdminBlank />,
+        path: "/admin/order",
+        element: <PrivateRoute element={<AdminOrderCustomers />} />,
+      },
+      {
+        path: "/admin/article",
+        element: <PrivateRoute element={<AdminArticle />} />,
       },
     ],
   },

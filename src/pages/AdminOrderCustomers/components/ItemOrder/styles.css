@@ -1,0 +1,12 @@
+.time-timeup{
+    animation: changeColor infinite 2s ease-in-out;
+}
+
+@keyframes changeColor {
+    from{
+        background-color: white;
+    }
+    to{
+        background-color: red;
+    }
+}

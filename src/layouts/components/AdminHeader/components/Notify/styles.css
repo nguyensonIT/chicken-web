@@ -1,0 +1,20 @@
+.new-notify{
+    animation: changColor 2s infinite ease-in-out;
+}
+
+@keyframes changColor {
+    0%{
+        
+        background-color: white;
+    }
+    25%{
+        background-color: #c0c0c0;
+    }
+    50%{
+        background-color: white;
+    }
+    100%{
+        background-color: #c0c0c0;
+    }
+    
+}

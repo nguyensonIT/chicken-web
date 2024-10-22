@@ -2,10 +2,10 @@ import * as request from "../utils/request";
 
 const token = localStorage.getItem("authToken");
 
-export const getAllCategory = async (token) => {
+export const getAllCategory = async () => {
   const obj = {
     path: "category",
-    token: token,
+    token,
   };
 
   const response = await request.GET(obj);
@@ -43,5 +43,16 @@ export const deleteCategory = async (id) => {
   };
 
   const response = await request.DELETE(obj);
+  return response;
+};
+
+export const reorderCategories = async ({ body }) => {
+  const obj = {
+    path: `category/reorder-categories`,
+    token,
+    body,
+  };
+
+  const response = await request.PUT(obj);
   return response;
 };

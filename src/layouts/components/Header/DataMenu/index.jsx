@@ -16,6 +16,10 @@ export const menus = [
     href: "/products?category=alls",
     children: [
       {
+        name: "Tất cả sản phẩm",
+        href: "/products?category=alls",
+      },
+      {
         name: "Sản phẩm mới",
         href: "/products?category=new",
       },
@@ -37,6 +41,10 @@ export const menus = [
     name: "Giới thiệu",
     href: "/introduce",
   },
+  {
+    name: "Đơn hàng",
+    href: "/order-tracking",
+  },
 ];
 export const listMenuAvatar = [
   {
@@ -47,10 +55,12 @@ export const listMenuAvatar = [
       {
         id: 4,
         option: "Tiếng Anh",
+        prev: true,
       },
       {
         id: 5,
         option: "Tiếng Việt",
+        prev: true,
       },
     ],
   },

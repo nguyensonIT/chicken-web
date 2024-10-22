@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import { dataForm } from "../DataForm";
 
-function Login({ setIsDialog }) {
+function Login({ setIsDialog = () => {} }) {
   const refDialog = useRef(null);
 
   const [dataItemSignUp, setDataItemSignUp] = useState([]);

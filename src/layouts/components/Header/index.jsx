@@ -1,32 +1,47 @@
-import { listMenuAvatar, menus } from "./DataMenu";
-import logo from "../../../assets/img/Logo.png";
-
 import { NavLink, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretDown,
   faCaretRight,
   faCartShopping,
+  faChevronLeft,
 } from "@fortawesome/free-solid-svg-icons";
-
-import "./index.css";
 import { useEffect, useRef, useState } from "react";
+
+import { listMenuAvatar, menus } from "./DataMenu";
+import logo from "../../../assets/img/Logo.png";
+import "./index.css";
 import Login from "../../../components/Login";
 import { useHandleContext } from "../../../contexts/UserProvider";
 import DialogQuestionYesNo from "../../../components/DialogQuestionYesNo";
 
 function Header() {
-  const { user } = useHandleContext();
+  const { user, quantityProductInCartContext } = useHandleContext();
 
   const refDialog = useRef(null);
 
   const [token, setToken] = useState(localStorage.getItem("authToken") || "");
   const [isDialog, setIsDialog] = useState(false);
   const [isDialogLogout, setIsDialogLogout] = useState(false);
+  const [isListOptionBoxAvatar, setIsListOptionBoxAvatar] = useState(false);
+  const [quantityProductInCart, setQuantityProductInCart] = useState(0);
 
   const [menuAvatar, setMenuAvatar] = useState(listMenuAvatar);
 
   // data function action
+
+  const handleClickBoxAvatar = () => {
+    if (isListOptionBoxAvatar) {
+      setMenuAvatar(listMenuAvatar);
+      setIsListOptionBoxAvatar(!isListOptionBoxAvatar);
+    } else {
+      setIsListOptionBoxAvatar(!isListOptionBoxAvatar);
+    }
+  };
+
+  const handlePrevOption = () => {
+    setMenuAvatar(listMenuAvatar);
+  };
 
   const handleDialogLogout = () => {
     if (isDialogLogout) {
@@ -103,9 +118,9 @@ function Header() {
     window.location.reload();
   };
 
-  const hanldeMouseLeave = () => {
-    setMenuAvatar(listMenuAvatar);
-  };
+  useEffect(() => {
+    setQuantityProductInCart(quantityProductInCartContext);
+  }, [quantityProductInCartContext]);
 
   useEffect(() => {
     isDialogLogout && refDialog.current.classList.add("isDetail");
@@ -203,39 +218,56 @@ function Header() {
           className="relative pr-[8px] text-[18px] cursor-pointer text-cartColor"
         >
           <FontAwesomeIcon icon={faCartShopping} />
-          <span className="absolute block top-[-10px] right-[-8px] min-w-[20px] min-h-[20px] text-white text-[12px] flex justify-center items-center rounded-[50%] bg-textEmphasizeColor">
-            1
-          </span>
+          {/* quantity in cart */}
+          {quantityProductInCart > 0 && (
+            <span className="absolute block top-[-10px] right-[-8px] min-w-[20px] min-h-[20px] text-white text-[12px] flex justify-center items-center rounded-[50%] bg-textEmphasizeColor">
+              {quantityProductInCart}
+            </span>
+          )}
         </Link>
         {/* login  */}
         <div>
           {token ? (
-            <div className="box-user relative box_img flex justify-center items-center cursor-pointer">
-              <p className="font-bold text-[12px]  mr-[10px]">{user?.name}</p>
-              <img
-                className="w-[40px] h-[40px] rounded-[50%]"
-                src={user?.picture || logo}
-                alt="avatar"
-              />
-              <ul
-                onMouseLeave={hanldeMouseLeave}
-                className="box-user-option py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid"
+            <div className="relative ">
+              <div
+                onClick={handleClickBoxAvatar}
+                className="flex justify-center items-center cursor-pointer"
               >
-                {menuAvatar.map((item, index) => {
-                  return (
+                <p className="w-[80px] font-bold text-[12px] mr-[10px] truncate">
+                  {user?.name}
+                </p>
+                <img
+                  className="w-[40px] h-[40px] rounded-[50%] border"
+                  src={user?.image || logo}
+                  alt="avatar"
+                />
+              </div>
+              {isListOptionBoxAvatar && (
+                <ul className="py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid">
+                  {menuAvatar[0].prev && (
                     <li
-                      key={index}
-                      className="flex justify-between items-center my-[5px] py-[5px] px-[10px] hover:bg-bgHoverColor"
-                      onClick={() => handleClickOption(item)}
+                      onClick={handlePrevOption}
+                      className="bg-slate-200 hover:bg-bgHoverColor pl-[8px] cursor-pointer"
                     >
-                      <p className="text-[12px] mr-[10px] text-nowrap">
-                        {item.option}
-                      </p>
-                      <div className="block">{item?.icon}</div>
+                      <FontAwesomeIcon icon={faChevronLeft} />
                     </li>
-                  );
-                })}
-              </ul>
+                  )}
+                  {menuAvatar.map((item, index) => {
+                    return (
+                      <li
+                        key={index}
+                        className="flex justify-between items-center my-[5px] py-[5px] px-[10px] hover:bg-bgHoverColor cursor-pointer"
+                        onClick={() => handleClickOption(item)}
+                      >
+                        <p className="text-[12px] mr-[10px] text-nowrap">
+                          {item.option}
+                        </p>
+                        <div className="block">{item?.icon}</div>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
             </div>
           ) : (
             <button

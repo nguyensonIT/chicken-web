@@ -5,20 +5,26 @@ import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
 
-import banner from "../../assets/img/banner.png";
+import bannerReal2 from "../../assets/img/BannerReal2.jpg";
+import bannerReal from "../../assets/img/bannerReal.jpg";
 import CardProduct from "../../components/CardProduct";
 import * as handleProductsService from "../../services/handleProductsService";
 
 const Home = () => {
   const [dataApiProducts, setDataApiProducts] = useState([]);
+
   const [isProductSale, setIsProductSale] = useState(false);
+  const [isProductHot, setIsProductHot] = useState(false);
+  const [isProductNew, setIsProductNew] = useState(false);
 
   useEffect(() => {
     handleProductsService
       .getAllProducts()
-      .then((res) => setDataApiProducts(res.data));
+      .then((res) => setDataApiProducts(res.data))
+      .catch((err) => console.log(err));
   }, []);
 
+  // Xử lý các món hot, sale, new
   useEffect(() => {
     // Kiểm tra sale
     const allProducts = dataApiProducts.flatMap(
@@ -26,8 +32,19 @@ const Home = () => {
     );
     const isSale = allProducts.some((product) => product.sale > 0);
     setIsProductSale(isSale);
+
+    //Kiểm tra hot product
+    const isHotProduct = allProducts.some(
+      (product) => product.hotProduct === true
+    );
+    setIsProductHot(isHotProduct);
+
+    //Kiểm tra new product
+    const isNewProduct = allProducts.some(
+      (product) => product.newProduct === true
+    );
+    setIsProductNew(isNewProduct);
   }, [dataApiProducts]);
-  console.log(dataApiProducts);
 
   return (
     <div className="px-[20px] py-[10px] bg-bgMainColor">
@@ -47,8 +64,8 @@ const Home = () => {
           <SwiperSlide>
             <div className="w-full h-[250px]">
               <img
-                className="w-full h-full object-cover"
-                src={banner}
+                className="w-full h-full object-contain"
+                src={bannerReal2}
                 alt="banner"
               />
             </div>
@@ -56,17 +73,8 @@ const Home = () => {
           <SwiperSlide>
             <div className="w-full h-[250px]">
               <img
-                className="w-full h-full object-cover"
-                src={banner}
-                alt="banner"
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full h-[250px]">
-              <img
-                className="w-full h-full object-cover"
-                src={banner}
+                className="w-full h-full object-contain"
+                src={bannerReal}
                 alt="banner"
               />
             </div>
@@ -95,11 +103,14 @@ const Home = () => {
             })}
           </div>
         </div>
-        {/* product new  */}
+        {/* product hot  */}
         <div className="pt-[10px]">
           <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản Phẩm hot
           </h1>
+          {isProductHot === false && (
+            <h1 className="text-center">Hiện chưa có sản phẩm nào hot</h1>
+          )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
             {dataApiProducts.map((data, index) => {
               return data.products.map((product, index) => {
@@ -115,6 +126,9 @@ const Home = () => {
           <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản phẩm mới
           </h1>
+          {isProductNew === false && (
+            <h1 className="text-center">Hiện chưa có sản phẩm nào mới</h1>
+          )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
             {dataApiProducts.map((data, index) => {
               return data.products.map((product, index) => {

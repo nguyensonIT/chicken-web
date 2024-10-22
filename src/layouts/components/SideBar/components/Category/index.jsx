@@ -1,3 +1,5 @@
+import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useSearchParams } from "react-router-dom";
 
 const Category = ({ name, id, className }) => {
@@ -7,12 +9,17 @@ const Category = ({ name, id, className }) => {
       className={
         className +
         `${
-          searchParams.get("category") == id ? " text-textHoverColor" : ""
-        } my-[5px] transition-[2s] hover:text-textHoverColor`
+          searchParams.get("category") === id ? " text-textHoverColor" : ""
+        } flex items-center font-bold my-[5px] transition-[2s] hover:text-textHoverColor border-b-[1px] border-b-borderColor`
       }
       to={`/products?category=${id}`}
     >
-      <span className="ml-[5px]">{name}</span>
+      {searchParams.get("category") === id && (
+        <FontAwesomeIcon className="mr-[3px]" icon={faCaretRight} />
+      )}
+      <span className="ml-[5px] inline-block max-w-full overflow-hidden whitespace-nowrap text-ellipsis">
+        {name}
+      </span>
     </Link>
   );
 };

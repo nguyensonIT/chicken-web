@@ -1,4 +1,4 @@
-import { faList } from "@fortawesome/free-solid-svg-icons";
+import { faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
@@ -88,7 +88,12 @@ const EditCategory = () => {
   };
 
   useEffect(() => {
-    handleCategoryService.getAllCategory().then((res) => setCategory(res.data));
+    setIsLoading(true);
+    handleCategoryService
+      .getAllCategory()
+      .then((res) => setCategory(res.data))
+      .catch((err) => console.log("Lỗi gọi category", err))
+      .finally(() => setIsLoading(false));
   }, [reload]);
 
   useEffect(() => {
@@ -103,9 +108,14 @@ const EditCategory = () => {
     isDialogDelete && refDialog.current.classList.add("isDetail");
   }, [isDialogDelete]);
   return (
-    <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
-      <h1 className="text-[20px] font-bold uppercase">Chỉnh sửa danh mục</h1>
-      <div className="border border-[1px] border-borderColor max-h-[800px] overflow-y-auto py-[40px] w-[70%]">
+    <div className="h-screen flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
+      <h1 className="text-[24px] font-bold uppercase">Chỉnh sửa danh mục</h1>
+      <div className="border border-borderColor max-h-[800px] overflow-y-auto py-[40px] w-[70%]">
+        {isLoading && (
+          <div className="flex justify-center">
+            <FontAwesomeIcon icon={faSpinner} className="loading" />
+          </div>
+        )}
         {category.map((item, index) => {
           return (
             <div onClick={() => handleTurnInput(item._id)} key={index}>

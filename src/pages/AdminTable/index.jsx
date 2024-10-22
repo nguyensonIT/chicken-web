@@ -1,25 +1,34 @@
 import {
+  faChevronDown,
   faChevronLeft,
+  faChevronRight,
   faPenToSquare,
   faPlus,
   faSearch,
+  faSpinner,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 
 import { dataOption } from "./componnents/DataOptions";
 import ItemProductRow from "./componnents/ItemProductRow";
 import React, { Fragment, useEffect, useRef, useState } from "react";
 import PopupWrapper from "../../components/PopupWrapper";
 import EditProduct from "./componnents/EditProduct";
-import * as handleProductsService from "../../services/handleProductsService";
+import * as handleCategoryService from "../../services/handleCategoryService";
 import { useHandleContext } from "../../contexts/UserProvider";
 import EditCategory from "./componnents/EditCategory";
+import { toast } from "react-toastify";
 
 const AdminTable = () => {
-  const { productContext, handleTakeInFoBtnProductContext } =
-    useHandleContext();
+  const {
+    productContext,
+    handleTakeInFoBtnProductContext,
+    setSelectedProductsContext,
+  } = useHandleContext();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [isPopup, setIsPopup] = useState(false);
   const [isPopupEdit, setIsPopupEdit] = useState(false);
   const [isPopupEditCategory, setIsPopupEditCategory] = useState(false);
@@ -27,9 +36,42 @@ const AdminTable = () => {
   const [dataEdit, setDataEdit] = useState([]);
 
   const [dataProductsAPI, setDataProductsAPI] = useState([]);
+  const [idCollapse, setIdCollapse] = useState([]);
 
   const refDialog = useRef(null);
   const refDialogEdit = useRef(null);
+
+  //Drag and Drop
+  const onDragEnd = (result) => {
+    if (!result.destination) return;
+
+    const updatedItems = Array.from(dataProductsAPI);
+    const [removed] = updatedItems.splice(result.source.index, 1);
+    updatedItems.splice(result.destination.index, 0, removed);
+
+    setDataProductsAPI(updatedItems);
+    const body = { orderList: updatedItems.map((item) => item._id) };
+
+    handleCategoryService
+      .reorderCategories({ body })
+      .then((res) => {
+        if (res.status === 200) {
+          toast.success("Sắp xếp thành công");
+        } else if (res.response.status === 400) {
+          toast.error("Sắp xếp lỗi");
+        }
+      })
+      .catch((err) => console.log((err) => console.log("Lỗi sắp xếp", err)));
+  };
+  //End Drag and Drop
+
+  const handleOpenCollapse = (id) => {
+    setIdCollapse((prev) => [...prev, id]);
+  };
+  const handleCloseCollapse = (id) => {
+    const newIds = idCollapse.filter((item) => item !== id);
+    setIdCollapse(newIds);
+  };
 
   const handleEditProduct = (data) => {
     setDataEdit(data);
@@ -51,6 +93,7 @@ const AdminTable = () => {
       setOption(dataOption);
       setIsPopup(false);
     }, 300);
+    setSelectedProductsContext([]);
   };
 
   const handleCloseDialogEdit = () => {
@@ -69,6 +112,7 @@ const AdminTable = () => {
 
   const handlePrev = () => {
     setOption(dataOption);
+    setSelectedProductsContext([]);
   };
 
   const handleOption = (data) => {
@@ -76,16 +120,18 @@ const AdminTable = () => {
   };
 
   useEffect(() => {
-    console.log("Goi lai API");
     if (isPopup) {
       handleCloseDialog();
     }
-    handleProductsService
-      .getAllProducts()
+    setIsLoading(true);
+    handleCategoryService
+      .getAllCategory()
       .then((data) => {
-        setDataProductsAPI(data.data);
+        const newDataSory = data.data.sort((a, b) => a.order - b.order);
+        setDataProductsAPI(newDataSory);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }, [productContext]);
 
   useEffect(() => {
@@ -97,10 +143,11 @@ const AdminTable = () => {
   useEffect(() => {
     isPopupEditCategory && refDialogEdit.current.classList.add("isDetail");
   }, [isPopupEditCategory]);
+
   return (
     <div className="max-w-full">
       <h1 className="text-[32px] font-bold text-center">Quản lý sản phẩm</h1>
-      <div className="overflow-x-auto shadow-md sm:rounded-lg">
+      <div className="shadow-md sm:rounded-lg">
         <div className="flex justify-between p-4">
           {/* Search  */}
           <div className="relative mt-1">
@@ -137,43 +184,90 @@ const AdminTable = () => {
           </div>
         </div>
         {/* Form Create  */}
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th className="px-6 py-3">Danh mục</th>
-              <th className="px-6 py-3">ID SP</th>
-              <th className="px-6 py-3">Ảnh SP</th>
-              <th className="px-6 py-3">Tên SP</th>
-              <th className="px-6 py-3">Giá tiền</th>
-              <th className="px-6 py-3">Còn hàng</th>
-            </tr>
-          </thead>
-          <tbody>
-            {dataProductsAPI.map((data, index) => {
-              return (
-                <React.Fragment key={index}>
-                  <tr className="border border-b-borderColor">
-                    <td
-                      colSpan={6}
-                      className="py-[15px] pl-[10px] uppercase font-bold text-textEmphasizeColor"
-                    >
-                      {data.nameCategory}
-                    </td>
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="list-container">
+            {(provided) => (
+              <table
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th className="px-6 py-3">Danh mục</th>
+                    <th className="px-6 py-3">ID SP</th>
+                    <th className="px-6 py-3">Ảnh SP</th>
+                    <th className="px-6 py-3">Tên SP</th>
+                    <th className="px-6 py-3">Giá tiền</th>
+                    <th className="px-6 py-3">Còn hàng</th>
                   </tr>
-                  {data.products.map((item, index) => {
+                </thead>
+                <tbody>
+                  {isLoading && (
+                    <tr className="">
+                      <td colSpan={6} className="text-center">
+                        <FontAwesomeIcon className="loading" icon={faSpinner} />
+                      </td>
+                    </tr>
+                  )}
+                  {dataProductsAPI.map((data, index) => {
                     return (
-                      <ItemProductRow
-                        onClick={handleEditProduct}
-                        key={index}
-                        data={item}
-                      />
+                      <React.Fragment key={index}>
+                        <Draggable
+                          key={data._id}
+                          draggableId={data._id.toString()}
+                          index={index}
+                        >
+                          {(provided) => (
+                            <tr
+                              ref={provided.innerRef}
+                              {...provided.dragHandleProps}
+                              {...provided.draggableProps}
+                              className="border border-b-borderColor"
+                            >
+                              <td
+                                colSpan={6}
+                                className="py-[15px] pl-[10px] uppercase font-bold text-textEmphasizeColor select-none"
+                              >
+                                {data.nameCategory}
+                                {idCollapse.includes(data._id) ? (
+                                  <FontAwesomeIcon
+                                    onClick={() =>
+                                      handleCloseCollapse(data._id)
+                                    }
+                                    className="ml-[10px] text-[16px] p-[3px] cursor-pointer"
+                                    icon={faChevronDown}
+                                  />
+                                ) : (
+                                  <FontAwesomeIcon
+                                    onClick={() => handleOpenCollapse(data._id)}
+                                    className="ml-[10px] text-[16px] p-[3px] cursor-pointer"
+                                    icon={faChevronRight}
+                                  />
+                                )}
+                              </td>
+                            </tr>
+                          )}
+                        </Draggable>
+                        {idCollapse.includes(data._id) &&
+                          data.products.map((item, index) => {
+                            return (
+                              <ItemProductRow
+                                onClick={handleEditProduct}
+                                key={index}
+                                data={item}
+                              />
+                            );
+                          })}
+                      </React.Fragment>
                     );
                   })}
-                </React.Fragment>
-              );
-            })}
-          </tbody>
-        </table>
+                  {provided.placeholder}
+                </tbody>
+              </table>
+            )}
+          </Droppable>
+        </DragDropContext>
       </div>
       {/* popup create  */}
       {isPopup && (
@@ -182,13 +276,15 @@ const AdminTable = () => {
             <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
               {option.map((data, index) => {
                 return (
-                  <Fragment key={index}>
+                  <div className="relative w-full " key={index}>
                     {data.isPrev ? (
-                      <div className="w-full">
+                      <div className=" w-full">
                         <h1 className="text-center text-[20px] uppercase font-bold mb-[40px]">
                           {data.title}
                         </h1>
-                        {data.option}
+                        <div className="h-[350px] overflow-y-auto">
+                          {data.option}
+                        </div>
                       </div>
                     ) : (
                       <span
@@ -198,7 +294,7 @@ const AdminTable = () => {
                         {data.option}
                       </span>
                     )}
-                  </Fragment>
+                  </div>
                 );
               })}
             </div>
@@ -252,7 +348,7 @@ const AdminTable = () => {
 
       {isPopupEditCategory && (
         <PopupWrapper>
-          <div ref={refDialogEdit} className="relative my-[40px] mx-[40px]">
+          <div ref={refDialogEdit} className="relative mx-[40px]">
             <EditCategory />
             {/* close popup  */}
             <div

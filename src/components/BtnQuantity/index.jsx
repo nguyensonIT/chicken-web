@@ -1,15 +1,33 @@
-const BtnQuantity = ({ currentValue, setCurrentValue }) => {
+import { handleAddCartFnc, handleDecreaseCartFnc } from "../Function";
+
+const BtnQuantity = ({
+  setReloadCart,
+  currentValue,
+  setCurrentValue,
+  data = {},
+}) => {
+  const isEmptyObject = Object.keys(data).length === 0;
+
   const handleChangeValue = (e) => {
     setCurrentValue(e.target.value);
   };
   const handleIncrease = () => {
     setCurrentValue((prev) => prev + 1);
+    if (!isEmptyObject) {
+      handleAddCartFnc(data);
+      setReloadCart(data.quantity);
+    }
   };
   const handleDecrease = () => {
     if (currentValue >= 1) {
       setCurrentValue((prev) => prev - 1);
     }
+    if (!isEmptyObject) {
+      handleDecreaseCartFnc(data);
+      setReloadCart(data.quantity);
+    }
   };
+
   return (
     <div className="flex items-center border-gray-100">
       <span
@@ -20,11 +38,9 @@ const BtnQuantity = ({ currentValue, setCurrentValue }) => {
         -{" "}
       </span>
       <input
-        className="h-8 w-8 border bg-white text-center text-xs outline-none"
-        type="number"
+        className="h-8 w-8 border bg-white text-center text-xs outline-none pointer-events-none"
         value={currentValue}
         onChange={(e) => handleChangeValue(e)}
-        min="1"
       />
       <span
         onClick={handleIncrease}
