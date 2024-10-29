@@ -14,10 +14,17 @@ import "./index.css";
 import Login from "../../../components/Login";
 import { useHandleContext } from "../../../contexts/UserProvider";
 import DialogQuestionYesNo from "../../../components/DialogQuestionYesNo";
+import * as handleCategoryService from "../../../services/handleCategoryService";
+import * as handleProductsService from "../../../services/handleProductsService";
 
 function Header() {
   const navigate = useNavigate();
-  const { user, quantityProductInCartContext } = useHandleContext();
+  const {
+    user,
+    quantityProductInCartContext,
+    setDataSideBarContext,
+    setDataAllProductContext,
+  } = useHandleContext();
 
   const refDialog = useRef(null);
 
@@ -125,6 +132,25 @@ function Header() {
     localStorage.clear();
     window.location.reload();
   };
+
+  //Call API product
+  useEffect(() => {
+    handleProductsService
+      .getAllProducts()
+      .then((res) => setDataAllProductContext(res.data))
+      .catch((err) => console.log(err));
+  }, []);
+
+  //API category
+  useEffect(() => {
+    handleCategoryService
+      .getAllCategory()
+      .then((res) => {
+        const newProducts = res.data.sort((a, b) => a.order - b.order);
+        setDataSideBarContext(newProducts);
+      })
+      .catch((err) => console.log("Lỗi api category", err));
+  }, []);
 
   useEffect(() => {
     setQuantityProductInCart(quantityProductInCartContext);

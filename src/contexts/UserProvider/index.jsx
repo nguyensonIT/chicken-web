@@ -23,6 +23,8 @@ const UserProvider = ({ children }) => {
         0
     );
   const [takeIdLikePostContext, setTakeIdLikePostContext] = useState("");
+  const [dataSideBarContext, setDataSideBarContext] = useState([]);
+  const [dataAllProductContext, setDataAllProductContext] = useState([]);
 
   //có thể render lại trang order admin
   const handTakeDataSubId = (id) => {
@@ -55,6 +57,10 @@ const UserProvider = ({ children }) => {
         renderPopupNotifyAdminContext,
         selectedProductsContext,
         takeIdLikePostContext,
+        dataSideBarContext,
+        dataAllProductContext,
+        setDataAllProductContext,
+        setDataSideBarContext,
         setTakeIdLikePostContext,
         setSelectedProductsContext,
         handleRenderNotifyAdminContext,

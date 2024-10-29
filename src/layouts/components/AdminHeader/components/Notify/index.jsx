@@ -7,7 +7,8 @@ import "./styles.css";
 const Notify = ({ notify }) => {
   const random = uuidv4();
   const [searchParams] = useSearchParams();
-  const { handTakeDataSubId, handleRenderNotifyAdmin } = useHandleContext();
+  const { handTakeDataSubId, handleRenderNotifyAdminContext } =
+    useHandleContext();
   const navigate = useNavigate();
 
   const handleClickItemNotify = (data) => {
@@ -32,7 +33,7 @@ const Notify = ({ notify }) => {
       })();
       navigate("/admin/order?order=new-order");
     }
-    handleRenderNotifyAdmin(random);
+    handleRenderNotifyAdminContext(random);
   };
 
   return (
