@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLanguage,
   faRightFromBracket,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
 import BtnTurnOn from "../../../../components/BtnTurnOn";
@@ -47,6 +48,11 @@ export const menus = [
   },
 ];
 export const listMenuAvatar = [
+  {
+    id: 6,
+    option: "Trang cá nhân",
+    icon: <FontAwesomeIcon icon={faUser} />,
+  },
   {
     id: 3,
     option: "Ngôn ngữ",

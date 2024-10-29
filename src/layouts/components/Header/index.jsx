@@ -1,4 +1,4 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretDown,
@@ -16,6 +16,7 @@ import { useHandleContext } from "../../../contexts/UserProvider";
 import DialogQuestionYesNo from "../../../components/DialogQuestionYesNo";
 
 function Header() {
+  const navigate = useNavigate();
   const { user, quantityProductInCartContext } = useHandleContext();
 
   const refDialog = useRef(null);
@@ -67,6 +68,9 @@ function Header() {
   const handleVietnamese = () => {
     console.log("Tiếng việt");
   };
+  const handleNavigateProfile = () => {
+    navigate("/profile");
+  };
 
   // action handle
   const action = [
@@ -89,6 +93,10 @@ function Header() {
     {
       id: 5,
       handle: handleVietnamese,
+    },
+    {
+      id: 6,
+      handle: handleNavigateProfile,
     },
   ];
 
@@ -238,6 +246,10 @@ function Header() {
                 </p>
                 <img
                   className="w-[40px] h-[40px] rounded-[50%] border"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = logo;
+                  }}
                   src={user?.image || logo}
                   alt="avatar"
                 />

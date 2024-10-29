@@ -15,6 +15,7 @@ import AdminOrderCustomers from "./AdminOrderCustomers";
 import OrderTracking from "./OrderTracking";
 import PrivateRoute from "../routes/PrivateRoute";
 import AdminArticle from "./AdminArticle";
+import Profile from "./Profile";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/order-tracking",
         element: <OrderTracking />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       },
     ],
   },

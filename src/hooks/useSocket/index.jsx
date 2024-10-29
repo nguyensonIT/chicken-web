@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 
 // Địa chỉ máy chủ WebSocket của bạn
-const SOCKET_URL = "ws://localhost:3000";
+const SOCKET_URL = "wss://socket-io-be.onrender.com";
 
 // Tạo hook useSocket
 const useSocket = () => {
