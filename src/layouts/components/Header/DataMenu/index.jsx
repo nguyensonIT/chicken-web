@@ -54,6 +54,11 @@ export const listMenuAvatar = [
     icon: <FontAwesomeIcon icon={faUser} />,
   },
   {
+    id: 7,
+    option: "Quản trị Admin",
+    icon: <FontAwesomeIcon icon={faUser} />,
+  },
+  {
     id: 3,
     option: "Ngôn ngữ",
     icon: <FontAwesomeIcon icon={faLanguage} />,

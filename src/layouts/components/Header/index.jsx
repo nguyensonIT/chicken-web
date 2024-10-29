@@ -78,6 +78,9 @@ function Header() {
   const handleNavigateProfile = () => {
     navigate("/profile");
   };
+  const handleNavigateAdmin = () => {
+    navigate("/admin");
+  };
 
   // action handle
   const action = [
@@ -104,6 +107,10 @@ function Header() {
     {
       id: 6,
       handle: handleNavigateProfile,
+    },
+    {
+      id: 7,
+      handle: handleNavigateAdmin,
     },
   ];
 
