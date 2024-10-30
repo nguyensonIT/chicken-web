@@ -23,7 +23,7 @@ export const dataForm = [
       {
         icon: <GoogleIcon />,
         name: "Tiếp tục với Google",
-        disable: false,
+        disable: true,
         handle: loginGoogle,
       },
       {
@@ -56,7 +56,7 @@ export const dataForm = [
       {
         icon: <GoogleIcon />,
         name: "Tiếp tục với Google",
-        disable: false,
+        disable: true,
         handle: loginGoogle,
       },
       {

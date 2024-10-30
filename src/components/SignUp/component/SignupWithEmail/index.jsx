@@ -47,10 +47,11 @@ function SignupWithEmail() {
     registerService
       .register(infoSignUp)
       .then((res) => {
-        if (res.data.response.status === 400) {
+        if (res.response.status === 404) {
+          toast.warn("Lỗi sever. Vui lòng liên hệ Admin");
+        } else if (res.data.response.status === 400) {
           toast.error("Tài khoản này đã được đăng ký. Vui lòng thử lại!");
-        }
-        if (res.data.response.status === 201) {
+        } else if (res.data.response.status === 201) {
           toast.success(
             "Đăng ký thành công tài khoản! Tự động đăng nhập sau 3s"
           );

@@ -36,13 +36,13 @@ function LoginWithEmail() {
           setTimeout(() => {
             window.location.reload();
           }, 2000);
-        }
-        if (res?.response?.status === 401) {
+        } else if (res?.response?.status === 404) {
+          toast.warn("Lỗi sever. Vui lòng liên hệ Admin");
+        } else if (res?.response?.status === 401) {
           toast.warn(
             "Thông tin tài khoản hoặc mật khẩu không chính xác. Vui lòng thử lại!"
           );
-        }
-        if (res?.response?.status === 500) {
+        } else if (res?.response?.status === 500) {
           toast.error("Server bị lỗi. Vui lòng thử lại!");
         }
       })

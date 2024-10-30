@@ -22,10 +22,14 @@ const Home = () => {
 
   // Xử lý các món hot, sale, new
   useEffect(() => {
-    // Kiểm tra sale
-    const allProducts = dataAllProductContext.flatMap(
-      (category) => category.products
-    );
+    let allProducts = [];
+
+    if (dataAllProductContext.length > 0) {
+      // Kiểm tra sale
+      allProducts = dataAllProductContext.flatMap(
+        (category) => category.products
+      );
+    }
     const isSale = allProducts.some((product) => product.sale > 0);
     setIsProductSale(isSale);
 
@@ -103,13 +107,14 @@ const Home = () => {
             </h1>
           )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
-            {dataAllProductContext.map((data, index) => {
-              return data.products.map((product, index) => {
-                if (product.sale) {
-                  return <CardProduct key={index} data={product} />;
-                }
-              });
-            })}
+            {dataAllProductContext.length > 0 &&
+              dataAllProductContext.map((data, index) => {
+                return data.products.map((product, index) => {
+                  if (product.sale) {
+                    return <CardProduct key={index} data={product} />;
+                  }
+                });
+              })}
           </div>
         </div>
         {/* product hot  */}
@@ -126,13 +131,14 @@ const Home = () => {
             <h1 className="text-center">Hiện chưa có sản phẩm nào hot</h1>
           )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
-            {dataAllProductContext.map((data, index) => {
-              return data.products.map((product, index) => {
-                if (product.hotProduct) {
-                  return <CardProduct key={index} data={product} />;
-                }
-              });
-            })}
+            {dataAllProductContext.length > 0 &&
+              dataAllProductContext.map((data, index) => {
+                return data.products.map((product, index) => {
+                  if (product.hotProduct) {
+                    return <CardProduct key={index} data={product} />;
+                  }
+                });
+              })}
           </div>
         </div>
         {/* product new  */}
@@ -149,13 +155,14 @@ const Home = () => {
             <h1 className="text-center">Hiện chưa có sản phẩm nào mới</h1>
           )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
-            {dataAllProductContext.map((data, index) => {
-              return data.products.map((product, index) => {
-                if (product.newProduct) {
-                  return <CardProduct key={index} data={product} />;
-                }
-              });
-            })}
+            {dataAllProductContext.length > 0 &&
+              dataAllProductContext.map((data, index) => {
+                return data.products.map((product, index) => {
+                  if (product.newProduct) {
+                    return <CardProduct key={index} data={product} />;
+                  }
+                });
+              })}
           </div>
         </div>
       </div>

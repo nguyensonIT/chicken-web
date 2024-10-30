@@ -144,7 +144,13 @@ function Header() {
   useEffect(() => {
     handleProductsService
       .getAllProducts()
-      .then((res) => setDataAllProductContext(res.data))
+      .then((res) => {
+        if (res.status === 200) {
+          setDataAllProductContext(res.data);
+        } else {
+          setDataAllProductContext([]);
+        }
+      })
       .catch((err) => console.log(err));
   }, []);
 
@@ -153,8 +159,12 @@ function Header() {
     handleCategoryService
       .getAllCategory()
       .then((res) => {
-        const newProducts = res.data.sort((a, b) => a.order - b.order);
-        setDataSideBarContext(newProducts);
+        if (res.status === 200) {
+          const newProducts = res.data.sort((a, b) => a.order - b.order);
+          setDataSideBarContext(newProducts);
+        } else {
+          setDataSideBarContext([]);
+        }
       })
       .catch((err) => console.log("Lỗi api category", err));
   }, []);

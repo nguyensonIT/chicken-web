@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
-import CardProduct from "../../components/CardProduct";
-import * as handleProductsService from "../../services/handleProductsService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
+import CardProduct from "../../components/CardProduct";
+import { useHandleContext } from "../../contexts/UserProvider";
+
 const Product = () => {
+  const { dataAllProductContext } = useHandleContext();
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [dataAllsProductsArranged, setDataAllsProductsArranged] = useState([]);
-  const [dataApiProducts, setDataApiProducts] = useState([]);
   const [dataPageProducts, setDataPageProducts] = useState([]);
   const [nameCategory, setNameCategory] = useState("");
 
@@ -76,8 +77,8 @@ const Product = () => {
     setNameCategory(categoryName);
   };
 
-  const fncCheckTitle = (dataApiProducts) => {
-    const allProducts = dataApiProducts.flatMap(
+  const fncCheckTitle = (dataAllProductContext) => {
+    const allProducts = dataAllProductContext.flatMap(
       (category) => category.products
     );
     // Kiểm tra sale
@@ -98,30 +99,23 @@ const Product = () => {
   };
 
   useEffect(() => {
-    setIsLoading(true);
-    handleProductsService
-      .getAllProducts()
-      .then((res) => {
-        setDataApiProducts(res.data);
-        fncTakeData(res.data);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
+    if (dataAllProductContext.length > 0) {
+      setIsLoading(false);
+    } else {
+      setIsLoading(true);
+    }
     if (searchParams.get("category") === "alls") {
-      const newProducts = dataApiProducts.sort((a, b) => a.order - b.order);
+      const newProducts = dataAllProductContext.sort(
+        (a, b) => a.order - b.order
+      );
       setDataAllsProductsArranged(newProducts);
       setIsAllsProduct(true);
     } else {
       setIsAllsProduct(false);
     }
-    fncTakeData(dataApiProducts);
-    fncCheckTitle(dataApiProducts);
-  }, [searchParams, dataApiProducts]);
+    fncTakeData(dataAllProductContext);
+    fncCheckTitle(dataAllProductContext);
+  }, [searchParams, dataAllProductContext]);
 
   return (
     <div className="px-[20px] py-[10px] bg-bgMainColor">

@@ -208,7 +208,13 @@ const News = () => {
   useEffect(() => {
     handlePostService
       .getAllPost()
-      .then((res) => setDataPost(res.data))
+      .then((res) => {
+        if (res.status === 200) {
+          setDataPost(res.data);
+        } else {
+          setDataPost([]);
+        }
+      })
       .catch((err) => console.log("Lỗi gọi API bài viết", err));
   }, []);
 
