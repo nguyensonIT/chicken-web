@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 
 // Địa chỉ máy chủ WebSocket của bạn
-const SOCKET_URL = "wss://socket-io-be.onrender.com";
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
 // Tạo hook useSocket
 const useSocket = () => {
@@ -19,13 +19,11 @@ const useSocket = () => {
     // Xử lý sự kiện kết nối
     socketRef.current.on("connect", () => {
       setConnected(true);
-      console.log("Connected to WebSocket server");
     });
 
     // Xử lý sự kiện ngắt kết nối
     socketRef.current.on("disconnect", () => {
       setConnected(false);
-      console.log("Disconnected from WebSocket server");
     });
 
     // Xử lý tin nhắn đến từ máy chủ
@@ -41,7 +39,6 @@ const useSocket = () => {
     // Cleanup khi component bị unmount
     return () => {
       socketRef.current.disconnect();
-      console.log("WebSocket connection closed");
     };
   }, []);
 

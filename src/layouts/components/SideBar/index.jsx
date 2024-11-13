@@ -2,21 +2,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faList, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import Category from "./components/Category";
-import { useEffect, useState } from "react";
 import { useHandleContext } from "../../../contexts/UserProvider";
 
 const SideBar = () => {
-  const { dataSideBarContext } = useHandleContext();
+  const { dataSideBarContext, dataIsLoadingContext } = useHandleContext();
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    if (dataSideBarContext.length > 0) {
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
-    }
-  }, [dataSideBarContext]);
   return (
     <div className="flex flex-col h-[100%] bg-bgSideBarColor">
       {/* Title */}
@@ -29,7 +19,12 @@ const SideBar = () => {
       </div>
       {/* list  */}
       <div className="flex h-[70%] flex-col px-[10px] pt-[10px] overflow-y-auto">
-        {isLoading && <FontAwesomeIcon className="loading" icon={faSpinner} />}
+        {/* {isLoading && <FontAwesomeIcon className="loading" icon={faSpinner} />} */}
+        {dataIsLoadingContext?.isLoadingSidebar && (
+          <span className="w-full text-center">
+            <FontAwesomeIcon className="loading" icon={faSpinner} />
+          </span>
+        )}
         {dataSideBarContext.map((item, index) => {
           return (
             <Category

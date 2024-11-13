@@ -4,6 +4,7 @@ import Paper from "@mui/material/Paper";
 
 import Chart from "./components/Chart";
 import Deposits from "./components/Deposits";
+import BtnStatusToggle from "../../components/BtnStatusToggle";
 
 export default function AdminDashboard() {
   return (
@@ -17,6 +18,14 @@ export default function AdminDashboard() {
             height: 240,
           }}
         >
+          {/* btn turn on  */}
+          <div className="w-full flex justify-end gap-[5px]">
+            <p className="font-bold text-[14px]">
+              Trạng thái <span className="text-[10px]">(Đóng/ Mở cửa)</span>
+            </p>
+            <BtnStatusToggle />
+          </div>
+          {/* chart  */}
           <Chart />
         </Paper>
       </Grid>

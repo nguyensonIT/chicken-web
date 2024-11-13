@@ -18,8 +18,12 @@ const PopupCheckInfoOrder = ({
 }) => {
   const navigate = useNavigate();
 
-  const { setQuantityProductInCartContext } = useHandleContext();
-  const { sendMessage } = useSocket();
+  const {
+    user,
+    setQuantityProductInCartContext,
+    setRenderOrderByIdUserContext,
+  } = useHandleContext();
+  const { sendMessage, connected } = useSocket();
   const [totalBill, setTotalBill] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -35,25 +39,38 @@ const PopupCheckInfoOrder = ({
       ...dataUserOrder,
       totalBill,
       subId,
+      userOrderId: user?.id,
     };
     setIsLoading(true);
-
-    handleOrderService
-      .postOrder(dataOrder)
-      .then((res) => {
-        if (res.status === 201) {
-          sendMessage({ ...dataUserOrder, isNewNotify: true, subId });
-          toast.success("Đặt hàng thành công!");
-          handleCloseCheckInfoOrder();
-          handleCheckOrder();
-          setQuantityProductInCartContext(0);
-          localStorage.removeItem("productsInCart");
-          localStorage.setItem("subCodeOrder", subId);
-          navigate("/order-tracking");
-        }
-      })
-      .catch((err) => console.log("Lỗi order", err))
-      .finally(() => setIsLoading(false));
+    if (connected) {
+      handleOrderService
+        .postOrder(dataOrder)
+        .then((res) => {
+          if (res.status === 201) {
+            sendMessage({
+              ...dataUserOrder,
+              isNewNotify: true,
+              isCanceled: false,
+              subId,
+            });
+            toast.success("Đặt hàng thành công!");
+            handleCloseCheckInfoOrder();
+            handleCheckOrder();
+            setQuantityProductInCartContext(0);
+            setRenderOrderByIdUserContext(subId);
+            localStorage.removeItem("productsInCart");
+            localStorage.setItem("subCodeOrder", subId);
+            navigate("/order-tracking");
+          }
+        })
+        .catch((err) => console.log("Lỗi order", err))
+        .finally(() => setIsLoading(false));
+    } else {
+      toast.warn("Mạng kém vui lòng thử lại!");
+      handleCheckOrder();
+      handleCloseCheckInfoOrder();
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {

@@ -5,7 +5,10 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { formatCurrency } from "../../../../components/FormatCurrency";
 import bikeShip from "../../../../assets/img/freeShip.png";
 
-const ItemOrderTracking = ({ data, handleClickItemOrderTracking }) => {
+const ItemOrderTracking = ({
+  data,
+  handleClickItemOrderTracking = function () {},
+}) => {
   // Parse chuỗi ngày giờ
   const m = moment(data.orderDate);
 

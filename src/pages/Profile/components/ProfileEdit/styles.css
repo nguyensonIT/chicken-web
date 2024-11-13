@@ -1,0 +1,12 @@
+.edit-imgUser:hover .box-camera{
+    animation: fadeTop forwards .3s ease-in-out;
+}
+
+@keyframes fadeTop {
+    0%{
+        bottom: -100px;
+    }
+    100%{
+        bottom: -40px;
+    }
+}

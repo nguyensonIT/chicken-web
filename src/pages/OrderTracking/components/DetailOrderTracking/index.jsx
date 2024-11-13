@@ -1,13 +1,112 @@
 import moment from "moment";
-import { formatCurrency } from "../../../../components/FormatCurrency";
+import { v4 as uuidv4 } from "uuid";
 
-const DetailOrderTracking = ({ data }) => {
+import { formatCurrency } from "../../../../components/FormatCurrency";
+import DialogQuestionYesNo from "../../../../components/DialogQuestionYesNo";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
+import * as handleOrderService from "../../../../services/handleOrderService";
+import { useHandleContext } from "../../../../contexts/UserProvider";
+import useSocket from "../../../../hooks/useSocket";
+
+const DetailOrderTracking = ({
+  data,
+  handleClickItemOrderTracking = () => {},
+}) => {
   // Parse chuỗi ngày giờ
   const m = moment(data.orderDate);
   // Tách ngày tháng
   const datePart = m.format("DD-MM-YYYY"); // vd "2024-09-14"
   // Tách giờ
   const timePart = m.format("HH:mm"); // vd "07:47:46"
+
+  const { sendMessage, connected } = useSocket();
+
+  const { setRenderOrderByIdUserContext } = useHandleContext();
+
+  const [canCancel, setCanCancel] = useState(true);
+  const [timeRemaining, setTimeRemaining] = useState(0);
+
+  const refDialogCancel = useRef(null);
+  const [isLogCancel, setIsLogCancel] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [dataSendServer, setDataSendServer] = useState(null);
+
+  const handleLogCancel = () => {
+    if (isLogCancel) {
+      refDialogCancel.current.classList.add("isClose");
+      setTimeout(() => {
+        setIsLogCancel(!isLogCancel);
+      }, 300);
+    } else {
+      setIsLogCancel(!isLogCancel);
+    }
+  };
+
+  const handleCancel = () => {
+    setIsLoading(true);
+    if (canCancel) {
+      if (connected) {
+        handleOrderService
+          .canceledOderByCustomer({ id: data._id })
+          .then((res) => {
+            if (res.status && res.status === 200) {
+              toast.warn("Đơn hàng đã bị hủy!");
+              handleClickItemOrderTracking();
+              handleLogCancel();
+              setRenderOrderByIdUserContext(uuidv4());
+              setDataSendServer({
+                ...res.data.data,
+                isNewNotify: true,
+                isCanceled: true,
+              });
+            } else if (res.response && res.response.status === 400) {
+              toast.warn("Đã quá 3 phút để hủy đơn!");
+            }
+          })
+          .finally(() => setIsLoading(false));
+      } else {
+        toast.warn("Mạng kém vui lòng thử lại!");
+        setIsLoading(false);
+      }
+    } else {
+      toast.warn("Không thể hủy đơn hàng do đã hết thời gian!");
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    const endTime = new Date(data.orderDate).getTime() + 3 * 60 * 1000;
+
+    const updateTimer = () => {
+      const now = Date.now();
+      const timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
+      setTimeRemaining(timeLeft);
+
+      if (timeLeft <= 0) {
+        setCanCancel(false);
+      } else {
+        setCanCancel(true);
+      }
+    };
+
+    updateTimer(); // Update immediately
+    const intervalId = setInterval(updateTimer, 1000);
+
+    return () => clearInterval(intervalId); // Clean up on unmount
+  }, []);
+
+  useEffect(() => {
+    if (dataSendServer) {
+      sendMessage(dataSendServer);
+    }
+  }, [dataSendServer]);
+
+  useEffect(() => {
+    isLogCancel && refDialogCancel.current.classList.add("isDetail");
+  }, [isLogCancel]);
+
   return (
     <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="w-full flex border border-borderColor">
@@ -66,7 +165,9 @@ const DetailOrderTracking = ({ data }) => {
                 <p className="font-bold ml-[5px]">Đã giao hàng</p>
               )}
               {data.statusOrder.isCanceled && (
-                <p className="font-bold ml-[5px]">Đơn hàng đã bị hủy</p>
+                <p className="font-bold text-textEmphasizeColor ml-[5px]">
+                  Đơn hàng đã bị hủy
+                </p>
               )}
               {/* end status  */}
             </span>
@@ -146,6 +247,32 @@ const DetailOrderTracking = ({ data }) => {
                 </p>
               </div>
             </div>
+            {/* Buttun  */}
+            {data?.statusOrder?.isPreparing && (
+              <div className="flex gap-[10px] justify-end mt-[10px]">
+                <span
+                  onClick={handleLogCancel}
+                  className={`${
+                    canCancel ? "" : "pointer-events-none bg-red-200"
+                  } block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-[red] hover:border-[red] bg-[red] border border-borderColor transition-all cursor-pointer`}
+                >
+                  {canCancel ? "Hủy đơn hàng" : "Không thể hủy đơn hàng"}{" "}
+                  {canCancel &&
+                    `${Math.floor(timeRemaining / 60)}:${timeRemaining % 60}`}
+                </span>
+              </div>
+            )}
+            {isLogCancel && (
+              <DialogQuestionYesNo
+                refDialog={refDialogCancel}
+                title="Bạn có chắc muốn hủy đơn hàng?"
+                textNo="Trở lại"
+                textYes="Đồng ý"
+                handleYes={handleCancel}
+                handleNo={handleLogCancel}
+                isLoading={isLoading}
+              />
+            )}
           </div>
         </div>
       </div>

@@ -1,4 +1,6 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PopupWrapper from "../PopupWrapper";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 const DialogQuestionYesNo = ({
   refDialog,
   title,
@@ -6,6 +8,7 @@ const DialogQuestionYesNo = ({
   textYes,
   handleYes,
   handleNo,
+  isLoading = false,
 }) => {
   return (
     <PopupWrapper>
@@ -21,9 +24,15 @@ const DialogQuestionYesNo = ({
             </button>
             <button
               onClick={handleYes}
-              className=" text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-[red] hover:bg-red-400 cursor-pointer transition-all"
+              className={`${
+                isLoading ? "bg-red-400 pointer-events-none" : ""
+              } text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-[red] hover:bg-red-400 cursor-pointer transition-all`}
             >
-              {textYes}
+              {isLoading ? (
+                <FontAwesomeIcon className="loading" icon={faSpinner} />
+              ) : (
+                textYes
+              )}
             </button>
           </div>
         </div>

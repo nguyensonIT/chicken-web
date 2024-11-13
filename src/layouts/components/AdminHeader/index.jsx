@@ -19,7 +19,7 @@ const AdminHeader = () => {
   const [notify, setNotify] = useState([]);
 
   const [isDisplayNotify, setIsDisplayNotify] = useState(false);
-  const [isImg, setIsImg] = useState(false);
+  const [isImg, setIsImg] = useState(user?.image);
 
   const hanldeClickNotify = () => {
     setIsDisplayNotify(!isDisplayNotify);
@@ -32,6 +32,11 @@ const AdminHeader = () => {
   const handleDeleteNotify = () => {
     localStorage.removeItem("notify");
     setNotify([]);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -135,7 +140,7 @@ const AdminHeader = () => {
           {/* Ảnh đại diện  */}
           <div className="box-img w-[30px] h-[30px] rounded-[50%] overflow-hidden cursor-pointer">
             {isImg ? (
-              <img className="w-full h-full object-cover" src="" alt="" />
+              <img className="w-full h-full object-cover" src={isImg} alt="" />
             ) : (
               <span className="w-full h-full flex justify-center items-center font-bold text-white text-[12px] bg-[#C0C0C0]">
                 Err
@@ -143,7 +148,10 @@ const AdminHeader = () => {
             )}
             <div className="absolute right-0 p-[10px] transition-all box-option hidden bg-white shadow-md top-[35px] z-10">
               <span className="absolute w-full h-[8px] top-[-6px] left-0 bg-transparent"></span>
-              <button className="transition-all hover:text-textHoverColor">
+              <button
+                onClick={handleLogout}
+                className="transition-all hover:text-textHoverColor"
+              >
                 Đăng xuất{" "}
                 <span>
                   <FontAwesomeIcon icon={faRightFromBracket} />

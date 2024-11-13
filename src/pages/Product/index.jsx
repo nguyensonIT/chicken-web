@@ -7,7 +7,7 @@ import CardProduct from "../../components/CardProduct";
 import { useHandleContext } from "../../contexts/UserProvider";
 
 const Product = () => {
-  const { dataAllProductContext } = useHandleContext();
+  const { dataAllProductContext, dataIsLoadingContext } = useHandleContext();
 
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -19,7 +19,6 @@ const Product = () => {
   const [isProductHot, setIsProductHot] = useState(null);
   const [isProductNew, setIsProductNew] = useState(null);
   const [isAllsProduct, setIsAllsProduct] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const fncTakeData = (products) => {
     const category = searchParams.get("category");
@@ -99,11 +98,6 @@ const Product = () => {
   };
 
   useEffect(() => {
-    if (dataAllProductContext.length > 0) {
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
-    }
     if (searchParams.get("category") === "alls") {
       const newProducts = dataAllProductContext.sort(
         (a, b) => a.order - b.order
@@ -132,7 +126,7 @@ const Product = () => {
         {searchParams.get("category") === "new" && isProductNew === false && (
           <h1 className="text-center">{nameCategory.titleNotProduct}</h1>
         )}
-        {isLoading && (
+        {dataIsLoadingContext.isLoadingProduct && (
           <div className="w-full text-center">
             <FontAwesomeIcon className="loading" icon={faSpinner} />
           </div>

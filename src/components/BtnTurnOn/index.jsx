@@ -80,12 +80,8 @@ const BtnTurnOn = ({ data, isTurnLive }) => {
     }
   };
 
-  // transform: translate(-100%, -50%); Bật
-  // "#0be09b" Bật
-
-  const handleDarkMode = (e) => {
+  const handleBtnTurnOn = (e) => {
     e.stopPropagation();
-
     if (checkTurnLive) {
       apiUpdateActive();
     } else {
@@ -102,12 +98,13 @@ const BtnTurnOn = ({ data, isTurnLive }) => {
       }
     }
   };
+
   return (
     <div
       className={`relative h-[24px] w-[44px] rounded-[100px] transition-all duration-400 ease-in-out cursor-pointer ${
         data?.isActive ? "bg-[#0be09b]" : "bg-[#1618231f]"
       } `}
-      onClick={(e) => handleDarkMode(e)}
+      onClick={(e) => handleBtnTurnOn(e)}
       ref={boxBallRef}
     >
       <span

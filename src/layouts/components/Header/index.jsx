@@ -14,19 +14,13 @@ import "./index.css";
 import Login from "../../../components/Login";
 import { useHandleContext } from "../../../contexts/UserProvider";
 import DialogQuestionYesNo from "../../../components/DialogQuestionYesNo";
-import * as handleCategoryService from "../../../services/handleCategoryService";
-import * as handleProductsService from "../../../services/handleProductsService";
 
 function Header() {
   const navigate = useNavigate();
-  const {
-    user,
-    quantityProductInCartContext,
-    setDataSideBarContext,
-    setDataAllProductContext,
-  } = useHandleContext();
+  const { user, quantityProductInCartContext } = useHandleContext();
 
   const refDialog = useRef(null);
+  const refMenu = useRef(null);
 
   const [token, setToken] = useState(localStorage.getItem("authToken") || "");
   const [isDialog, setIsDialog] = useState(false);
@@ -44,6 +38,12 @@ function Header() {
       setIsListOptionBoxAvatar(!isListOptionBoxAvatar);
     } else {
       setIsListOptionBoxAvatar(!isListOptionBoxAvatar);
+    }
+  };
+
+  const handleClickOutside = (event) => {
+    if (refMenu.current && !refMenu.current.contains(event.target)) {
+      setIsListOptionBoxAvatar(false);
     }
   };
 
@@ -140,35 +140,6 @@ function Header() {
     window.location.reload();
   };
 
-  //Call API product
-  useEffect(() => {
-    handleProductsService
-      .getAllProducts()
-      .then((res) => {
-        if (res.status === 200) {
-          setDataAllProductContext(res.data);
-        } else {
-          setDataAllProductContext([]);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  //API category
-  useEffect(() => {
-    handleCategoryService
-      .getAllCategory()
-      .then((res) => {
-        if (res.status === 200) {
-          const newProducts = res.data.sort((a, b) => a.order - b.order);
-          setDataSideBarContext(newProducts);
-        } else {
-          setDataSideBarContext([]);
-        }
-      })
-      .catch((err) => console.log("Lỗi api category", err));
-  }, []);
-
   useEffect(() => {
     setQuantityProductInCart(quantityProductInCartContext);
   }, [quantityProductInCartContext]);
@@ -176,6 +147,13 @@ function Header() {
   useEffect(() => {
     isDialogLogout && refDialog.current.classList.add("isDetail");
   }, [isDialogLogout]);
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div className="h-[120px] w-full flex bg-bgHeaderColor ">
@@ -298,7 +276,10 @@ function Header() {
                 />
               </div>
               {isListOptionBoxAvatar && (
-                <ul className="py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid">
+                <ul
+                  ref={refMenu}
+                  className="py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid"
+                >
                   {menuAvatar[0].prev && (
                     <li
                       onClick={handlePrevOption}

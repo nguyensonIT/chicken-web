@@ -10,6 +10,25 @@ export const getAllOrder = async () => {
   return response;
 };
 
+export const getOrderByIdUser = async (userOrderId) => {
+  const obj = {
+    path: `order/${userOrderId}`,
+    token,
+  };
+
+  const response = await request.GET(obj);
+  return response;
+};
+
+export const getOrderBySubId = async (subId) => {
+  const obj = {
+    path: `order/order-by-subId/${subId}`,
+  };
+
+  const response = await request.GET(obj);
+  return response;
+};
+
 export const postOrder = async (body) => {
   const obj = {
     path: "order",
@@ -36,6 +55,16 @@ export const updateIsCanceledOrder = async (body) => {
     path: "order/canceled",
     body,
     token,
+  };
+
+  const response = await request.POST(obj);
+  return response;
+};
+
+export const canceledOderByCustomer = async (id) => {
+  const obj = {
+    path: "order/canceled-customer",
+    body: id,
   };
 
   const response = await request.POST(obj);

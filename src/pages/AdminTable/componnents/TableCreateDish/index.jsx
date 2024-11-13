@@ -25,7 +25,7 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
   );
   const [isDialogDeleteProduct, setDialogDeleteProduct] = useState(false);
 
-  const [idProduct, setIdProduct] = useState(data?.idProduct || "");
+  const [idProduct, setIdProduct] = useState(data?._id || "");
   const [nameProduct, setNameProduct] = useState(data?.nameProduct || "");
   const [priceProduct, setPriceProduct] = useState(data?.priceProduct || "");
   const [descProduct, setDescProduct] = useState(data?.descProduct || "");
@@ -151,6 +151,8 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
         body: newProduct,
       };
       handleProductsService.updateProduct(dataPost).then((res) => {
+        console.log(res);
+
         switch (res.status) {
           case 200:
             toast.success("Cập nhật món ăn thành công!");

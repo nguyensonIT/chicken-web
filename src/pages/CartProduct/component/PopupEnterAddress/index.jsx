@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import PopupWrapper from "../../../../components/PopupWrapper";
 import PopupCheckInfoOrder from "../PopupCheckInfoOrder";
+import { useHandleContext } from "../../../../contexts/UserProvider";
 
 const PopupEnterAddress = ({
   handleCheckOrder,
   priceSaleProduct,
   subTotal,
 }) => {
+  const { user } = useHandleContext();
+
   const refDialog = useRef(null);
 
   const [isFocusName, setIsFocusName] = useState(false);
@@ -17,9 +20,9 @@ const PopupEnterAddress = ({
 
   const [dataUserOrder, setDataUserOrder] = useState({});
 
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState(user ? user?.name : "");
+  const [phone, setPhone] = useState(user ? user?.phoneNumber : "");
+  const [address, setAddress] = useState(user ? user?.address : "");
   const [note, setNote] = useState("");
 
   const [errName, setErrName] = useState("");
@@ -166,6 +169,7 @@ const PopupEnterAddress = ({
       <h1 className="text-[12px] opacity-[0.6]">
         Để đặt hàng, vui lòng thêm địa chỉ nhận hàng
       </h1>
+
       <div className="mt-[20px] flex gap-4">
         <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
@@ -283,6 +287,7 @@ const PopupEnterAddress = ({
           className="h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
         />
       </div>
+
       {/* button  */}
       <div className="w-full mt-[20px] text-right">
         <span

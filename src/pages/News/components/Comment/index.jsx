@@ -6,6 +6,11 @@ import imgErr from "../../../../assets/img/Logo.png";
 const Comment = ({ data, handleReplyCmt, dataPost }) => {
   const [isSeeMore, setIsSeeMore] = useState(false);
   const [dataCmtUpdate, setDataCmtUpdate] = useState(data);
+  const [dataReplyComment, setDataReplyComment] = useState((prev) => {
+    return data.replies.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
+  });
   const [idAuthor, setIdAuthor] = useState(dataPost.userId._id);
 
   const handleSeeMore = () => {
@@ -14,6 +19,11 @@ const Comment = ({ data, handleReplyCmt, dataPost }) => {
 
   useEffect(() => {
     setDataCmtUpdate(data);
+    setDataReplyComment((prev) => {
+      return data.replies.sort(
+        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+      );
+    });
   }, [data]);
 
   return (
@@ -59,7 +69,7 @@ const Comment = ({ data, handleReplyCmt, dataPost }) => {
         </div>
         {/* <!-- Reply to First Comment --> */}
         {isSeeMore &&
-          dataCmtUpdate.replies.map((reply, index) => {
+          dataReplyComment?.map((reply, index) => {
             return (
               <div
                 key={index}

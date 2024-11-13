@@ -25,6 +25,9 @@ export default {
         "bgSideBarAdminColor": "#2c3e50",
 
       },
+      backgroundImage: {
+        'coolProfile': 'linear-gradient(135deg, #FDE68A, #FBBF24)',
+      },
       
     },
   },

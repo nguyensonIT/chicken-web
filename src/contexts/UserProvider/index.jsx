@@ -13,6 +13,8 @@ const UserProvider = ({ children }) => {
   const [selectedProductsContext, setSelectedProductsContext] = useState([]);
   const [renderPopupNotifyAdminContext, setRenderPopupNotifyAdminContext] =
     useState("");
+  const [renderOrderByIdUserContext, setRenderOrderByIdUserContext] =
+    useState("");
   const [dataSubIdContext, setDataSubIdContext] = useState("");
   const [productContext, setProductContext] = useState(null);
   const [inFoProductContext, setInFoProductContext] = useState("");
@@ -23,8 +25,17 @@ const UserProvider = ({ children }) => {
         0
     );
   const [takeIdLikePostContext, setTakeIdLikePostContext] = useState("");
+
+  const [dataIsLoadingContext, setDataIsLoadingContext] = useState({
+    isLoadingSidebar: false,
+    isLoadingProduct: false,
+    isLoadingPost: false,
+    isLoadingOrderByUser: false,
+  });
   const [dataSideBarContext, setDataSideBarContext] = useState([]);
   const [dataAllProductContext, setDataAllProductContext] = useState([]);
+  const [dataAllPostContext, setDataAllPostContext] = useState([]);
+  const [dataOrderByIdUserContext, setDataOrderByIdUserContext] = useState([]);
 
   //có thể render lại trang order admin
   const handTakeDataSubId = (id) => {
@@ -59,6 +70,14 @@ const UserProvider = ({ children }) => {
         takeIdLikePostContext,
         dataSideBarContext,
         dataAllProductContext,
+        dataAllPostContext,
+        dataIsLoadingContext,
+        dataOrderByIdUserContext,
+        renderOrderByIdUserContext,
+        setRenderOrderByIdUserContext,
+        setDataOrderByIdUserContext,
+        setDataIsLoadingContext,
+        setDataAllPostContext,
         setDataAllProductContext,
         setDataSideBarContext,
         setTakeIdLikePostContext,

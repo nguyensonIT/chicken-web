@@ -43,36 +43,45 @@ function SignupWithEmail() {
       username: data.username,
       password: data.password,
     };
+
     setIsLoading(true);
+
     registerService
       .register(infoSignUp)
       .then((res) => {
-        if (res.response.status === 404) {
-          toast.warn("Lỗi sever. Vui lòng liên hệ Admin");
-        } else if (res.data.response.status === 400) {
-          toast.error("Tài khoản này đã được đăng ký. Vui lòng thử lại!");
-        } else if (res.data.response.status === 201) {
+        if (res?.status && res.status === 201) {
           toast.success(
             "Đăng ký thành công tài khoản! Tự động đăng nhập sau 3s"
           );
           setTimeout(() => {
             loginService
               .login(infoLogin)
-              .then((res) => {
-                localStorage.setItem("authToken", res.data.response.data.token);
+              .then((loginRes) => {
+                localStorage.setItem("authToken", loginRes.data.token);
               })
-              .catch((err) => console.log(err))
+              .catch((err) => {
+                console.log(err);
+                toast.error("Đăng nhập thất bại. Vui lòng thử lại!");
+              })
               .finally(() => {
                 window.location.reload();
               });
           }, 3000);
+        } else if (res.response && res.response.status === 400) {
+          toast.error("Tài khoản này đã được đăng ký. Vui lòng thử lại!");
+        } else {
+          toast.error("Đã xảy ra lỗi không xác định. Vui lòng thử lại!");
         }
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        console.log(err);
+        toast.error("Đã xảy ra lỗi trong quá trình đăng ký. Vui lòng thử lại!");
+      })
       .finally(() => {
         setIsLoading(false);
       });
   };
+
   return (
     <div className="wrapper">
       <form

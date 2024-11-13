@@ -8,8 +8,11 @@ import { toast } from "react-toastify";
 import ItemOrderTracking from "./components/ItemOrderTracking";
 import PopupWrapper from "../../components/PopupWrapper";
 import DetailOrderTracking from "./components/DetailOrderTracking";
+import { useHandleContext } from "../../contexts/UserProvider";
 
 const OrderTracking = () => {
+  const { renderOrderByIdUserContext } = useHandleContext();
+
   const codeRef = useRef(null);
   const refDialogDetailOrder = useRef(null);
 
@@ -59,34 +62,43 @@ const OrderTracking = () => {
     }
   };
 
+  const fncCallApiOrderBySubId = () => {
+    handleOrderService
+      .getOrderBySubId(valueCode)
+      .then((res) => {
+        if (res.status === 200) {
+          if (res.data.data.length === 0) {
+            toast.warning("Mã đơn hàng không khớp. Vui lòng thử lại!");
+          } else {
+            setDataOrderCustomer(res.data.data[0]);
+          }
+        } else {
+          toast.warning(
+            "Lỗi không tìm được đơn hàng. Vui lòng liên hệ nhà hàng nếu bạn đã đặt hàng!"
+          );
+        }
+      })
+      .catch((err) => console.log("Lỗi lấy mã đơn hàng", err))
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
   const handleFindOrder = () => {
     setIsLoading(true);
     if (valueCode !== "") {
-      handleOrderService
-        .getAllOrder()
-        .then((res) => {
-          if (res.status === 200) {
-            const order = res.data.find((item) => item.subId === valueCode);
-            if (order) {
-              setDataOrderCustomer(order);
-            } else {
-              toast.warning("Mã đơn hàng không khớp. Vui lòng thử lại!");
-            }
-          } else {
-            toast.warning(
-              "Lỗi không tìm được đơn hàng. Vui lòng liên hệ nhà hàng nếu bạn đã đặt hàng!"
-            );
-          }
-        })
-        .catch((err) => console.log("Lỗi lấy mã đơn hàng", err))
-        .finally(() => {
-          setIsLoading(false);
-        });
+      fncCallApiOrderBySubId();
     } else {
       toast.warning("Vui lòng nhập mã đơn hàng!");
       setIsLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (valueCode) {
+      fncCallApiOrderBySubId();
+    }
+  }, [renderOrderByIdUserContext]);
 
   useEffect(() => {
     isDisplayDetailOrderTracking &&
@@ -171,7 +183,10 @@ const OrderTracking = () => {
             ref={refDialogDetailOrder}
             className="relative my-[20px] mx-[40px]"
           >
-            <DetailOrderTracking data={dataDetailOrderCustomer} />
+            <DetailOrderTracking
+              handleClickItemOrderTracking={handleClickItemOrderTracking}
+              data={dataDetailOrderCustomer}
+            />
             {/* close popup  */}
             <div
               onClick={handleClickItemOrderTracking}

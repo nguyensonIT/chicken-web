@@ -4,18 +4,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 import bannerReal2 from "../../assets/img/BannerReal2.jpg";
 import bannerReal from "../../assets/img/bannerReal.jpg";
 import CardProduct from "../../components/CardProduct";
 import { useHandleContext } from "../../contexts/UserProvider";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const Home = () => {
-  const { dataAllProductContext } = useHandleContext();
+  const { dataAllProductContext, dataIsLoadingContext } = useHandleContext();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [isProductSale, setIsProductSale] = useState(false);
   const [isProductHot, setIsProductHot] = useState(false);
   const [isProductNew, setIsProductNew] = useState(false);
@@ -44,14 +43,6 @@ const Home = () => {
       (product) => product.newProduct === true
     );
     setIsProductNew(isNewProduct);
-  }, [dataAllProductContext]);
-
-  useEffect(() => {
-    if (dataAllProductContext.length > 0) {
-      setIsLoading(false);
-    } else {
-      setIsLoading(true);
-    }
   }, [dataAllProductContext]);
 
   return (
@@ -96,16 +87,17 @@ const Home = () => {
           <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản Phẩm khuyến mại
           </h1>
-          {isLoading && (
+          {dataIsLoadingContext.isLoadingProduct && (
             <span className="block w-full text-center">
               <FontAwesomeIcon className="loading" icon={faSpinner} />
             </span>
           )}
-          {isProductSale === false && !isLoading && (
-            <h1 className="text-center">
-              Hiện chưa có sản phẩm nào đang khuyến mại
-            </h1>
-          )}
+          {isProductSale === false &&
+            !dataIsLoadingContext.isLoadingProduct && (
+              <h1 className="text-center">
+                Hiện chưa có sản phẩm nào đang khuyến mại
+              </h1>
+            )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
             {dataAllProductContext.length > 0 &&
               dataAllProductContext.map((data, index) => {
@@ -122,12 +114,12 @@ const Home = () => {
           <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản Phẩm hot
           </h1>
-          {isLoading && (
+          {dataIsLoadingContext.isLoadingProduct && (
             <span className="block w-full text-center">
               <FontAwesomeIcon className="loading" icon={faSpinner} />
             </span>
           )}
-          {isProductHot === false && !isLoading && (
+          {isProductHot === false && !dataIsLoadingContext.isLoadingProduct && (
             <h1 className="text-center">Hiện chưa có sản phẩm nào hot</h1>
           )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
@@ -146,12 +138,12 @@ const Home = () => {
           <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản phẩm mới
           </h1>
-          {isLoading && (
+          {dataIsLoadingContext.isLoadingProduct && (
             <span className="block w-full text-center">
               <FontAwesomeIcon className="loading" icon={faSpinner} />
             </span>
           )}
-          {isProductNew === false && !isLoading && (
+          {isProductNew === false && !dataIsLoadingContext.isLoadingProduct && (
             <h1 className="text-center">Hiện chưa có sản phẩm nào mới</h1>
           )}
           <div className="grid grid-cols-3 gap-[10px] mt-[20px]">

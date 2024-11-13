@@ -16,6 +16,7 @@ import OrderTracking from "./OrderTracking";
 import PrivateRoute from "../routes/PrivateRoute";
 import AdminArticle from "./AdminArticle";
 import Profile from "./Profile";
+import PrivateRouteClient from "../routes/PrivateRouteClient";
 
 const router = createBrowserRouter([
   {
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile />,
+        element: <PrivateRouteClient element={<Profile />} />,
       },
     ],
   },

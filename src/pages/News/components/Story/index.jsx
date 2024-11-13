@@ -5,28 +5,20 @@ import { useEffect, useRef, useState } from "react";
 import { timeAgo } from "../../../../components/Function";
 import imgErr from "../../../../assets/img/Logo.png";
 import "./styles.css";
-import { useHandleContext } from "../../../../contexts/UserProvider";
-import * as handlePostService from "../../../../services/handlePostService";
-import { toast } from "react-toastify";
 
 const Story = ({
-  isStoryDetail = false,
   isDetailComment = false,
-  data,
+  data = {},
   handleDetailImg,
   handleComment,
+  isLikePost = false,
+  qntLike = 0,
+  handleLikePost,
 }) => {
-  const { user } = useHandleContext();
-
   const textRef = useRef(null);
   const [isClamped, setIsClamped] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const [isLikePost, setIsLikePost] = useState(
-    data.likedBy.some((item) => item._id === user?.id)
-  );
-
-  const [qntLike, setQntLike] = useState(data.likedBy.length);
   const [qntComment, setQntComment] = useState(
     data.comments.length +
       data.comments.reduce(
@@ -35,44 +27,11 @@ const Story = ({
       )
   );
 
-  //Fnc call api like post
-  const fncCallApiLikePost = () => {
-    const idPost = data._id;
-    const idUserLikePost = { userId: user?.id };
-    if (localStorage.getItem("authToken")) {
-      handlePostService
-        .likePost(idPost, idUserLikePost)
-        .then((res) => {
-          if (res.status === 200) {
-            if (res.data.likedBy.some((item) => item === user.id)) {
-              setQntLike((prev) => prev + 1);
-            } else {
-              setQntLike((prev) => prev - 1);
-            }
-          }
-        })
-        .catch((err) => console.log("Lỗi api like post", err));
-
-      if (isLikePost) {
-        setIsLikePost(!isLikePost);
-      } else {
-        setIsLikePost(!isLikePost);
-      }
-    } else {
-      toast.warning("Bạn phải đăng nhập mới có thể like");
-    }
-  };
-
   //Comment Internal
   const handleCommentInternal = (id) => {
     if (!isDetailComment) {
       handleComment(id);
     }
-  };
-
-  //handle Like Post
-  const handleLikePost = () => {
-    fncCallApiLikePost();
   };
 
   useEffect(() => {
@@ -95,10 +54,10 @@ const Story = ({
         <img
           alt="Profile picture"
           className="w-10 h-10 rounded-full"
-          src={data.userId.image || imgErr}
+          src={data?.userId?.image || imgErr}
         />
         <div className="ml-3">
-          <h2 className="text-lg font-semibold">{data.userId.name}</h2>
+          <h2 className="text-lg font-semibold">{data?.userId?.name}</h2>
           <p className="text-gray-500 text-sm">{timeAgo(data.createdAt)}</p>
         </div>
       </div>
