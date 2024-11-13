@@ -18,15 +18,11 @@ const useSocket = () => {
 
     // Xử lý sự kiện kết nối
     socketRef.current.on("connect", () => {
-      console.log("connext");
-
       setConnected(true);
     });
 
     // Xử lý sự kiện ngắt kết nối
     socketRef.current.on("disconnect", () => {
-      console.log("disconnect");
-
       setConnected(false);
     });
 
