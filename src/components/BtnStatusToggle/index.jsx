@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const BtnStatusToggle = ({
   isActiveExternal = false,
@@ -13,7 +13,10 @@ const BtnStatusToggle = ({
     setIsActive((prev) => !prev);
     fncHandle();
   };
-  console.log(isActive);
+
+  useEffect(() => {
+    setIsActive(isActiveExternal);
+  }, [isActiveExternal]);
 
   return (
     <div

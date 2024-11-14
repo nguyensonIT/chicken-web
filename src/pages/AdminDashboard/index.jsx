@@ -1,12 +1,23 @@
 import * as React from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+import { toast } from "react-toastify";
 
 import Chart from "./components/Chart";
 import Deposits from "./components/Deposits";
 import BtnStatusToggle from "../../components/BtnStatusToggle";
+import useSocket from "../../hooks/useSocket";
 
 export default function AdminDashboard() {
+  const { statusOpenDoor, toggleOpenDoorStatus, connected } = useSocket();
+  const handleOpenDoor = () => {
+    if (connected) {
+      toggleOpenDoorStatus(!statusOpenDoor);
+    } else {
+      toast.warn("Đang kết nối Socket IO");
+    }
+  };
+
   return (
     <div className="h-[100vh]">
       <Grid item xs={12} md={8} lg={9}>
@@ -23,7 +34,10 @@ export default function AdminDashboard() {
             <p className="font-bold text-[14px]">
               Trạng thái <span className="text-[10px]">(Đóng/ Mở cửa)</span>
             </p>
-            <BtnStatusToggle />
+            <BtnStatusToggle
+              isActiveExternal={statusOpenDoor}
+              fncHandle={handleOpenDoor}
+            />
           </div>
           {/* chart  */}
           <Chart />

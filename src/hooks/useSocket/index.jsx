@@ -7,8 +7,8 @@ const SOCKET_URL = import.meta.env.VITE_SOCKET_URL;
 
 // Tạo hook useSocket
 const useSocket = () => {
-  const [data, setData] = useState([]);
   const [messages, setMessages] = useState([]);
+  const [statusOpenDoor, setStatusOpenDoor] = useState(false);
   const [connected, setConnected] = useState(false);
   const socketRef = useRef(null);
 
@@ -27,13 +27,13 @@ const useSocket = () => {
     });
 
     // Xử lý tin nhắn đến từ máy chủ
-    socketRef.current.on("adminEvent", (data) => {
-      setData(data);
+    socketRef.current.on("message", (messages) => {
+      setMessages([messages]);
     });
 
     // Xử lý tin nhắn đến từ máy chủ
-    socketRef.current.on("message", (messages) => {
-      setMessages([messages]);
+    socketRef.current.on("statusOpenDoor", (status) => {
+      setStatusOpenDoor(status);
     });
 
     // Cleanup khi component bị unmount
@@ -45,14 +45,21 @@ const useSocket = () => {
   // Gửi tin nhắn đến máy chủ
   const sendMessage = (message) => {
     if (socketRef.current) {
-      socketRef.current.send(message);
+      socketRef.current.emit("message", message);
+    }
+  };
+
+  const toggleOpenDoorStatus = (notify) => {
+    if (socketRef.current) {
+      socketRef.current.emit("toggleOpenDoorStatus", notify);
     }
   };
 
   return {
     messages,
-    data,
     connected,
+    statusOpenDoor,
+    toggleOpenDoorStatus,
     sendMessage,
   };
 };

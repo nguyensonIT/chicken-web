@@ -140,6 +140,11 @@ function Header() {
     window.location.reload();
   };
 
+  //HAndle Find product
+  const handleFindProduct = () => {
+    console.log("Tìm kiếm!");
+  };
+
   useEffect(() => {
     setQuantityProductInCart(quantityProductInCartContext);
   }, [quantityProductInCartContext]);
@@ -232,7 +237,10 @@ function Header() {
               placeholder="Tìm kiếm món ăn..."
               className="py-2 px-3 focus:outline-none flex-1  "
             />
-            <button className="transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 ">
+            <button
+              onClick={handleFindProduct}
+              className="transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+            >
               Tìm kiếm
             </button>
           </div>
