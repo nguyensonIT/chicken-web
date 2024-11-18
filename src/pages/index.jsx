@@ -17,6 +17,7 @@ import PrivateRoute from "../routes/PrivateRoute";
 import AdminArticle from "./AdminArticle";
 import Profile from "./Profile";
 import PrivateRouteClient from "../routes/PrivateRouteClient";
+import LayoutCart from "../layouts/LayoutCart";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,15 @@ const router = createBrowserRouter([
     ],
   },
   {
+    element: <LayoutCart />,
+    children: [
+      {
+        path: "/cart",
+        element: <CartProduct />,
+      },
+    ],
+  },
+  {
     element: <HeaderOnlyLayout />,
     children: [
       {
@@ -44,10 +54,7 @@ const router = createBrowserRouter([
         path: "/introduce",
         element: <Introduce />,
       },
-      {
-        path: "/cart",
-        element: <CartProduct />,
-      },
+
       {
         path: "/order-tracking",
         element: <OrderTracking />,

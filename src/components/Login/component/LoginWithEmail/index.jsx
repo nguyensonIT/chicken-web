@@ -134,7 +134,7 @@ function LoginWithEmail() {
           </a>
         </div>
         <button
-          className={`btn-login transition-all text-white block w-[100%] py-[4px] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor ${
+          className={`max-sm:text-[14px] btn-login transition-all text-white block w-[100%] py-[4px] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor ${
             isLoading ? "pointer-events-none opacity-[0.5]" : ""
           }`}
           type="submit"

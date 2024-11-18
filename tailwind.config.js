@@ -29,6 +29,7 @@ export default {
         'coolProfile': 'linear-gradient(135deg, #FDE68A, #FBBF24)',
       },
       
+      
     },
   },
   plugins: [],

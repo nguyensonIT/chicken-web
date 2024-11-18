@@ -1,35 +1,82 @@
-
-.nav-parent:hover .active-nav{
-    opacity: 1;
-    transform: scaleY(1);
+.nav-parent:hover .active-nav {
+  opacity: 1;
+  transform: scaleY(1);
 }
-.active-nav{
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: all .2s;
-}
-
-.icon-right{
-    display: none;
+.active-nav {
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: all 0.2s;
 }
 
-.tag-link:hover .icon-right{
-    display: inline-block;
+.icon-right {
+  display: none;
 }
 
+.tag-link:hover .icon-right {
+  display: inline-block;
+}
 
 .box-user-option {
-    opacity: 0;
-    transform: scaleY(0);
-    transform-origin: top;
-    transition: all .2s;
+  opacity: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: all 0.2s;
 }
 
 .box-user:hover .box-user-option {
-    opacity: 1;
-    transform: scaleY(1);
+  opacity: 1;
+  transform: scaleY(1);
 }
 
+.isNavMobile {
+  transform: translateX(0px);
+  animation: fadeInNav 0.2s ease-in-out;
+}
 
-  
+.isFadeOutNav {
+  animation: fadeOutNav 0.2s ease-in-out;
+}
+
+.isFind {
+  animation: fadeDownFind 0.3s ease-in-out;
+}
+
+.isNotFind {
+  animation: notFind 0.3s ease-in-out;
+}
+
+@keyframes fadeInNav {
+  0% {
+    transform: translateX(200px);
+  }
+  100% {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes fadeOutNav {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(200px);
+  }
+}
+
+@keyframes fadeDownFind {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes notFind {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

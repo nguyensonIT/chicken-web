@@ -108,8 +108,8 @@ const OrderTracking = () => {
   return (
     <div className="px-[20px] py-[30px] mb-[-20px] bg-bgMainColor">
       {/* Mã đơn hàng  */}
-      <div className="flex gap-[10px]">
-        <span>
+      <div className="max-sm:flex-col flex gap-[10px]">
+        <span className="max-sm:text-[12px]">
           Nhập <p className="inline font-bold">Mã đơn hàng</p> để tìm kiếm đơn
           hàng:
         </span>
@@ -117,7 +117,7 @@ const OrderTracking = () => {
           {isCode ? (
             <div>
               <input
-                className="outline-none bg-bgMainColor font-bold"
+                className="max-sm:text-[12px] pr-[10px] outline-none bg-bgMainColor font-bold"
                 type="text"
                 ref={codeRef}
                 value={codeOrderCustomer}
@@ -125,7 +125,7 @@ const OrderTracking = () => {
               />
               <span
                 onClick={handleCopyCode}
-                className="select-none px-[10px] py-[5px] rounded-md bg-btnColor hover:bg-btnHoverColor text-white transition-[2s] cursor-pointer"
+                className="max-sm:text-[12px] select-none px-[10px] py-[5px] rounded-md bg-btnColor hover:bg-btnHoverColor text-white transition-[2s] cursor-pointer"
               >
                 {copied ? <FontAwesomeIcon icon={faCheck} /> : "Sao chép"}
               </span>
@@ -141,18 +141,18 @@ const OrderTracking = () => {
         </div>
       </div>
       {/* Tìm kiếm  */}
-      <div className="w-1/2 mx-auto">
+      <div className="max-sm:w-full w-1/2 mx-auto">
         <div className="mt-[20px] border focus:border-yellow-500 rounded-md flex items-center overflow-hidden">
           <input
             type="text"
             placeholder="Nhập mã đơn hàng..."
-            className="py-2 px-3 focus:outline-none flex-1 "
+            className="max-sm:text-[12px] py-2 px-3 focus:outline-none flex-1 "
             value={valueCode}
             onChange={handleChangeCode}
           />
           <button
             onClick={handleFindOrder}
-            className="transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+            className="max-sm:text-[12px] transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
           >
             {isLoading ? (
               <FontAwesomeIcon className="loading" icon={faSpinner} />

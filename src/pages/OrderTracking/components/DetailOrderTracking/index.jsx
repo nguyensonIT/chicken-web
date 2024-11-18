@@ -109,63 +109,74 @@ const DetailOrderTracking = ({
 
   return (
     <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="w-full flex border border-borderColor">
+      <div className="max-sm:h-[500px] max-sm:overflow-y-auto max-sm:flex-col w-full flex border border-borderColor">
         {/* Left  */}
-        <div className="w-1/2 border border-borderColor">
-          <h1 className="py-[20px] text-[20px] text-center font-bold">
+        <div className="max-sm:w-full max-sm:border-0 w-1/2 border border-borderColor">
+          <h1 className="max-sm:text-[14px] max-sm:py-[10px] py-[20px] text-[20px] text-center font-bold">
             Thông tin của bạn
           </h1>
-          <div className="px-[20px] py-[20px] flex flex-col">
-            <span>
+          <div className="max-sm:py-[10px] px-[20px] py-[20px] flex flex-col">
+            <span className="max-sm:text-[14px] ">
               Tên khách hàng:{" "}
-              <p className="inline italic font-bold">{data.nameCustomers}</p>
+              <p className="max-sm:text-[12px]  inline italic font-bold">
+                {data.nameCustomers}
+              </p>
             </span>
-            <span>
+            <span className="max-sm:text-[14px] ">
               Số điện thoại:{" "}
-              <p className="inline italic font-bold">{data.phoneCustomers}</p>
+              <p className="max-sm:text-[12px]  inline italic font-bold">
+                {data.phoneCustomers}
+              </p>
             </span>
-            <span>
+            <span className="max-sm:text-[14px] ">
               Địa chỉ:{" "}
-              <p className="inline italic font-bold">{data.addressCustomers}</p>
+              <p className="max-sm:text-[12px]  inline italic font-bold">
+                {data.addressCustomers}
+              </p>
             </span>
             <br />
             {data.note && (
-              <span>
-                Ghi chú: <p className="inline italic font-bold">{data.note}</p>
+              <span className="max-sm:text-[14px] ">
+                Ghi chú:{" "}
+                <p className="max-sm:text-[12px]  inline italic font-bold">
+                  {data.note}
+                </p>
               </span>
             )}
           </div>
         </div>
 
         {/* Right  */}
-        <div className="w-1/2 border border-borderColor">
-          <h1 className="py-[20px] text-[20px] text-center font-bold">
+        <div className="max-sm:w-full max-sm:border-t-[1px] w-1/2 border border-borderColor">
+          <h1 className="max-sm:py-[10px] max-sm:text-[14px] py-[20px] text-[20px] text-center font-bold">
             Đơn hàng
           </h1>
-          <div className="px-[20px] py-[20px] flex flex-col">
+          <div className="max-sm:py-[10px] px-[20px] py-[20px] flex flex-col">
             {/* Top  */}
-            <span>
+            <span className="max-sm:text-[14px]">
               Mã đơn hàng:{" "}
-              <p className="inline italic text-[10px] font-bold">
+              <p className=" max-sm:text-[10px] inline italic text-[10px] font-bold">
                 # {data.subId}
               </p>
             </span>
-            <span>
+            <span className="max-sm:text-[14px]">
               Thời gian đặt đơn:{" "}
-              <p className="inline underline italic font-bold">{`${timePart} - ( Ngày ${datePart} )`}</p>
+              <p className="max-sm:text-[14px] inline underline italic font-bold">{`${timePart} - ( Ngày ${datePart} )`}</p>
             </span>
-            <span className="flex">
+            <span className="max-sm:text-[14px] max-sm:block flex">
               Trạng thái: {/* Status  */}
               {data.statusOrder.isPreparing && (
-                <p className="font-bold ml-[5px]">
+                <p className="max-sm:inline max-sm:text-[12px] font-bold ml-[5px]">
                   Quán đang chuẩn bị đơn hàng
                 </p>
               )}
               {data.statusOrder.isDelivered && (
-                <p className="font-bold ml-[5px]">Đã giao hàng</p>
+                <p className="max-sm:text-[14px] font-bold ml-[5px]">
+                  Đã giao hàng
+                </p>
               )}
               {data.statusOrder.isCanceled && (
-                <p className="font-bold text-textEmphasizeColor ml-[5px]">
+                <p className="max-sm:text-[14px] font-bold text-textEmphasizeColor ml-[5px]">
                   Đơn hàng đã bị hủy
                 </p>
               )}
@@ -180,29 +191,33 @@ const DetailOrderTracking = ({
                 return (
                   <div key={index} className="w-full flex font-bold">
                     <div className="w-8/12 flex">
-                      <span className="block w-2/12">x{item.quantity}</span>
+                      <span className="max-sm:text-[14px] block w-2/12">
+                        x{item.quantity}
+                      </span>
                       <div className="flex flex-col w-10/12">
-                        <span className="block ">{item.nameProduct}</span>
+                        <span className="max-sm:text-[14px] block ">
+                          {item.nameProduct}
+                        </span>
                         {item.note && (
-                          <span className="font-normal italic text-[12px]">{`"${item.note}"`}</span>
+                          <span className="max-sm:text-[8px] font-normal italic text-[12px]">{`"${item.note}"`}</span>
                         )}
                       </div>
                     </div>
                     <div className="w-4/12 flex ">
                       <div className="">
-                        <span>
+                        <span className="max-sm:text-[14px]">
                           {formatCurrency(item.currentPriceProduct)}
-                          <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                          <span className="max-sm:text-[10px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                             đ
                           </span>
                         </span>
                         {item.sale > 0 && (
-                          <span className="block font-normal italic text-[14px]">
+                          <span className="max-sm:text-[12px] block font-normal italic text-[14px]">
                             -{" "}
                             {formatCurrency(
                               (item.currentPriceProduct * item.sale) / 100
                             )}
-                            <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                            <span className="max-sm:text-[10px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                               đ
                             </span>
                           </span>
@@ -219,29 +234,35 @@ const DetailOrderTracking = ({
             {/* Bottom  */}
             <div className="w-full flex flex-col">
               <div className="w-full flex">
-                <span className="block w-8/12">Tổng tiền món (giá gốc): </span>
-                <p className="block w-4/12 italic font-bold">
+                <span className="max-sm:text-[14px] block w-8/12">
+                  Tổng tiền món (giá gốc):{" "}
+                </span>
+                <p className="max-sm:text-[14px] block w-4/12 italic font-bold">
                   {formatCurrency(data.subTotal)}
-                  <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                  <span className="max-sm:text-[10px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                     đ
                   </span>
                 </p>
               </div>
               <div className="w-full flex opacity-[0.5]">
-                <span className=" block w-8/12">Trừ khuyến mại:</span>
-                <p className="block w-4/12 italic">
+                <span className="max-sm:text-[12px] block w-8/12">
+                  Trừ khuyến mại:
+                </span>
+                <p className="max-sm:text-[12px] block w-4/12 italic">
                   - {formatCurrency(data.priceSaleProduct)}
-                  <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                  <span className="max-sm:text-[10px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                     đ
                   </span>
                 </p>
               </div>
               <br />
               <div className="w-full flex mb-[10px]">
-                <span className="block w-8/12">Tổng tiền phải thanh toán:</span>
-                <p className="block w-4/12 italic font-bold text-textEmphasizeColor">
+                <span className="max-sm:text-[14px] block w-8/12">
+                  Tổng tiền phải thanh toán:
+                </span>
+                <p className="max-sm:text-[14px] block w-4/12 italic font-bold text-textEmphasizeColor">
                   {formatCurrency(data.totalBill)}
-                  <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                  <span className="max-sm:text-[10px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                     đ
                   </span>
                 </p>
@@ -254,7 +275,7 @@ const DetailOrderTracking = ({
                   onClick={handleLogCancel}
                   className={`${
                     canCancel ? "" : "pointer-events-none bg-red-200"
-                  } block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-[red] hover:border-[red] bg-[red] border border-borderColor transition-all cursor-pointer`}
+                  } max-sm:text-[14px] block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-[red] hover:border-[red] bg-[red] border border-borderColor transition-all cursor-pointer`}
                 >
                   {canCancel ? "Hủy đơn hàng" : "Không thể hủy đơn hàng"}{" "}
                   {canCancel &&

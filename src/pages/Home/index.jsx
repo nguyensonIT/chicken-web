@@ -58,10 +58,9 @@ const Home = () => {
           loop={true}
           spaceBetween={50}
           slidesPerView={1}
-          navigation
         >
           <SwiperSlide>
-            <div className="w-full h-[250px]">
+            <div className="w-full ">
               <img
                 className="w-full h-full object-contain"
                 src={bannerReal2}
@@ -70,7 +69,7 @@ const Home = () => {
             </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="w-full h-[250px]">
+            <div className="w-full ">
               <img
                 className="w-full h-full object-contain"
                 src={bannerReal}
@@ -84,7 +83,7 @@ const Home = () => {
       <div className="">
         {/* product sale  */}
         <div className="pt-[10px]">
-          <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản Phẩm khuyến mại
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -94,11 +93,11 @@ const Home = () => {
           )}
           {isProductSale === false &&
             !dataIsLoadingContext.isLoadingProduct && (
-              <h1 className="text-center">
+              <h1 className="max-sm:text-[14px] text-center">
                 Hiện chưa có sản phẩm nào đang khuyến mại
               </h1>
             )}
-          <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
+          <div className="max-sm:grid-cols-1 grid grid-cols-3 gap-[10px] mt-[20px]">
             {dataAllProductContext.length > 0 &&
               dataAllProductContext.map((data, index) => {
                 return data.products.map((product, index) => {
@@ -111,7 +110,7 @@ const Home = () => {
         </div>
         {/* product hot  */}
         <div className="pt-[10px]">
-          <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản Phẩm hot
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -120,9 +119,11 @@ const Home = () => {
             </span>
           )}
           {isProductHot === false && !dataIsLoadingContext.isLoadingProduct && (
-            <h1 className="text-center">Hiện chưa có sản phẩm nào hot</h1>
+            <h1 className="max-sm:text-[14px] text-center">
+              Hiện chưa có sản phẩm nào hot
+            </h1>
           )}
-          <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
+          <div className="max-sm:grid-cols-1 grid grid-cols-3 gap-[10px] mt-[20px]">
             {dataAllProductContext.length > 0 &&
               dataAllProductContext.map((data, index) => {
                 return data.products.map((product, index) => {
@@ -135,7 +136,7 @@ const Home = () => {
         </div>
         {/* product new  */}
         <div className="pt-[10px]">
-          <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản phẩm mới
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -144,9 +145,11 @@ const Home = () => {
             </span>
           )}
           {isProductNew === false && !dataIsLoadingContext.isLoadingProduct && (
-            <h1 className="text-center">Hiện chưa có sản phẩm nào mới</h1>
+            <h1 className="max-sm:text-[14px] text-center">
+              Hiện chưa có sản phẩm nào mới
+            </h1>
           )}
-          <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
+          <div className="max-sm:grid-cols-1 grid grid-cols-3 gap-[10px] mt-[20px]">
             {dataAllProductContext.length > 0 &&
               dataAllProductContext.map((data, index) => {
                 return data.products.map((product, index) => {

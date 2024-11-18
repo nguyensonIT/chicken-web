@@ -212,7 +212,7 @@ function SignupWithEmail() {
         <button
           className={`${
             isLoading ? "pointer-events-none opacity-[0.3]" : ""
-          } btn-signup transition-all py-[4px] text-white block w-[100%] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor`}
+          } max-sm:text-[14px] btn-signup transition-all py-[4px] text-white block w-[100%] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor`}
         >
           {isLoading ? (
             <FontAwesomeIcon className="loading" icon={faSpinner} />

@@ -9,8 +9,11 @@ import "./index.css";
 import DetailProductDialog from "../DetailProductDialog";
 import { useHandleContext } from "../../contexts/UserProvider";
 import { handleAddCartFnc } from "../Function";
+import useSocket from "../../hooks/useSocket";
 
 const CardProduct = ({ data }) => {
+  const { statusOpenDoor } = useSocket();
+
   const [dataItemProduct, setDataItemProduct] = useState(data || []);
   const [displayDetail, setDisplayDetail] = useState(false);
 
@@ -35,14 +38,20 @@ const CardProduct = ({ data }) => {
 
   const handleAddCart = (e, data) => {
     e.stopPropagation();
-    handleAddCartFnc(data);
-    const productIndex = cartData.findIndex(
-      (item) => item.idProduct === data.idProduct
-    );
-    if (productIndex === -1) {
-      setQuantityProductInCartContext((prev) => prev + 1);
+    if (statusOpenDoor === false) {
+      toast.warn("Cửa hàng đang đóng cửa.");
+    } else if (data.isActive) {
+      handleAddCartFnc(data);
+      const productIndex = cartData.findIndex(
+        (item) => item.idProduct === data.idProduct
+      );
+      if (productIndex === -1) {
+        setQuantityProductInCartContext((prev) => prev + 1);
+      }
+      toast.success("Đã thêm vào giỏ hàng!");
+    } else {
+      toast.warn("Món này đang tạm hết. Bạn ăn món khác nhé!");
     }
-    toast.success("Đã thêm vào giỏ hàng!");
   };
 
   useEffect(() => {
@@ -53,7 +62,8 @@ const CardProduct = ({ data }) => {
     <div
       onClick={handleDetail}
       className={`${
-        data.isActive === false && "pointer-events-none opacity-[0.6]"
+        (data.isActive === false || !statusOpenDoor) &&
+        "pointer-events-none opacity-[0.6]"
       } card-wrap relative cursor-pointer border-transparent border-[2px] hover:border-textHoverColor hover:border-solid relative rounded-md grid grid-cols-3 gap-[8px] p-[12px] bg-white`}
     >
       <div className="image-product flex justify-center items-center relative col-span-1 overflow-hidden">
@@ -64,10 +74,10 @@ const CardProduct = ({ data }) => {
         />
       </div>
       <div className="content col-span-2 flex flex-col justify-between ">
-        <h1 className="product-name overflow-ellipsis whitespace-nowrap overflow-hidden ">
+        <h1 className="max-sm:text-[14px] product-name overflow-ellipsis whitespace-nowrap overflow-hidden ">
           {dataItemProduct?.nameProduct}
         </h1>
-        <p className="desc italic text-[10px] overflow-ellipsis whitespace-nowrap overflow-hidden">
+        <p className="max-sm:text-[8px] desc italic text-[10px] overflow-ellipsis whitespace-nowrap overflow-hidden">
           {dataItemProduct?.descProduct}
         </p>
         {dataItemProduct?.sale ? (

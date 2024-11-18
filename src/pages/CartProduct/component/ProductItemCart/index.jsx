@@ -72,28 +72,30 @@ const ProductItemCart = ({ data, setReloadCart }) => {
   }, [isDialogDelete]);
 
   return (
-    <div className="grid grid-cols-7 border-[2px] border-dashed border-borderColor items-center mb-6 rounded-lg p-6">
-      <div className="col-span-1 w-[80px] h-[80px] rounded-lg">
+    <div className="max-sm:p-[8px] max-sm:gap-[5px] grid grid-cols-7 border-[2px] border-dashed border-borderColor items-center mb-6 rounded-lg p-6">
+      <div className="max-sm:col-span-2 max-sm:size-[60px] col-span-1 size-[80px] rounded-lg">
         <img
           src={data?.imgProduct || logo}
           alt={data?.altImage || "img"}
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
-      <div className="col-[2/8] sm:ml-4 sm:flex sm:w-full sm:justify-between">
-        <div className="mt-5 sm:mt-0">
-          <h2 className="text-lg font-bold text-gray-900">
+      <div className="max-sm:col-[3/8] col-[2/8] sm:ml-4 sm:flex sm:w-full sm:justify-between">
+        <div className="max-sm:mt-0 mt-5 sm:mt-0">
+          <h2 className="max-sm:text-[14px] text-lg font-bold text-gray-900">
             {data?.nameProduct}
           </h2>
           {data?.note && (
-            <p className="mt-1 italic text-[10px] text-gray-700">
-              <span className="text-[14px] italic underline">Ghi chú: </span>
+            <p className="max-sm:text-[8px] mt-1 italic text-[10px] text-gray-700">
+              <span className="max-sm:text-[10px] text-[14px] italic underline">
+                Ghi chú:{" "}
+              </span>
               {"   "}
               {`" ${data?.note} "`}
             </p>
           )}
         </div>
-        <div className="mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
+        <div className="max-sm:mt-[8px] mt-4 flex justify-between sm:space-y-6 sm:mt-0 sm:block sm:space-x-6">
           <BtnQuantity
             data={data}
             currentValue={currentValue}
@@ -103,16 +105,16 @@ const ProductItemCart = ({ data, setReloadCart }) => {
           <div className="flex items-center space-x-4">
             {data?.sale ? (
               <div className="flex items-center">
-                <span className="mr-[2px] line-through text-[12px] opacity-30 italic">
+                <span className="max-sm:text-[8px] mr-[2px] line-through text-[12px] opacity-30 italic">
                   {priceProduct}
                 </span>
-                <span className="mr-[8px] relative top-[-4px] line-through font-normal text-[10px] opacity-30 italic">
+                <span className="max-sm:text-[8px] mr-[8px] relative top-[-4px] line-through font-normal text-[10px] opacity-30 italic">
                   đ
                 </span>
-                <span className="text-[15px] font-normal">
+                <span className="max-sm:text-[10px] text-[15px] font-normal">
                   {afterSaleProduct()}
                 </span>
-                <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                <span className="max-sm:text-[8px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                   đ
                 </span>
               </div>

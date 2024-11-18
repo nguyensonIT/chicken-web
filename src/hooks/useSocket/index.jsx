@@ -16,6 +16,8 @@ const useSocket = () => {
     // Tạo kết nối WebSocket
     socketRef.current = io(SOCKET_URL);
 
+    if (socketRef.current) {
+    }
     // Xử lý sự kiện kết nối
     socketRef.current.on("connect", () => {
       setConnected(true);

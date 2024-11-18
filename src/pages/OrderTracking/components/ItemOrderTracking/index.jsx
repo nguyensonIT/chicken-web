@@ -21,26 +21,26 @@ const ItemOrderTracking = ({
   return (
     <div
       onClick={() => handleClickItemOrderTracking(data)}
-      className="bg-white relative p-[10px] mb-[10px] flex border border-borderColor hover:bg-gray-50 cursor-pointer"
+      className="max-sm:flex-col bg-white relative p-[10px] mb-[10px] flex border border-borderColor hover:bg-gray-50 cursor-pointer"
     >
-      <div className="w-1/2 flex flex-col border-r-[2px] border-r-borderColor">
+      <div className="max-sm:w-full max-sm:border-0 w-1/2 flex flex-col border-r-[2px] border-r-borderColor">
         {/* STT đơn hàng, id đơn hàng, tên khách hàng  */}
         <div className="flex items-center">
-          <span className="flex text-white justify-center items-center w-[30px] h-[30px] bg-bgEmphasizeColor">
+          <span className="max-sm:text-[14px] flex text-white justify-center items-center w-[30px] h-[30px] bg-bgEmphasizeColor">
             Mã
           </span>
           <span className="text-[10px] font-bold ml-[5px]">#{data.subId}</span>
         </div>
-        <span className="text-[16px]">
+        <span className="max-sm:text-[14px] text-[16px]">
           Đã đặt vào{" "}
           <p className="inline-block font-bold">{`${timePart} ( Ngày ${datePart} )`}</p>
         </span>
-        <span className="flex">
+        <span className="max-sm:text-[14px] flex">
           Khách hàng:{" "}
           <h1 className="ml-[5px] font-bold">{data.nameCustomers}</h1>
         </span>
       </div>
-      <div className="w-1/2 flex justify-around items-end">
+      <div className="max-sm:order-2 max-sm:w-full max-sm:justify-between max-sm:border-t-[1px] w-1/2 flex justify-around items-end">
         <p className="font-bold">{data.data.length} món</p>
         <p className="font-bold">
           {formatCurrency(data.totalBill)}{" "}
@@ -50,11 +50,11 @@ const ItemOrderTracking = ({
         </p>
       </div>
       {/* thời gian đếm ngược */}
-      <div className="absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor">
-        <p className="font-bold mr-[10px]">Trạng thái: </p>
+      <div className="max-sm:order-1 max-sm:border-0 max-sm:px-0 sm:absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor">
+        <p className="max-sm:text-[14px] font-bold mr-[10px]">Trạng thái: </p>
         {data.statusOrder.isPreparing && (
           <>
-            <p>Quán đang chuẩn bị hàng...</p>
+            <p className="max-sm:text-[12px]">Quán đang chuẩn bị hàng...</p>
             <img className="w-[20px] h-[20px]" src={bikeShip} alt="bikeImg" />
           </>
         )}

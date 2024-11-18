@@ -22,8 +22,11 @@ const PopupCheckInfoOrder = ({
     user,
     setQuantityProductInCartContext,
     setRenderOrderByIdUserContext,
+    dataAllProductContext,
   } = useHandleContext();
-  const { sendMessage, connected } = useSocket();
+
+  const { sendMessage, connected, statusOpenDoor } = useSocket();
+
   const [totalBill, setTotalBill] = useState(0);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -32,7 +35,33 @@ const PopupCheckInfoOrder = ({
     JSON.parse(localStorage.getItem("productsInCart")) || []
   );
 
+  const [dataUpdatedCartStatus, setDataUpdatedCartStatus] = useState([]);
+
+  // Tạo mảng chứa tất cả các sản phẩm từ mọi danh mục
+  const allProductsFlattened = dataAllProductContext.flatMap(
+    (category) => category.products
+  );
+
+  const fncupdatedCartStatus = () => {
+    const updatedCartStatus = dataProductInCart.map((cartItem) => {
+      const productFromDb = allProductsFlattened.find(
+        (dbItem) => dbItem.idProduct === cartItem.idProduct
+      );
+
+      return {
+        ...cartItem,
+        isActive: productFromDb ? productFromDb.isActive : false,
+      };
+    });
+    setDataUpdatedCartStatus(updatedCartStatus);
+  };
+
   const handleOrder = () => {
+    setIsLoading(true);
+    //Check product isActive
+    const productNotActive = dataUpdatedCartStatus.filter(
+      (product) => product.isActive === false
+    );
     const subId = uuidv4();
     const dataOrder = {
       data: dataProductInCart,
@@ -41,37 +70,54 @@ const PopupCheckInfoOrder = ({
       subId,
       userOrderId: user?.id,
     };
-    setIsLoading(true);
-    if (connected) {
-      handleOrderService
-        .postOrder(dataOrder)
-        .then((res) => {
-          if (res.status === 201) {
-            sendMessage({
-              ...dataUserOrder,
-              isNewNotify: true,
-              isCanceled: false,
-              subId,
-            });
-            toast.success("Đặt hàng thành công!");
-            handleCloseCheckInfoOrder();
-            handleCheckOrder();
-            setQuantityProductInCartContext(0);
-            setRenderOrderByIdUserContext(subId);
-            localStorage.removeItem("productsInCart");
-            localStorage.setItem("subCodeOrder", subId);
-            navigate("/order-tracking");
-          }
-        })
-        .catch((err) => console.log("Lỗi order", err))
-        .finally(() => setIsLoading(false));
-    } else {
-      toast.warn("Mạng kém vui lòng thử lại!");
-      handleCheckOrder();
-      handleCloseCheckInfoOrder();
+
+    if (productNotActive.length > 0) {
+      const productNames = productNotActive
+        .map((product) => product.nameProduct)
+        .join(", ");
+      toast.warn(`Sản phẩm ${productNames} đang hết hàng`);
       setIsLoading(false);
+    } else {
+      if (statusOpenDoor) {
+        if (connected) {
+          handleOrderService
+            .postOrder(dataOrder)
+            .then((res) => {
+              if (res.status === 201) {
+                sendMessage({
+                  ...dataUserOrder,
+                  isNewNotify: true,
+                  isCanceled: false,
+                  subId,
+                });
+                toast.success("Đặt hàng thành công!");
+                handleCloseCheckInfoOrder();
+                handleCheckOrder();
+                setQuantityProductInCartContext(0);
+                setRenderOrderByIdUserContext(subId);
+                localStorage.removeItem("productsInCart");
+                localStorage.setItem("subCodeOrder", subId);
+                navigate("/order-tracking");
+              }
+            })
+            .catch((err) => console.log("Lỗi order", err))
+            .finally(() => setIsLoading(false));
+        } else {
+          toast.warn("Mạng kém vui lòng thử lại!");
+          handleCheckOrder();
+          handleCloseCheckInfoOrder();
+          setIsLoading(false);
+        }
+      } else {
+        toast.warn("Nhà hàng đang đóng cửa. Thời gian mở cửa 9h - 22h");
+        setIsLoading(false);
+      }
     }
   };
+
+  useEffect(() => {
+    fncupdatedCartStatus();
+  }, [dataAllProductContext]);
 
   useEffect(() => {
     const total = dataProductInCart.reduce((totalSum, item) => {

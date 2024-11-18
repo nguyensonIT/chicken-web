@@ -114,17 +114,23 @@ const Product = () => {
   return (
     <div className="px-[20px] py-[10px] bg-bgMainColor">
       <div className="pt-[10px]">
-        <h1 className="p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+        <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
           {nameCategory.title}
         </h1>
         {searchParams.get("category") === "sale" && isProductSale === false && (
-          <h1 className="text-center">{nameCategory.titleNotProduct}</h1>
+          <h1 className="max-sm:text-[14px] text-center">
+            {nameCategory.titleNotProduct}
+          </h1>
         )}
         {searchParams.get("category") === "hot" && isProductHot === false && (
-          <h1 className="text-center">{nameCategory.titleNotProduct}</h1>
+          <h1 className="max-sm:text-[14px] text-center">
+            {nameCategory.titleNotProduct}
+          </h1>
         )}
         {searchParams.get("category") === "new" && isProductNew === false && (
-          <h1 className="text-center">{nameCategory.titleNotProduct}</h1>
+          <h1 className="max-sm:text-[14px] text-center">
+            {nameCategory.titleNotProduct}
+          </h1>
         )}
         {dataIsLoadingContext.isLoadingProduct && (
           <div className="w-full text-center">
@@ -132,7 +138,7 @@ const Product = () => {
           </div>
         )}
         {!isAllsProduct ? (
-          <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
+          <div className="max-sm:grid-cols-1 grid grid-cols-3 gap-[10px] mt-[20px]">
             {dataPageProducts?.map((data, index) => {
               return <CardProduct key={index} data={data} />;
             })}
@@ -141,10 +147,10 @@ const Product = () => {
           dataAllsProductsArranged?.map((data, index) => {
             return (
               <div key={index} className="">
-                <h1 className="text-[24px] text-textEmphasizeColor py-[15px] font-bold">
+                <h1 className="max-sm:text-[14px] text-[24px] text-textEmphasizeColor py-[15px] font-bold">
                   {data.nameCategory}
                 </h1>
-                <div className="grid grid-cols-3 gap-[10px] mt-[20px]">
+                <div className="max-sm:grid-cols-1 grid grid-cols-3 gap-[10px] mt-[20px]">
                   {data.products.map((data, index) => {
                     return <CardProduct key={index} data={data} />;
                   })}

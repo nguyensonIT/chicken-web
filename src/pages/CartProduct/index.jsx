@@ -82,7 +82,7 @@ const CartProduct = () => {
   }, [isPopupCheckOrder]);
 
   return (
-    <div className="h-screen pt-[40px]">
+    <div className="max-sm:h-auto h-screen pt-[40px]">
       {dataProductCart.length === 0 && (
         <div className="flex justify-center mt-[-40px]">
           <div className="w-1/2 flex justify-center">
@@ -94,8 +94,8 @@ const CartProduct = () => {
           </div>
         </div>
       )}
-      <div className="mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-        <div className="h-screen overflow-scroll rounded-lg md:w-2/3">
+      <div className="max-sm:mb-[180px] mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+        <div className=" sm:h-screen overflow-scroll rounded-lg md:w-2/3">
           {/* item  */}
           {dataProductCart.length > 0 &&
             dataProductCart.map((data, index) => {
@@ -110,7 +110,7 @@ const CartProduct = () => {
         </div>
         {/* Sub total */}
         {dataProductCart.length > 0 && (
-          <div className="mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+          <div className="max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:h-auto max-sm:z-20 max-sm:mt-0 max-sm:p-[10px] mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
             <div className="mb-2 flex justify-between">
               <p className="text-gray-700">Tổng phụ</p>
               <p className="text-gray-700">
@@ -129,7 +129,7 @@ const CartProduct = () => {
                 </span>
               </p>
             </div>
-            <div className="flex justify-between">
+            <div className=" flex justify-between">
               <p className="text-gray-700">Phí ship</p>
               <p className="text-gray-700 italic line-through">
                 25.000
@@ -139,23 +139,25 @@ const CartProduct = () => {
               </p>
             </div>
             <hr className="my-4" />
-            <div className="flex justify-between">
-              <p className="text-lg font-bold">Tổng</p>
-              <div className="">
-                <p className="mb-1 text-lg font-bold">
-                  {formatCurrency(grandTotal())}
-                  <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
-                    đ
-                  </span>
-                </p>
+            <div className="max-sm:flex max-sm:justify-between max-sm:items-center">
+              <div className="max-sm:gap-[20px] max-sm:items-center flex justify-between">
+                <p className="text-lg font-bold">Tổng</p>
+                <div className="">
+                  <p className="max-sm:mb-0 mb-1 text-lg font-bold">
+                    {formatCurrency(grandTotal())}
+                    <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                      đ
+                    </span>
+                  </p>
+                </div>
               </div>
+              <button
+                onClick={handleCheckOrder}
+                className="max-sm:mt-0 max-sm:w-auto max-sm:px-[20px] mt-6 w-full rounded-md transition-all bg-btnColor py-1.5 font-medium text-blue-50 hover:bg-btnHoverColor"
+              >
+                Kiểm tra
+              </button>
             </div>
-            <button
-              onClick={handleCheckOrder}
-              className="mt-6 w-full rounded-md transition-all bg-btnColor py-1.5 font-medium text-blue-50 hover:bg-btnHoverColor"
-            >
-              Kiểm tra
-            </button>
           </div>
         )}
       </div>

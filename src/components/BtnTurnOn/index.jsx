@@ -22,7 +22,7 @@ const BtnTurnOn = ({ data, isTurnLive }) => {
       setIsActive(false);
 
       const body = {
-        id: data.idProduct,
+        id: data._id,
         isActive: false,
       };
 
@@ -52,7 +52,7 @@ const BtnTurnOn = ({ data, isTurnLive }) => {
       setIsActive(true);
 
       const body = {
-        id: data.idProduct,
+        id: data._id,
         isActive: true,
       };
 

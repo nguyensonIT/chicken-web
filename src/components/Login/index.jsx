@@ -45,15 +45,15 @@ function Login({ setIsDialog = () => {} }) {
   }, [dataDialog]);
 
   return ReactDOM.createPortal(
-    <div className="wrapper fixed flex justify-center items-center top-0 left-0 right-0 bottom-0 z-[999] bg-bgDialogColor">
+    <div className=" wrapper fixed flex justify-center items-center top-0 left-0 right-0 bottom-0 z-[999] bg-bgDialogColor">
       <div
         ref={refDialog}
-        className="dialog flex absolute flex-col w-[auto] h-[auto] p-[48px] rounded-[8px] bg-white "
+        className="max-sm:w-full max-sm:p-[20px] dialog flex absolute flex-col w-[auto] h-[auto] p-[48px] rounded-[8px] bg-white "
       >
         <div className="container w-[100%]">
-          <div className="wrapper-content w-[375px] m-auto p-[unset] grow-[1] shrink-[1] basis-[0%]">
+          <div className="max-sm:w-[auto] wrapper-content w-[375px] m-auto p-[unset] grow-[1] shrink-[1] basis-[0%]">
             <div className="content">
-              <h1 className="title text-center text-black text-[32px] my-[16px] mx-auto font-bold">
+              <h1 className="max-sm:text-[24px] title text-center text-black text-[32px] my-[16px] mx-auto font-bold">
                 {dataDialog[dataDialog.length - 1].title}
               </h1>
               {Array.isArray(dataItemSignUp)
@@ -75,7 +75,7 @@ function Login({ setIsDialog = () => {} }) {
                         <p className="icon-option flex items-center absolute left-[12px] w-[25px]">
                           {data.icon}
                         </p>
-                        <p>{data.name}</p>
+                        <p className="max-sm:text-[16px]">{data.name}</p>
                       </div>
                     </div>
                   ))
@@ -85,9 +85,11 @@ function Login({ setIsDialog = () => {} }) {
         </div>
 
         <div className="footer flex items-center justify-center h-[64px] m-[unset] text-black border-t-[0.5px] border-solid border-borderColor text-[15px] leading-[18px]">
-          <p>{dataDialog[dataDialog.length - 1].footer_des}</p>
+          <p className="max-sm:text-[14px]">
+            {dataDialog[dataDialog.length - 1].footer_des}
+          </p>
           <span
-            className="sign-up text-textEmphasizeColor font-semibold ml-[5px] cursor-pointer hover:underline"
+            className="max-sm:text-[14px] sign-up text-textEmphasizeColor font-semibold ml-[5px] cursor-pointer hover:underline"
             onClick={handleChangeForm}
           >
             {dataDialog[dataDialog.length - 1].footer_link}
