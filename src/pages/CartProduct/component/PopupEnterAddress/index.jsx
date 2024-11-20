@@ -170,122 +170,126 @@ const PopupEnterAddress = ({
         Để đặt hàng, vui lòng thêm địa chỉ nhận hàng
       </h1>
 
-      <div className="mt-[20px] flex gap-4">
-        <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
-          <input
-            onChange={handleChangeName}
-            value={name}
-            onBlur={handleBlurName}
-            onFocus={handleFocusName}
-            id="name"
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+      <div className="max-sm:w-full max-sm:items-start flex flex-col items-center justify-center">
+        <div className="max-sm:flex-col max-sm:w-full max-sm:mt-0 max-sm:gap-[0px] mt-[20px] flex gap-4">
+          <div className=" inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+            <input
+              onChange={handleChangeName}
+              value={name}
+              onBlur={handleBlurName}
+              onFocus={handleFocusName}
+              id="name"
+              className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            />
+            {!errName && (
+              <label
+                className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
+                  isFocusName
+                    ? "top-[-10px] opacity-[1]"
+                    : "top-[8px] opacity-[0.3]"
+                }`}
+                htmlFor="name"
+              >
+                Họ và Tên
+              </label>
+            )}
+            {errName && (
+              <label
+                className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
+                  isFocusName ? "top-[-10px] opacity-[1]" : "top-[8px] "
+                }`}
+                htmlFor="name"
+              >
+                {`*${errName}`}
+              </label>
+            )}
+          </div>
+          <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+            <input
+              onChange={hanldeChangePhone}
+              value={phone}
+              onBlur={handleBlurPhone}
+              onFocus={handleFocusPhone}
+              id="phone"
+              className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            />
+            {!errPhone && (
+              <label
+                className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
+                  isFocusPhone
+                    ? "top-[-10px] opacity-[1]"
+                    : "top-[8px] opacity-[0.3]"
+                }`}
+                htmlFor="phone"
+              >
+                Số điện thoại
+              </label>
+            )}
+            {errPhone && (
+              <label
+                className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
+                  isFocusPhone ? "top-[-10px] opacity-[1]" : "top-[8px] "
+                }`}
+                htmlFor="phone"
+              >
+                {`*${errPhone}`}
+              </label>
+            )}
+          </div>
+        </div>
+        <div className=" max-sm:w-full inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+          <textarea
+            onChange={hanldeChangeAddress}
+            value={address}
+            onBlur={handleBlurAddress}
+            onFocus={handleFocusAddress}
+            id="address"
+            className="h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
           />
-          {!errName && (
+          {!errAddress && (
             <label
               className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
-                isFocusName
+                isFocusAddress
                   ? "top-[-10px] opacity-[1]"
                   : "top-[8px] opacity-[0.3]"
               }`}
-              htmlFor="name"
+              htmlFor="address"
             >
-              Họ và Tên
+              Địa chỉ cụ thể
             </label>
           )}
-          {errName && (
+          {errAddress && (
             <label
               className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
-                isFocusName ? "top-[-10px] opacity-[1]" : "top-[8px] "
+                isFocusAddress ? "top-[-10px] opacity-[1]" : "top-[8px] "
               }`}
-              htmlFor="name"
+              htmlFor="address"
             >
-              {`*${errName}`}
+              {`*${errAddress}`}
             </label>
           )}
         </div>
-        <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
-          <input
-            onChange={hanldeChangePhone}
-            value={phone}
-            onBlur={handleBlurPhone}
-            onFocus={handleFocusPhone}
-            id="phone"
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
-          />
-          {!errPhone && (
-            <label
-              className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
-                isFocusPhone
-                  ? "top-[-10px] opacity-[1]"
-                  : "top-[8px] opacity-[0.3]"
-              }`}
-              htmlFor="phone"
-            >
-              Số điện thoại
-            </label>
-          )}
-          {errPhone && (
-            <label
-              className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
-                isFocusPhone ? "top-[-10px] opacity-[1]" : "top-[8px] "
-              }`}
-              htmlFor="phone"
-            >
-              {`*${errPhone}`}
-            </label>
-          )}
-        </div>
-      </div>
-      <div className="inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
-        <textarea
-          onChange={hanldeChangeAddress}
-          value={address}
-          onBlur={handleBlurAddress}
-          onFocus={handleFocusAddress}
-          id="address"
-          className="h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
-        />
-        {!errAddress && (
+        {/* Ghi chú  */}
+        <div className=" max-sm:w-full inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <label
             className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
-              isFocusAddress
+              isFocusNote
                 ? "top-[-10px] opacity-[1]"
                 : "top-[8px] opacity-[0.3]"
             }`}
-            htmlFor="address"
+            htmlFor="note"
           >
-            Địa chỉ cụ thể
+            Ghi chú
           </label>
-        )}
-        {errAddress && (
-          <label
-            className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
-              isFocusAddress ? "top-[-10px] opacity-[1]" : "top-[8px] "
-            }`}
-            htmlFor="address"
-          >
-            {`*${errAddress}`}
-          </label>
-        )}
-      </div>
-      {/* Ghi chú  */}
-      <div className="inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
-        <label
-          className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
-            isFocusNote ? "top-[-10px] opacity-[1]" : "top-[8px] opacity-[0.3]"
-          }`}
-          htmlFor="note"
-        >
-          Ghi chú
-        </label>
-        <textarea
-          onChange={hanldeChangeNote}
-          onBlur={handleBlurNote}
-          onFocus={handleFocusNote}
-          value={note}
-          id="note"
-          className="h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
-        />
+          <textarea
+            onChange={hanldeChangeNote}
+            onBlur={handleBlurNote}
+            onFocus={handleFocusNote}
+            value={note}
+            id="note"
+            className="h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+          />
+        </div>
       </div>
 
       {/* button  */}
@@ -305,7 +309,10 @@ const PopupEnterAddress = ({
       </div>
       {isPopupCheckInfoOrder && (
         <PopupWrapper>
-          <div ref={refDialog} className="relative my-[20px] mx-[40px]">
+          <div
+            ref={refDialog}
+            className="max-sm:mx-auto max-sm:my-[50px] relative my-[20px] mx-[40px]"
+          >
             <PopupCheckInfoOrder
               handleCheckOrder={handleCheckOrder}
               handleCloseCheckInfoOrder={handleCloseCheckInfoOrder}

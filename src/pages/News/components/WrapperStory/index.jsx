@@ -253,7 +253,7 @@ const WrapperStory = ({ data }) => {
               {positionImg !== 0 && (
                 <span
                   onClick={handlePrev}
-                  className="flex justify-center items-center text-white absolute top-[50%] left-[-60px] max-w-[80px] w-[50px] man-h-[80px] h-[50px] rounded-[50%] bg-slate-400 cursor-pointer"
+                  className="max-sm:left-[-50px] max-sm:size-[35px] flex justify-center items-center text-white absolute top-[50%] left-[-60px] max-w-[80px] w-[50px] man-h-[80px] h-[50px] rounded-[50%] bg-slate-400 cursor-pointer"
                 >
                   <FontAwesomeIcon
                     className="text-[20px]"
@@ -264,7 +264,7 @@ const WrapperStory = ({ data }) => {
               {positionImg !== dataDetailImg.length - 1 && (
                 <span
                   onClick={handleNext}
-                  className="flex justify-center items-center text-white absolute top-[50%] right-[-60px] max-w-[80px] w-[50px] man-h-[80px] h-[50px] rounded-[50%] bg-slate-400 cursor-pointer"
+                  className="max-sm:right-[-50px] max-sm:size-[35px] flex justify-center items-center text-white absolute top-[50%] right-[-60px] max-w-[80px] w-[50px] man-h-[80px] h-[50px] rounded-[50%] bg-slate-400 cursor-pointer"
                 >
                   <FontAwesomeIcon
                     className="text-[20px]"
@@ -327,7 +327,7 @@ const WrapperStory = ({ data }) => {
                   })}
                 </div>
               </div>
-              <div className="bottom-0 left-0 right-0 p-4 bg-white border-t">
+              <div className="max-sm:h-full max-sm:pt-[20px] bottom-0 left-0 right-0 p-4 bg-white border-t">
                 <div className="flex items-center gap-[10px]">
                   {user?.image ? (
                     <img
@@ -374,7 +374,7 @@ const WrapperStory = ({ data }) => {
                       )}
                     </div>
                   </div>
-                  <div className="flex items-center w-full rounded-full border bg-white overflow-hidden">
+                  <div className=" flex items-center w-full rounded-full border bg-white overflow-hidden">
                     {Object.keys(dataCmtClickReply).length !== 0 && (
                       <span className="relative">
                         <p className="leading-[20px] ml-[10px] pl-[5px] w-[80px] h-[20px] font-bold text-[8px] bg-blue-100 truncate">

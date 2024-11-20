@@ -139,10 +139,16 @@ const PopupCheckInfoOrder = ({
       <h1 className="text-[20px] uppercase font-bold">Xem lại đơn hàng</h1>
       {/* Đơn hàng  */}
       <div className="w-full mt-[20px]">
-        <div className="flex">
-          <h1 className="w-[40%] text-left font-bold">Tên mặt hàng</h1>
-          <p className="w-[20%] text-right font-bold">Số lượng</p>
-          <p className="w-[40%] text-right font-bold">Giá tiền</p>
+        <div className="max-sm:mb-[10px] flex">
+          <h1 className="max-sm:text-smDesc w-[40%] text-left font-bold">
+            Tên mặt hàng
+          </h1>
+          <p className="max-sm:text-smDesc w-[20%] text-right font-bold">
+            Số lượng
+          </p>
+          <p className="max-sm:text-smDesc w-[40%] text-right font-bold">
+            Giá tiền
+          </p>
         </div>
         <div className="border border-bgEmphasizeColor bg-[#FFF9E3]">
           {/* Item product  */}
@@ -152,7 +158,7 @@ const PopupCheckInfoOrder = ({
             })}
           </div>
           <div className="text-right">
-            <h1 className="text-[15px] uppercase font-bold text-right">
+            <h1 className="max-sm:text-sm text-[15px] uppercase font-bold text-right">
               Tổng hóa đơn:
             </h1>
             <span className="text-[15px]">{formatCurrency(totalBill)}</span>
@@ -163,8 +169,8 @@ const PopupCheckInfoOrder = ({
         </div>
       </div>
       {/* Địa chỉ  */}
-      <div className="w-full p-[5px] h-[150px] mt-[10px] overflow-y-auto border border-bgEmphasizeColor ">
-        <h1 className="uppercase font-bold">Địa chỉ</h1>
+      <div className="max-sm:px-[12px] w-full p-[5px] h-[150px] mt-[10px] overflow-y-auto border border-bgEmphasizeColor ">
+        <h1 className="max-sm:text-sm uppercase font-bold">Địa chỉ</h1>
         <div className="ml-[20px]">
           <p className="text-left font-bold">
             Tên:{" "}
@@ -187,18 +193,18 @@ const PopupCheckInfoOrder = ({
         </div>
       </div>
       {/* Button check order  */}
-      <div className="w-full mt-[20px] text-right">
+      <div className="max-sm:flex max-sm:justify-between w-full mt-[20px] text-right">
         <span
           onClick={handleCloseCheckInfoOrder}
-          className="text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-[red] hover:bg-red-400 cursor-pointer transition-all"
+          className="max-sm:px-[10px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-[red] hover:bg-red-400 cursor-pointer transition-all"
         >
           Trở lại
         </span>
         <span
           onClick={handleOrder}
           className={`${
-            isLoading && "bg-btnHoverColor pointer-events-none"
-          } ml-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor hover:bg-btnHoverColor cursor-pointer transition-all`}
+            isLoading && " bg-btnHoverColor pointer-events-none"
+          } max-sm:px-[10px] ml-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor hover:bg-btnHoverColor cursor-pointer transition-all`}
         >
           {isLoading ? (
             <FontAwesomeIcon className="loading" icon={faSpinner} />

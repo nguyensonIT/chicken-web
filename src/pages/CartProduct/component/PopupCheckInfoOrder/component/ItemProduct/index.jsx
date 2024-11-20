@@ -9,9 +9,13 @@ const ItemProduct = ({ data }) => {
   }
   return (
     <div className="w-full flex ">
-      <h1 className="w-[40%] text-left">{data.nameProduct}</h1>
-      <p className="w-[20%] text-right">{data.quantity}</p>
-      <p className="w-[40%] text-right">{formatCurrency(price)}</p>
+      <h1 className="max-sm:text-smDesc w-[40%] text-left">
+        {data.nameProduct}
+      </h1>
+      <p className="max-sm:text-smDesc w-[20%] text-right">{data.quantity}</p>
+      <p className="max-sm:text-smDesc w-[40%] text-right">
+        {formatCurrency(price)}
+      </p>
       <span className="mr-[8px] relative top-[-4px] font-normal text-[10px] italic">
         đ
       </span>

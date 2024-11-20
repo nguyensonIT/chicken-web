@@ -28,7 +28,12 @@ export default {
       backgroundImage: {
         'coolProfile': 'linear-gradient(135deg, #FDE68A, #FBBF24)',
       },
-      
+      fontSize:{
+        sm: "16px",
+        smTitle: "18px",
+        smDesc:"10px",
+        smBtn: "20px"
+      }
       
     },
   },

@@ -12,7 +12,10 @@ const DialogQuestionYesNo = ({
 }) => {
   return (
     <PopupWrapper>
-      <div ref={refDialog} className="relative w-[400px] my-[40px] mx-auto">
+      <div
+        ref={refDialog}
+        className="max-sm:w-[90%] max-sm:my-[50%] relative w-[400px] my-[40px] mx-auto"
+      >
         <div className=" pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
           <p className=" mb-[50px] text-[28px]">{title}</p>
           <div className="flex justify-end">

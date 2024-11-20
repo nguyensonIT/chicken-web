@@ -99,13 +99,16 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
       ref={dialogRef}
       className="fixed z-[999] top-0 bottom-0 right-0 left-0 bg-bgDialogColor    "
     >
-      <div ref={detailRef} className="my-[40px] w-[400px] mx-auto ">
+      <div
+        ref={detailRef}
+        className="max-sm:w-[90%] max-sm:my-[50%] my-[40px] w-[400px] mx-auto "
+      >
         <div className="p-[8px] bg-white shadow-lg rounded-lg overflow-hidden max-w-md">
           <div className="flex ">
             <div className="w-1/3 flex justify-center items-center">
               <div
                 onClick={handleClickImg}
-                className="max-w-[120px] max-h-[120px] p-[5px] border-solid border-[1px] border-borderColor cursor-pointer"
+                className="w-[120px] h-[120px] p-[5px] border-solid border-[1px] border-borderColor cursor-pointer"
               >
                 <img
                   src={data.imgProduct || logo}
@@ -115,10 +118,10 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
               </div>
             </div>
             <div className="w-2/3 p-4">
-              <h1 className="text-gray-900 font-bold text-2xl">
+              <h1 className="max-sm:text-smTitle text-gray-900 font-bold text-2xl">
                 {data.nameProduct}
               </h1>
-              <p className="mt-2 text-gray-600 text-sm italic">
+              <p className="max-sm:text-smDesc mt-2 text-gray-600 text-sm italic">
                 {data.descProduct}
               </p>
               <div className="flex item-center justify-between mt-3">
@@ -185,10 +188,10 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
         >
           <div
             ref={detailImgRef}
-            className="mx-auto mt-[30px] w-[400px] h-[400px] bg-white "
+            className="max-sm:w-[90%] max-sm:h-auto max-sm:my-[40%] mx-auto mt-[30px] w-[400px] h-[400px] bg-white "
           >
             <img
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               src={data.imgProduct || logo}
               alt={data.altImg || "img"}
             />

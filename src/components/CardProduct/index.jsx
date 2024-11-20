@@ -74,10 +74,10 @@ const CardProduct = ({ data }) => {
         />
       </div>
       <div className="content col-span-2 flex flex-col justify-between ">
-        <h1 className="max-sm:text-[14px] product-name overflow-ellipsis whitespace-nowrap overflow-hidden ">
+        <h1 className="text-sm product-name overflow-ellipsis whitespace-nowrap overflow-hidden ">
           {dataItemProduct?.nameProduct}
         </h1>
-        <p className="max-sm:text-[8px] desc italic text-[10px] overflow-ellipsis whitespace-nowrap overflow-hidden">
+        <p className="text-smDesc desc italic text-[10px] overflow-ellipsis whitespace-nowrap overflow-hidden">
           {dataItemProduct?.descProduct}
         </p>
         {dataItemProduct?.sale ? (

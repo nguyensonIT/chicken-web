@@ -83,7 +83,7 @@ const Home = () => {
       <div className="">
         {/* product sale  */}
         <div className="pt-[10px]">
-          <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản Phẩm khuyến mại
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -93,7 +93,7 @@ const Home = () => {
           )}
           {isProductSale === false &&
             !dataIsLoadingContext.isLoadingProduct && (
-              <h1 className="max-sm:text-[14px] text-center">
+              <h1 className="max-sm:text-sm text-center">
                 Hiện chưa có sản phẩm nào đang khuyến mại
               </h1>
             )}
@@ -110,7 +110,7 @@ const Home = () => {
         </div>
         {/* product hot  */}
         <div className="pt-[10px]">
-          <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản Phẩm hot
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -119,7 +119,7 @@ const Home = () => {
             </span>
           )}
           {isProductHot === false && !dataIsLoadingContext.isLoadingProduct && (
-            <h1 className="max-sm:text-[14px] text-center">
+            <h1 className="max-sm:text-sm text-center">
               Hiện chưa có sản phẩm nào hot
             </h1>
           )}
@@ -136,7 +136,7 @@ const Home = () => {
         </div>
         {/* product new  */}
         <div className="pt-[10px]">
-          <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
             Sản phẩm mới
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -145,7 +145,7 @@ const Home = () => {
             </span>
           )}
           {isProductNew === false && !dataIsLoadingContext.isLoadingProduct && (
-            <h1 className="max-sm:text-[14px] text-center">
+            <h1 className="max-sm:text-sm text-center">
               Hiện chưa có sản phẩm nào mới
             </h1>
           )}

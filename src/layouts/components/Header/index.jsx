@@ -213,7 +213,7 @@ function Header() {
 
         <Link
           to="/"
-          className="max-sm:w-[33.333%] max-sm:gap-[8px] max-sm:flex-col w-[25%] flex justify-center items-center gap-[20px]"
+          className="max-sm:w-[35%] max-sm:gap-[8px] max-sm:flex-col w-[25%] flex justify-center items-center gap-[20px]"
         >
           <div className="max-sm:size-[30px] logo size-[50px] ">
             <img
@@ -222,14 +222,14 @@ function Header() {
               alt="logo"
             />
           </div>
-          <p className="max-sm:text-[12px] text-center brand text-[#FFD700] font-bold text-[20px]">
+          <p className="text-sm text-center brand text-[#FFD700] font-bold text-[20px]">
             VUA GÀ TƯƠI
           </p>
         </Link>
 
         {/* MIDDLE HEADER */}
 
-        <div className="max-sm:w-[33.333%] w-[50%] flex flex-col justify-center items-center">
+        <div className="max-sm:w-[10%] w-[50%] flex flex-col justify-center items-center">
           {/* menu */}
           <ul className="max-sm:hidden flex">
             {/* map 1 */}
@@ -295,13 +295,16 @@ function Header() {
 
         {/* RIGHT HEADER  */}
 
-        <div className="max-sm:w-[33.333%] max-sm:flex-col w-[25%] flex justify-around items-center ">
-          <div className=" max-sm:w-full max-sm:justify-end max-sm:gap-[5px] flex justify-around items-center gap-[20px]">
+        <div className="max-sm:w-[55%] max-sm:flex-col max-sm:gap-[20px] w-[25%] flex justify-around items-center ">
+          <div className=" max-sm:w-full max-sm:justify-end max-sm:gap-[15px] flex justify-around items-center gap-[20px]">
             <Link
               to={"/cart"}
               className="relative pr-[8px] text-[18px] cursor-pointer text-cartColor"
             >
-              <FontAwesomeIcon icon={faCartShopping} />
+              <FontAwesomeIcon
+                className="max-sm:text-smBtn"
+                icon={faCartShopping}
+              />
               {/* quantity in cart */}
               {quantityProductInCart > 0 && (
                 <span className="max-sm:text-[8px] max-sm:min-w-[17px] max-sm:min-h-[17px] max-sm:right-[-3px] max-sm:top-[-8px] absolute block top-[-10px] right-[-8px] min-w-[20px] min-h-[20px] text-white text-[12px] flex justify-center items-center rounded-[50%] bg-textEmphasizeColor">
@@ -310,14 +313,14 @@ function Header() {
               )}
             </Link>
             {/* login  */}
-            <div>
+            <div className="">
               {token ? (
                 <div className="relative ">
                   <div
                     onClick={handleClickBoxAvatar}
                     className="flex justify-center items-center cursor-pointer"
                   >
-                    <p className="w-[80px] font-bold text-[12px] mr-[10px] truncate">
+                    <p className="max-sm:hidden w-[80px] font-bold text-[12px] mr-[10px] truncate">
                       {user?.name}
                     </p>
                     <img
@@ -333,7 +336,7 @@ function Header() {
                   {isListOptionBoxAvatar && (
                     <ul
                       ref={refMenu}
-                      className="py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid"
+                      className="py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid z-20"
                     >
                       {menuAvatar[0].prev && (
                         <li
@@ -364,7 +367,7 @@ function Header() {
                 <button
                   type="button"
                   onClick={handleDialogLogin}
-                  className="max-sm:py-[5px] max-sm:px-[4px] max-sm:text-[12px] transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+                  className="max-sm:py-[5px] max-sm:px-[4px] max-sm:text-smBtn text-sm transition-[2s] rounded-md bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
                 >
                   Đăng nhập
                 </button>
@@ -377,13 +380,16 @@ function Header() {
               onClick={handleTurnInpFind}
               className=" flex justify-center items-center size-[20px] "
             >
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
+              <FontAwesomeIcon
+                className="max-sm:text-smBtn"
+                icon={faMagnifyingGlass}
+              />
             </div>
             <div
               onClick={handleClickNavbar}
               className=" flex justify-center items-center size-[20px] "
             >
-              <FontAwesomeIcon icon={faBars} />
+              <FontAwesomeIcon className="max-sm:text-smBtn" icon={faBars} />
             </div>
             {isNavbar && (
               <PopupWrapper>
@@ -401,13 +407,13 @@ function Header() {
                             className="relative"
                           >
                             <span
-                              className="transition-[2s] text-[14px] block pl-[20px] py-[4px] border-b"
+                              className="transition-[2s] text-sm block pl-[20px] py-[10px] border-b"
                               key={index}
                             >
                               {menu.name}
                               <FontAwesomeIcon
                                 icon={faCaretDown}
-                                className="ml-[5px] text-[12px]"
+                                className="text-sm ml-[5px] text-[12px]"
                               />
                             </span>
                             {isNavChild && (
@@ -419,7 +425,7 @@ function Header() {
                                       key={index}
                                     >
                                       <Link
-                                        className="pl-[40px] py-[4px] text-[12px] border-b block transition-[2s] transition-all"
+                                        className="pl-[40px] py-[6px] text-[14px] border-b block transition-[2s] transition-all"
                                         to={menu.href}
                                       >
                                         <FontAwesomeIcon
@@ -438,7 +444,7 @@ function Header() {
                       }
                       return (
                         <NavLink
-                          className="nav-link block text-[14px] transition-[2s] pl-[20px] py-[4px] border-b "
+                          className="nav-link block text-sm transition-[2s] pl-[20px] py-[10px] border-b "
                           style={navLinkStyle}
                           to={menu.href}
                           key={index}

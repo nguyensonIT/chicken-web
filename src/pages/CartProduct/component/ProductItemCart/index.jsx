@@ -82,12 +82,12 @@ const ProductItemCart = ({ data, setReloadCart }) => {
       </div>
       <div className="max-sm:col-[3/8] col-[2/8] sm:ml-4 sm:flex sm:w-full sm:justify-between">
         <div className="max-sm:mt-0 mt-5 sm:mt-0">
-          <h2 className="max-sm:text-[14px] text-lg font-bold text-gray-900">
+          <h2 className="max-sm:text-sm text-lg font-bold text-gray-900">
             {data?.nameProduct}
           </h2>
           {data?.note && (
             <p className="max-sm:text-[8px] mt-1 italic text-[10px] text-gray-700">
-              <span className="max-sm:text-[10px] text-[14px] italic underline">
+              <span className="max-sm:text-smDesc text-[14px] italic underline">
                 Ghi chú:{" "}
               </span>
               {"   "}

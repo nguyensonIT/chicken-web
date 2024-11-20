@@ -8,16 +8,16 @@ const FindProduct = forwardRef(
     return (
       <div
         ref={resolvedRef}
-        className={`${className} find transition-all border focus:border-yellow-500 rounded-md flex items-center overflow-hidden`}
+        className={`${className} max-sm:border-0 max-sm:rounded-none find transition-all border focus:border-yellow-500 rounded-md flex items-center overflow-hidden`}
       >
         <input
           type="text"
           placeholder="Tìm kiếm món ăn..."
-          className="max-sm:text-[12px] py-2 px-3 focus:outline-none flex-1  "
+          className="max-sm:text-sm py-2 px-3 focus:outline-none flex-1  "
         />
         <button
           onClick={handleFindProduct}
-          className="max-sm:text-[12px] transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+          className="max-sm:text-smBtn max-sm:py-[4px] transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
         >
           Tìm kiếm
         </button>

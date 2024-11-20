@@ -3,11 +3,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SideBar from "../components/SideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faChevronLeft,
-  faChevronRight,
-  faList,
-} from "@fortawesome/free-solid-svg-icons";
+import { faBars, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 
 const RootLayout = () => {
@@ -33,12 +29,12 @@ const RootLayout = () => {
       </div>
       <div
         ref={refSidebar}
-        className="fixed max-sm:w-[0px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all"
+        className="fixed max-sm:w-[0px] max-sm:top-[140px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all"
       >
         <div
           ref={refBtn}
           onClick={handleClickSidebar}
-          className="sm:hidden flex justify-center items-center fixed py-[9px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor border-[1px] border-[white] z-20 transition-all"
+          className="sm:hidden max-sm:top-[140px] flex justify-center items-center fixed py-[9px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor border-[1px] border-[white] z-20 transition-all"
         >
           {isSidebar ? (
             <FontAwesomeIcon
@@ -47,7 +43,7 @@ const RootLayout = () => {
             />
           ) : (
             <FontAwesomeIcon
-              icon={faList}
+              icon={faBars}
               className="text-[20px] px-[4px] text-textEmphasizeColor"
             />
           )}
@@ -55,7 +51,7 @@ const RootLayout = () => {
         <SideBar />
       </div>
 
-      <div className="max-sm:ml-0 relative ml-[180px] overflow-y-auto top-[120px] transition-all">
+      <div className="max-sm:ml-0 max-sm:top-[140px] relative ml-[180px] overflow-y-auto top-[120px] transition-all">
         <Outlet />
         <div className="w-full">
           <Footer />

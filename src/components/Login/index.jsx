@@ -48,7 +48,7 @@ function Login({ setIsDialog = () => {} }) {
     <div className=" wrapper fixed flex justify-center items-center top-0 left-0 right-0 bottom-0 z-[999] bg-bgDialogColor">
       <div
         ref={refDialog}
-        className="max-sm:w-full max-sm:p-[20px] dialog flex absolute flex-col w-[auto] h-[auto] p-[48px] rounded-[8px] bg-white "
+        className="max-sm:w-[90%] max-sm:p-[20px] dialog flex absolute flex-col w-[auto] h-[auto] p-[48px] rounded-[8px] bg-white "
       >
         <div className="container w-[100%]">
           <div className="max-sm:w-[auto] wrapper-content w-[375px] m-auto p-[unset] grow-[1] shrink-[1] basis-[0%]">
