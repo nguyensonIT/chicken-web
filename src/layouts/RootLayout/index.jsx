@@ -27,14 +27,17 @@ const RootLayout = () => {
       <div className="fixed top-0 left-0 right-0 z-[20]">
         <Header />
       </div>
-      <div
-        ref={refSidebar}
-        className="fixed max-sm:w-[0px] max-sm:top-[140px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all"
-      >
+      <div>
+        <div
+          ref={refSidebar}
+          className="fixed max-sm:w-[0px] max-sm:top-[140px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all fixedSidebar"
+        >
+          <SideBar />
+        </div>
         <div
           ref={refBtn}
           onClick={handleClickSidebar}
-          className="sm:hidden max-sm:top-[140px] flex justify-center items-center fixed py-[9px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor border-[1px] border-[white] z-20 transition-all"
+          className="sm:hidden max-sm:top-[140px] flex justify-center items-center fixed py-[9px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor border-[1px] border-[white] z-10  transition-all fixedBtn"
         >
           {isSidebar ? (
             <FontAwesomeIcon
@@ -48,7 +51,6 @@ const RootLayout = () => {
             />
           )}
         </div>
-        <SideBar />
       </div>
 
       <div className="max-sm:ml-0 max-sm:top-[140px] relative ml-[180px] overflow-y-auto top-[120px] transition-all">
