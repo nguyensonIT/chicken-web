@@ -163,7 +163,7 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
               <textarea
                 value={note}
                 onChange={handleChangeNote}
-                className="w-full px-[10px] py-[10px] mt-[10px] italic text-[12px] outline-none border border-borderColor rounded-md"
+                className="max-sm:text-inputSize w-full px-[10px] py-[10px] mt-[10px] italic text-[12px] outline-none border border-borderColor rounded-md"
                 rows="2"
                 placeholder="VD: Không cay,..."
               ></textarea>

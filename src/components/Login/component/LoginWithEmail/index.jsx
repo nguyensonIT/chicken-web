@@ -60,11 +60,11 @@ function LoginWithEmail() {
         onSubmit={handleSubmit(handleLogin)}
       >
         <label className="lable-login font-semibold text-[14px]">
-          Nhập Email của bạn
+          Nhập Email, mật khẩu của bạn
         </label>
-        <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type="text"
             placeholder="Nhập email của bạn"
             {...register("username", {
@@ -75,9 +75,9 @@ function LoginWithEmail() {
             })}
           />
         </div>
-        <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type={isEyePassword ? "text" : "password"}
             placeholder="Mật khẩu"
             {...register("password", {
@@ -134,7 +134,7 @@ function LoginWithEmail() {
           </a>
         </div>
         <button
-          className={`max-sm:text-[14px] btn-login transition-all text-white block w-[100%] py-[4px] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor ${
+          className={`max-sm:text-sm max-sm:py-[10px] btn-login transition-all text-white block w-[100%] py-[4px] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor ${
             isLoading ? "pointer-events-none opacity-[0.5]" : ""
           }`}
           type="submit"

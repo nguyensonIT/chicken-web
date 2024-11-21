@@ -172,14 +172,14 @@ const PopupEnterAddress = ({
 
       <div className="max-sm:w-full max-sm:items-start flex flex-col items-center justify-center">
         <div className="max-sm:flex-col max-sm:w-full max-sm:mt-0 max-sm:gap-[0px] mt-[20px] flex gap-4">
-          <div className=" inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+          <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
             <input
               onChange={handleChangeName}
               value={name}
               onBlur={handleBlurName}
               onFocus={handleFocusName}
               id="name"
-              className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+              className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             />
             {!errName && (
               <label
@@ -204,14 +204,14 @@ const PopupEnterAddress = ({
               </label>
             )}
           </div>
-          <div className="inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+          <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
             <input
               onChange={hanldeChangePhone}
               value={phone}
               onBlur={handleBlurPhone}
               onFocus={handleFocusPhone}
               id="phone"
-              className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+              className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             />
             {!errPhone && (
               <label
@@ -244,7 +244,7 @@ const PopupEnterAddress = ({
             onBlur={handleBlurAddress}
             onFocus={handleFocusAddress}
             id="address"
-            className="h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
           />
           {!errAddress && (
             <label
@@ -287,7 +287,7 @@ const PopupEnterAddress = ({
             onFocus={handleFocusNote}
             value={note}
             id="note"
-            className="h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] pt-[5px] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
           />
         </div>
       </div>

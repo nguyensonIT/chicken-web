@@ -92,9 +92,9 @@ function SignupWithEmail() {
           Nhập Email của bạn:
           <p className="inline text-[20px] text-[red]">*</p>
         </label>
-        <div className="inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="max-sm:h-smInpHeight inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type="text"
             placeholder="Email"
             {...register("username", {
@@ -109,9 +109,9 @@ function SignupWithEmail() {
             })}
           />
         </div>
-        <div className="inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="max-sm:h-smInpHeight inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type={isEyePassword ? "text" : "password"}
             placeholder="Mật khẩu"
             {...register("password", {
@@ -138,9 +138,9 @@ function SignupWithEmail() {
             )}
           </div>
         </div>
-        <div className="inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="max-sm:h-smInpHeight inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type={isEyeCofirmPassword ? "text" : "password"}
             placeholder="Nhập lại mật khẩu"
             {...register("confirmPassword", {
@@ -162,9 +162,9 @@ function SignupWithEmail() {
         <label className="lable-signup mt-[9px] font-semibold text-[14px]">
           Tên bạn muốn hiển thị:
         </label>
-        <div className="inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        <div className="max-sm:h-smInpHeight inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
           <input
-            className="h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+            className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
             type="text"
             placeholder="VD: Nguyễn A... ( Mặc định là email của bạn )"
             {...register("nameuser")}
@@ -212,7 +212,7 @@ function SignupWithEmail() {
         <button
           className={`${
             isLoading ? "pointer-events-none opacity-[0.3]" : ""
-          } max-sm:text-[14px] btn-signup transition-all py-[4px] text-white block w-[100%] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor`}
+          } max-sm:py-[10px] max-sm:text-sm btn-signup transition-all py-[4px] text-white block w-[100%] my-[9px] mx-0 bg-btnColor hover:bg-btnHoverColor`}
         >
           {isLoading ? (
             <FontAwesomeIcon className="loading" icon={faSpinner} />

@@ -117,7 +117,7 @@ const OrderTracking = () => {
           {isCode ? (
             <div>
               <input
-                className="max-sm:text-[12px] pr-[10px] outline-none bg-bgMainColor font-bold"
+                className="max-sm:text-[12px] max-sm:text-inputSize pr-[10px] outline-none bg-bgMainColor font-bold"
                 type="text"
                 ref={codeRef}
                 value={codeOrderCustomer}
@@ -146,13 +146,13 @@ const OrderTracking = () => {
           <input
             type="text"
             placeholder="Nhập mã đơn hàng..."
-            className="max-sm:text-[12px] py-2 px-3 focus:outline-none flex-1 "
+            className="max-sm:text-inputSize py-2 px-3 focus:outline-none flex-1 "
             value={valueCode}
             onChange={handleChangeCode}
           />
           <button
             onClick={handleFindOrder}
-            className="max-sm:text-[12px] transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+            className="max-sm:text-sm transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
           >
             {isLoading ? (
               <FontAwesomeIcon className="loading" icon={faSpinner} />

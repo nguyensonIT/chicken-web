@@ -29,10 +29,14 @@ export default {
         'coolProfile': 'linear-gradient(135deg, #FDE68A, #FBBF24)',
       },
       fontSize:{
+        inputSize: "16px",
         sm: "16px",
         smTitle: "18px",
         smDesc:"10px",
         smBtn: "20px"
+      },
+      height:{
+        smInpHeight: "45px"
       }
       
     },

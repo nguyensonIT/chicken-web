@@ -2,121 +2,121 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 400;
-    font-style: normal;
+body {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .be-vietnam-pro-thin {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 100;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-extralight {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 200;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-light {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-regular {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-medium {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 500;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-semibold {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-bold {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 700;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-extrabold {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 800;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-black {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 900;
-    font-style: normal;
-  }
-  
-  .be-vietnam-pro-thin-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 100;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-extralight-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 200;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-light-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 300;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-regular-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 400;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-medium-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 500;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-semibold-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 600;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-bold-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 700;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-extrabold-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 800;
-    font-style: italic;
-  }
-  
-  .be-vietnam-pro-black-italic {
-    font-family: "Be Vietnam Pro", sans-serif;
-    font-weight: 900;
-    font-style: italic;
-  }
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
 
-  /* custom-scrollbar.css */
+.be-vietnam-pro-extralight {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.be-vietnam-pro-light {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.be-vietnam-pro-regular {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.be-vietnam-pro-medium {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.be-vietnam-pro-semibold {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.be-vietnam-pro-bold {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.be-vietnam-pro-extrabold {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.be-vietnam-pro-black {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.be-vietnam-pro-thin-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.be-vietnam-pro-extralight-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.be-vietnam-pro-light-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.be-vietnam-pro-regular-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.be-vietnam-pro-medium-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.be-vietnam-pro-semibold-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.be-vietnam-pro-bold-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.be-vietnam-pro-extrabold-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.be-vietnam-pro-black-italic {
+  font-family: "Be Vietnam Pro", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* custom-scrollbar.css */
 /* Thanh cuộn chính */
 ::-webkit-scrollbar {
   width: 5px; /* Chiều rộng của thanh cuộn */
@@ -130,13 +130,11 @@ body{
 
 /* Handle (thanh cuộn chính) */
 ::-webkit-scrollbar-thumb {
-  background: #EBDFEB; /* Màu của thanh cuộn */
+  background: #ebdfeb; /* Màu của thanh cuộn */
   border-radius: 10px; /* Bo tròn các góc của thanh cuộn */
 }
 
 /* Khi rê chuột lên thanh cuộn */
 ::-webkit-scrollbar-thumb:hover {
-  background: #B6A7CB; /* Màu của thanh cuộn khi rê chuột lên */
+  background: #b6a7cb; /* Màu của thanh cuộn khi rê chuột lên */
 }
-
-  
