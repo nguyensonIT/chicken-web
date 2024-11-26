@@ -104,19 +104,23 @@ const ProductItemCart = ({ data, setReloadCart }) => {
           />
           <div className="flex items-center space-x-4">
             {data?.sale ? (
-              <div className="flex items-center">
-                <span className="max-sm:text-[8px] mr-[2px] line-through text-[12px] opacity-30 italic">
-                  {priceProduct}
-                </span>
-                <span className="max-sm:text-[8px] mr-[8px] relative top-[-4px] line-through font-normal text-[10px] opacity-30 italic">
-                  đ
-                </span>
-                <span className="max-sm:text-[10px] text-[15px] font-normal">
-                  {afterSaleProduct()}
-                </span>
-                <span className="max-sm:text-[8px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
-                  đ
-                </span>
+              <div className="max-sm:flex-col flex items-center">
+                <div className="flex">
+                  <span className="max-sm:text-[8px] mr-[2px] line-through text-[12px] opacity-30 italic">
+                    {priceProduct}
+                  </span>
+                  <span className="max-sm:text-[8px] mr-[8px] relative top-[-4px] line-through font-normal text-[10px] opacity-30 italic">
+                    đ
+                  </span>
+                </div>
+                <div className="flex">
+                  <span className="max-sm:text-[10px] text-[15px] font-normal">
+                    {afterSaleProduct()}
+                  </span>
+                  <span className="max-sm:text-[8px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                    đ
+                  </span>
+                </div>
               </div>
             ) : (
               <div className="flex items-center">

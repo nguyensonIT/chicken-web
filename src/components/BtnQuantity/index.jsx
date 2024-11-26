@@ -1,4 +1,5 @@
 import { handleAddCartFnc, handleDecreaseCartFnc } from "../Function";
+import { v4 as uuidv4 } from "uuid";
 
 const BtnQuantity = ({
   setReloadCart,
@@ -7,6 +8,7 @@ const BtnQuantity = ({
   data = {},
 }) => {
   const isEmptyObject = Object.keys(data).length === 0;
+  const idRandom = uuidv4();
 
   const handleChangeValue = (e) => {
     setCurrentValue(e.target.value);
@@ -15,7 +17,7 @@ const BtnQuantity = ({
     setCurrentValue((prev) => prev + 1);
     if (!isEmptyObject) {
       handleAddCartFnc(data);
-      setReloadCart(data.quantity);
+      setReloadCart(idRandom);
     }
   };
   const handleDecrease = () => {
@@ -24,7 +26,7 @@ const BtnQuantity = ({
     }
     if (!isEmptyObject) {
       handleDecreaseCartFnc(data);
-      setReloadCart(data.quantity);
+      setReloadCart(idRandom);
     }
   };
 

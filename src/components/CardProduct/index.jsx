@@ -11,7 +11,7 @@ import { useHandleContext } from "../../contexts/UserProvider";
 import { handleAddCartFnc } from "../Function";
 import useSocket from "../../hooks/useSocket";
 
-const CardProduct = ({ data }) => {
+const CardProduct = ({ data = [] }) => {
   const { statusOpenDoor } = useSocket();
 
   const [dataItemProduct, setDataItemProduct] = useState(data || []);

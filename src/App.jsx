@@ -28,7 +28,7 @@ function App() {
     <GlobalStyles>
       {ReactDOM.createPortal(
         <div className="z-[9999]">
-          <ToastContainer />
+          <ToastContainer autoClose={1000} />
         </div>,
         document.body
       )}

@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 import SideBar from "../components/SideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const RootLayout = () => {
   const refBtn = useRef();
@@ -12,25 +12,48 @@ const RootLayout = () => {
 
   const [isSidebar, setIsSidebar] = useState(false);
 
+  const handleClickOutside = (event) => {
+    if (!refBtn.current.contains(event.target)) {
+      if (refSidebar.current && refSidebar.current.contains(event.target)) {
+        setIsSidebar(true);
+        refSidebar.current.style.width = "180px";
+        refBtn.current.style.left = "180px";
+      } else {
+        setIsSidebar(false);
+        refSidebar.current.style.width = "0px";
+        refBtn.current.style.left = "0px";
+      }
+    }
+  };
+
   const handleClickSidebar = () => {
-    setIsSidebar((prev) => !prev);
     if (isSidebar) {
+      setIsSidebar(false);
       refSidebar.current.style.width = "0px";
       refBtn.current.style.left = "0px";
     } else {
+      setIsSidebar(true);
       refSidebar.current.style.width = "180px";
       refBtn.current.style.left = "180px";
     }
   };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div>
       <div className="fixed top-0 left-0 right-0 z-[20]">
         <Header />
       </div>
       <div>
+        {/* sidebar mobile */}
         <div
           ref={refSidebar}
-          className="fixed max-sm:w-[0px] max-sm:top-[140px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all fixedSidebar"
+          className="fixed sm:hidden max-sm:w-[0px] max-sm:top-[140px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all"
         >
           <SideBar />
         </div>
@@ -50,6 +73,10 @@ const RootLayout = () => {
               className="text-[20px] px-[4px] text-textEmphasizeColor"
             />
           )}
+        </div>
+        {/* sidebar pc */}
+        <div className="fixed max-sm:hidden w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all fixedSidebar">
+          <SideBar />
         </div>
       </div>
 

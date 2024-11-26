@@ -249,7 +249,7 @@ function Header() {
                         className="ml-[5px] text-[12px]"
                       />
                     </NavLink>
-                    <ul className="active-nav absolute bg-[white] mt-[20px] p-[10px] shadow-md">
+                    <ul className="active-nav absolute bg-[white] mt-[20px] p-[10px] shadow-md z-10">
                       <li className="absolute h-[27px] w-full bg-[transparent]  top-[-26px] left-0"></li>
                       <li className="absolute top-[-5px] left-[30px] border-solid border-x-[5px] border-x-[transparent] border-b-[5px] border-b-[white] "></li>
                       {/* map 2 */}
