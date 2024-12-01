@@ -109,14 +109,14 @@ const AdminOrderCustomers = () => {
 
   return (
     <div className="max-w-full">
-      <h1 className="fixed top-[60px] right-0 left-[180px] mx-[20px] py-[10px] text-[32px] bg-white font-bold text-center z-10">
+      <h1 className="max-sm:left-0 max-sm:z-1 fixed top-[120px] right-0 left-[180px] mx-[20px] py-[10px] text-[32px] bg-white font-bold text-center z-10">
         Quản lý đơn hàng
       </h1>
       <div className="shadow-md sm:rounded-lg ">
         {/* table  */}
         <div className="flex flex-col">
           {/* Router đơn hàng: đặt trước, đơn mới, lịch sử */}
-          <div className="text-xs fixed top-[120px] right-0 left-[180px] mb-[20px] mx-[20px] flex text-gray-700 uppercase bg-gray-50 border-b-[2px] border-b-borderColor z-10">
+          <div className="max-sm:left-0 max-sm:z-1 text-xs fixed top-[180px] right-0 left-[180px] mb-[20px] mx-[20px] flex text-gray-700 uppercase bg-gray-50 border-b-[2px] border-b-borderColor z-10">
             {/* Đặt trước  */}
             <div className="w-1/4 h-[40px] text-center border-r-[2px] border-r-borderColor">
               <Link
@@ -163,7 +163,7 @@ const AdminOrderCustomers = () => {
             </div>
           </div>
           {/* Box Item các đơn hàng */}
-          <div className="mt-[100px]">
+          <div className="mt-[100px] max-sm:z-0">
             {/* Loading  */}
             {isLoading && (
               <div className="flex justify-center">

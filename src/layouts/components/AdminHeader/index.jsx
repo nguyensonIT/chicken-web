@@ -4,7 +4,7 @@ import {
   faBell,
   faRotateForward,
 } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import logo from "../../../assets/img/Logo.png";
 import { useHandleContext } from "../../../contexts/UserProvider";
@@ -18,8 +18,20 @@ const AdminHeader = () => {
 
   const [notify, setNotify] = useState([]);
 
+  const refAvatar = useRef();
+  const refNotify = useRef();
+
+  const [isDisplayBoxAvatar, setIsDisplayBoxAvatar] = useState(false);
   const [isDisplayNotify, setIsDisplayNotify] = useState(false);
   const [isImg, setIsImg] = useState(user?.image);
+
+  const handleClickOutside = (event) => {
+    if (refAvatar.current && !refAvatar.current.contains(event.target)) {
+      setIsDisplayBoxAvatar(false);
+    } else if (refNotify.current && !refNotify.current.contains(event.target)) {
+      setIsDisplayNotify(false);
+    }
+  };
 
   const hanldeClickNotify = () => {
     setIsDisplayNotify(!isDisplayNotify);
@@ -32,6 +44,10 @@ const AdminHeader = () => {
   const handleDeleteNotify = () => {
     localStorage.removeItem("notify");
     setNotify([]);
+  };
+
+  const handleAvatar = () => {
+    setIsDisplayBoxAvatar((prev) => !prev);
   };
 
   const handleLogout = () => {
@@ -59,27 +75,39 @@ const AdminHeader = () => {
     setNotify(JSON.parse(localStorage.getItem("notify")));
   }, [renderPopupNotifyAdminContext]);
 
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="h-[60px] w-full px-[20px] grid grid-cols-4 items-center bg-bgHeaderAdminColor">
+    <div className="h-[120px] w-full px-[20px] grid grid-cols-6 items-center bg-bgHeaderAdminColor">
       {/* logo left  */}
-      <div className="flex col-[1/2]">
-        <div className="h-[30px] w-[30px] mr-[5px] text-black">
+      <div className="max-sm:flex-col max-sm:items-center max-sm:gap-[10px] flex items-center gap-[20px] col-[1/3]">
+        <div className="max-sm:size-[30px] size-[50px] mr-[5px] text-black rounded-md overflow-hidden">
           <img className="h-full w-full object-cover" src={logo} alt="logo" />
         </div>
-        <p className="text-black">VUA GÀ TƯƠI</p>
+        <p className="max-sm:text-[16px] block font-bold text-textHoverColor text-black">
+          VUA GÀ TƯƠI
+        </p>
       </div>
       {/* middle  */}
-      <div className="col-[2/4] text-black text-center">
+      <marquee className="col-[3/5] text-black text-center">
         Chào mừng đến với trang quản trị Admin!
-      </div>
+      </marquee>
       {/* right  */}
-      <div className="col-[4/5] text-black">
+      <div className="col-[5/7] text-black">
         <div className="relative flex justify-end">
           {/* Thông báo  */}
           <div className="relative mr-[20px]">
             {/* popup notify  */}
             {isDisplayNotify && (
-              <div className="absolute right-0 top-[40px] shadow-md rounded-sm bg-white">
+              <div
+                ref={refNotify}
+                className="absolute right-0 top-[40px] shadow-md rounded-sm bg-white"
+              >
                 <span className="absolute top-[-10px] right-[10px] border-solid border-x-[10px] border-x-[transparent] border-b-[10px] border-b-[white] "></span>
                 <div className="pl-[10px] pt-[5px] font-bold">
                   <FontAwesomeIcon
@@ -138,7 +166,10 @@ const AdminHeader = () => {
             )}
           </div>
           {/* Ảnh đại diện  */}
-          <div className="box-img w-[30px] h-[30px] rounded-[50%] overflow-hidden cursor-pointer">
+          <div
+            onClick={handleAvatar}
+            className="w-[30px] h-[30px] rounded-[50%] overflow-hidden cursor-pointer"
+          >
             {isImg ? (
               <img className="w-full h-full object-cover" src={isImg} alt="" />
             ) : (
@@ -146,11 +177,16 @@ const AdminHeader = () => {
                 Err
               </span>
             )}
-            <div className="absolute right-0 p-[10px] transition-all box-option hidden bg-white shadow-md top-[35px] z-10">
-              <span className="absolute w-full h-[8px] top-[-6px] left-0 bg-transparent"></span>
+          </div>
+          {/* box handle avatar  */}
+          {isDisplayBoxAvatar && (
+            <div
+              ref={refAvatar}
+              className="absolute right-0 p-[10px] transition-all bg-white shadow-md top-[35px] z-10"
+            >
               <button
                 onClick={handleLogout}
-                className="transition-all hover:text-textHoverColor"
+                className="max-sm:text-[14px] transition-all hover:text-textHoverColor"
               >
                 Đăng xuất{" "}
                 <span>
@@ -158,7 +194,7 @@ const AdminHeader = () => {
                 </span>
               </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

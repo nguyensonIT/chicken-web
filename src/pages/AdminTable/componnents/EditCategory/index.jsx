@@ -110,7 +110,7 @@ const EditCategory = () => {
   return (
     <div className="h-screen flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
       <h1 className="text-[24px] font-bold uppercase">Chỉnh sửa danh mục</h1>
-      <div className="border border-borderColor max-h-[800px] overflow-y-auto py-[40px] w-[70%]">
+      <div className="max-sm:w-[100%] border border-borderColor max-h-[800px] overflow-y-auto py-[40px] w-[70%]">
         {isLoading && (
           <div className="flex justify-center">
             <FontAwesomeIcon icon={faSpinner} className="loading" />

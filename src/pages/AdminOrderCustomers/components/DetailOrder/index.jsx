@@ -92,156 +92,166 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
 
   return (
     <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="w-full flex border border-borderColor">
-        {/* Left  */}
-        <div className="w-1/2 border border-borderColor">
-          <h1 className="py-[20px] text-[20px] text-center font-bold">
-            Thông tin khách hàng
-          </h1>
-          <div className="px-[20px] py-[20px] flex flex-col">
-            <span>
-              Tên khách hàng:{" "}
-              <p className="inline italic font-bold">
-                {dataDetail.nameCustomers}
-              </p>
-            </span>
-            <span>
-              Số điện thoại:{" "}
-              <p className="inline italic font-bold">
-                {dataDetail.phoneCustomers}
-              </p>
-            </span>
-            <span>
-              Địa chỉ:{" "}
-              <p className="inline italic font-bold">
-                {dataDetail.addressCustomers}
-              </p>
-            </span>
-            <br />
-            {dataDetail.note && (
+      <div className="max-sm:flex-col max-sm:h-[550px] w-full flex border border-borderColor overflow-y-auto">
+        <div className="max-sm:flex-col h-full w-full flex">
+          {/* Left  */}
+          <div className="max-sm:w-full w-1/2 border border-borderColor">
+            <h1 className="max-sm:py-[5px] max-sm:text-[18px] py-[20px] text-[20px] text-center font-bold">
+              Thông tin khách hàng
+            </h1>
+            <div className="max-sm:py-[0px] max-sm:text-[14px] px-[20px] py-[20px] flex flex-col">
               <span>
-                Ghi chú:{" "}
-                <p className="inline italic font-bold">{dataDetail.note}</p>
+                Tên khách hàng:{" "}
+                <p className="inline italic font-bold">
+                  {dataDetail.nameCustomers}
+                </p>
               </span>
-            )}
+              <span>
+                Số điện thoại:{" "}
+                <p className="inline italic font-bold">
+                  {dataDetail.phoneCustomers}
+                </p>
+              </span>
+              <span>
+                Địa chỉ:{" "}
+                <p className="inline italic font-bold">
+                  {dataDetail.addressCustomers}
+                </p>
+              </span>
+              <br />
+              {dataDetail.note && (
+                <span>
+                  Ghi chú:{" "}
+                  <p className="inline italic font-bold">{dataDetail.note}</p>
+                </span>
+              )}
+            </div>
           </div>
-        </div>
 
-        {/* Right  */}
-        <div className="w-1/2 border border-borderColor">
-          <h1 className="py-[20px] text-[20px] text-center font-bold">
-            Đơn hàng
-          </h1>
-          <div className="px-[20px] py-[20px] flex flex-col">
-            {/* Top  */}
-            <span>
-              Mã đơn hàng:{" "}
-              <p className="inline italic font-bold">
-                #{`${fncTakeIdEqualDayOrder()}-${fncTakeIdEqualIdOrder()}`}
-              </p>
-            </span>
-            <span>
-              Thời gian đặt đơn:{" "}
-              <p className="inline italic font-bold">Hôm nay {timePart}</p>
-            </span>
-            <br />
-            <hr />
-            <br />
-            {/* Các mặt hàng  */}
-            <div className="w-full h-[100px] overflow-y-auto">
-              {dataDetail.data.map((item, index) => {
-                return (
-                  <div key={index} className="w-full flex font-bold">
-                    <div className="w-8/12 flex">
-                      <span className="block w-2/12">x{item.quantity}</span>
-                      <div className="flex flex-col w-10/12">
-                        <span className="block ">{item.nameProduct}</span>
-                        {item.note && (
-                          <span className="font-normal italic text-[12px]">{`"${item.note}"`}</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="w-4/12 flex ">
-                      <div className="">
-                        <span>
-                          {formatCurrency(item.currentPriceProduct)}
-                          <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
-                            đ
-                          </span>
+          {/* Right  */}
+          <div className="max-sm:w-full w-1/2 border border-borderColor">
+            <h1 className="max-sm:py-[5px] max-sm:text-[18px] py-[20px] text-[20px] text-center font-bold">
+              Đơn hàng
+            </h1>
+            <div className="max-sm:py-0 px-[20px] py-[20px] flex flex-col">
+              {/* Top  */}
+              <span>
+                Mã đơn hàng:{" "}
+                <p className="max-sm:text-[10px] inline italic font-bold">
+                  #{`${fncTakeIdEqualDayOrder()}-${fncTakeIdEqualIdOrder()}`}
+                </p>
+              </span>
+              <span>
+                Thời gian đặt đơn:{" "}
+                <p className="inline italic font-bold">Hôm nay {timePart}</p>
+              </span>
+              <br />
+              <hr />
+              <br />
+              {/* Các mặt hàng  */}
+              <div className="max-sm:max-h-[200px] w-full max-h-[100px] overflow-y-auto">
+                {dataDetail.data.map((item, index) => {
+                  return (
+                    <div key={index} className="w-full flex font-bold">
+                      <div className="w-8/12 flex">
+                        <span className="max-sm:text-[12px] block w-2/12">
+                          x{item.quantity}
                         </span>
-                        {item.sale > 0 && (
-                          <span className="block font-normal italic text-[14px]">
-                            -{" "}
-                            {formatCurrency(
-                              (item.currentPriceProduct * item.sale) / 100
-                            )}
-                            <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                        <div className="max-sm:text-[12px] flex flex-col w-10/12">
+                          <span className="block ">{item.nameProduct}</span>
+                          {item.note && (
+                            <span className="max-sm:text-[10px] font-normal italic text-[12px]">{`"${item.note}"`}</span>
+                          )}
+                        </div>
+                      </div>
+                      <div className="w-4/12 flex ">
+                        <div className="max-sm:text-[12px]">
+                          <span>
+                            {formatCurrency(item.currentPriceProduct)}
+                            <span className="max-sm:text-[10px]  mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                               đ
                             </span>
                           </span>
-                        )}
+                          {item.sale > 0 && (
+                            <span className="max-sm:text-[10px] block font-normal italic text-[14px]">
+                              -{" "}
+                              {formatCurrency(
+                                (item.currentPriceProduct * item.sale) / 100
+                              )}
+                              <span className="max-sm:text-[10px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                                đ
+                              </span>
+                            </span>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-              <br />
-            </div>
-            <hr />
-            <br />
-            {/* Bottom  */}
-            <div className="w-full flex flex-col">
-              <div className="w-full flex">
-                <span className="block w-8/12">Tổng tiền món (giá gốc): </span>
-                <p className="block w-4/12 italic font-bold">
-                  {formatCurrency(dataDetail.subTotal)}
-                  <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
-                    đ
-                  </span>
-                </p>
-              </div>
-              <div className="w-full flex opacity-[0.5]">
-                <span className=" block w-8/12">Trừ khuyến mại:</span>
-                <p className="block w-4/12 italic">
-                  - {formatCurrency(dataDetail.priceSaleProduct)}
-                  <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
-                    đ
-                  </span>
-                </p>
-              </div>
-              <br />
-              <div className="w-full flex mb-[10px]">
-                <span className="block w-8/12">Tổng tiền quán nhận được:</span>
-                <p className="block w-4/12 italic font-bold text-textEmphasizeColor">
-                  {formatCurrency(dataDetail.totalBill)}
-                  <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
-                    đ
-                  </span>
-                </p>
+                  );
+                })}
+                <br />
               </div>
               <hr />
-              {/* Button  */}
-              <div className="flex gap-[10px] justify-end mt-[10px]">
-                <span className="block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-textHoverColor bg-bgEmphasizeColor border border-borderColor transition-all cursor-pointer">
-                  <FontAwesomeIcon className="mr-[5px]" icon={faPrint} />
-                  In
-                </span>
-                {dataDetail.statusOrder.isPreparing && (
-                  <>
-                    <span
-                      onClick={handleDelivered}
-                      className="block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-textHoverColor bg-bgEmphasizeColor border border-borderColor transition-all cursor-pointer"
-                    >
-                      Đã giao
+              <br />
+              {/* Bottom  */}
+              <div className="w-full flex flex-col">
+                <div className="w-full flex">
+                  <span className="block w-8/12">
+                    Tổng tiền món (giá gốc):{" "}
+                  </span>
+                  <p className="block w-4/12 italic font-bold">
+                    {formatCurrency(dataDetail.subTotal)}
+                    <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                      đ
                     </span>
-                    <span
-                      onClick={handleLogCancel}
-                      className="block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-[red] hover:border-[red] bg-[red] border border-borderColor transition-all cursor-pointer"
-                    >
-                      Hủy đơn hàng
+                  </p>
+                </div>
+                <div className="w-full flex opacity-[0.5]">
+                  <span className="max-sm:text-[12px] block w-8/12">
+                    Trừ khuyến mại:
+                  </span>
+                  <p className="max-sm:text-[10px] w-4/12 italic">
+                    - {formatCurrency(dataDetail.priceSaleProduct)}
+                    <span className="max-sm:text-[10px] mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                      đ
                     </span>
-                  </>
-                )}
+                  </p>
+                </div>
+                <br />
+                <div className="w-full flex mb-[10px]">
+                  <span className="block w-8/12">
+                    Tổng tiền quán nhận được:
+                  </span>
+                  <p className="block w-4/12 italic font-bold text-textEmphasizeColor">
+                    {formatCurrency(dataDetail.totalBill)}
+                    <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
+                      đ
+                    </span>
+                  </p>
+                </div>
+                <hr />
+                {/* Button  */}
+                <div className="max-sm:text-[14px] flex gap-[10px] justify-end mt-[10px]">
+                  <span className="max-sm:hidden block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-textHoverColor bg-bgEmphasizeColor border border-borderColor transition-all cursor-pointer">
+                    <FontAwesomeIcon className="mr-[5px]" icon={faPrint} />
+                    In
+                  </span>
+                  {dataDetail.statusOrder.isPreparing && (
+                    <>
+                      <span
+                        onClick={handleDelivered}
+                        className="block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-textHoverColor bg-bgEmphasizeColor border border-borderColor transition-all cursor-pointer"
+                      >
+                        Đã giao
+                      </span>
+                      <span
+                        onClick={handleLogCancel}
+                        className="block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-[red] hover:border-[red] bg-[red] border border-borderColor transition-all cursor-pointer"
+                      >
+                        Hủy đơn hàng
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>

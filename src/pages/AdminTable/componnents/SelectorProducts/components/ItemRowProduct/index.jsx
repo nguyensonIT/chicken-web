@@ -12,19 +12,21 @@ const ItemRowProduct = ({ data }) => {
   };
 
   return (
-    <tr>
-      <th></th>
-      <td className="px-6 py-3">
+    <tr className="max-sm:flex max-sm:justify-between max-sm:items-center">
+      <th className=""></th>
+      <td className="max-sm:px-0 max-sm:py-[10px] px-6 py-3">
         <input
           type="checkbox"
           checked={selectedProductsContext.includes(data._id)}
           onChange={() => toggleProductSelection(data._id)}
         />
       </td>
-      <td className="px-6 py-3">{data.nameProduct}</td>
-      <td className="px-6 py-3">
+      <td className="max-sm:px-0 max-sm:py-[10px] px-6 py-3">
+        <p className="max-sm:w-[150px] max-sm:truncate">{data.nameProduct}</p>
+      </td>
+      <td className="max-sm:px-0 max-sm:py-[10px] px-6 py-3">
         <img
-          className="w-[30px] h-[30px] object-cover"
+          className="max-sm:size-[40px] size-[30px] object-cover"
           src={data.imgProduct}
           alt={data.nameProduct}
         />

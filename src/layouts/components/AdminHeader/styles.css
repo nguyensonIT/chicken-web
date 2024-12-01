@@ -1,6 +1,4 @@
-.box-img:hover .box-option{
-    display: block;
-}
+
 .active-notify{
     animation: shake 0.2s infinite ease-in-out;
 }

@@ -213,7 +213,10 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
   }, [isDialogDeleteProduct]);
 
   return (
-    <form onSubmit={handleSubmit(handleBtnSubmit)}>
+    <form
+      className="max-sm:w-full max-sm:h-full"
+      onSubmit={handleSubmit(handleBtnSubmit)}
+    >
       {/* box error */}
       {(errors.nameProduct?.message ||
         errCategory ||
@@ -231,8 +234,8 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
         </div>
       )}
 
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="max-sm:table-auto w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead className="max-sm:hidden  text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th className="px-6 py-3">Ảnh SP</th>
             {!isEmpty && <th className="px-6 py-3">ID</th>}
@@ -244,8 +247,9 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="flex justify-center py-[20px]">
+          <tr className="max-sm:flex max-sm:flex-col gap-[20px]">
+            <td className="max-sm:justify-between max-sm:items-center flex justify-center py-[20px]">
+              <p className="sm:hidden text-black">Hình ảnh</p>
               <input
                 ref={inpRef}
                 className="hidden rounded-md"
@@ -288,19 +292,23 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
               )}
             </td>
             {!isEmpty && (
-              <td className="pointer-events-none">
+              <td className="max-sm:flex max-sm:justify-between max-sm:items-center pointer-events-none">
+                <p className="sm:hidden text-black">Mã</p>
                 <div className="py-[5px] border border-borderColor rounded-md">
                   <input
-                    className="text-[14px] text-center w-full px-[5px] outline-none"
+                    className="max-sm:text-inputSize text-[14px] text-center w-full px-[5px] outline-none"
                     {...register("idProduct")}
                   />
                 </div>
               </td>
             )}
-            <td>
+            <td className="max-sm:flex max-sm:justify-between max-sm:items-center">
+              <span className="sm:hidden text-black flex">
+                Tên <p className="text-textEmphasizeColor">*</p>
+              </span>
               <div className="py-[5px] border border-borderColor rounded-md">
                 <input
-                  className="text-[14px] text-center w-full px-[5px] outline-none"
+                  className="max-sm:text-inputSize text-[14px] text-center w-full px-[5px] outline-none"
                   {...register("nameProduct", {
                     required: "Nhập tên sản phẩm đã!",
                     maxLength: {
@@ -312,10 +320,13 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
                 />
               </div>
             </td>
-            <td>
+            <td className="max-sm:flex max-sm:justify-between max-sm:items-center">
+              <span className="sm:hidden text-black flex">
+                Giá <p className="text-textEmphasizeColor">*</p>
+              </span>
               <div className="flex pr-[5px] py-[5px] border border-borderColor rounded-md">
                 <input
-                  className="text-[14px] text-center w-full px-[5px] outline-none"
+                  className="max-sm:text-inputSize text-[14px] text-center w-full px-[5px] outline-none"
                   placeholder="VD: 160000..."
                   {...register("priceProduct", {
                     required: "Nhập giá tiền đi!",
@@ -328,9 +339,10 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
                 VNĐ
               </div>
             </td>
-            <td>
+            <td className="max-sm:flex max-sm:justify-between max-sm:items-center">
+              <span className="sm:hidden text-black">Mô tả</span>
               <textarea
-                className="text-[14px] outline-none px-[5px] border border-borderColor rounded-md"
+                className="max-sm:text-inputSize max-sm:h-[80px] text-[14px] outline-none px-[5px] border border-borderColor rounded-md"
                 placeholder="VD: Gà chiên giòn ngập dầu..."
                 {...register("descProduct", {
                   maxLength: {
@@ -340,20 +352,24 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
                 })}
               ></textarea>
             </td>
-            <td>
+            <td className="max-sm:flex max-sm:justify-between max-sm:items-center">
+              <span className="sm:hidden text-black flex">
+                Danh mục <p className="text-textEmphasizeColor">*</p>
+              </span>
               <SelectCategory
                 categoryID={categoryID}
                 onChange={handleSelectCategory}
               />
             </td>
             {!isEmpty && (
-              <td>
+              <td className="max-sm:pt-[30px] max-sm:flex max-sm:justify-between max-sm:items-center max-sm:border-t-[5px]">
+                <span className="sm:hidden text-black flex">Còn món</span>
                 <BtnTurnOn data={dataProduct} />
               </td>
             )}
           </tr>
           <tr>
-            <td colSpan={7} className="text-end">
+            <td colSpan={7} className="max-sm:pt-[50px] text-end">
               {!isEmpty && (
                 <button
                   onClick={(e) => handleTurnOnDialogDelete(e)}

@@ -8,18 +8,23 @@ const ItemProductRow = ({ data, onClick }) => {
     <>
       <tr
         onClick={() => onClick(data)}
-        className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
+        className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer"
       >
         <th></th>
-        <th className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap">
-          {data.idProduct}
-        </th>
-        <td className="px-6 py-4">
-          <img className="w-[40px] h-[40px]" src={data.imgProduct} alt="img" />
+        <td className="max-sm:px-[5px] max-sm:py-[12px] px-6 py-4">
+          <img
+            className=" size-[40px] object-cover"
+            src={data.imgProduct}
+            alt="img"
+          />
         </td>
-        <td className="px-6 py-4">{data.nameProduct}</td>
-        <td className="px-6 py-4">{formatCurrency(data.priceProduct)}</td>
-        <td className="px-6 py-4 text-right">
+        <td className="max-sm:px-[5px] max-sm:py-[12px] px-6 py-4">
+          <p className="max-sm:w-[120px] truncate">{data.nameProduct}</p>
+        </td>
+        <td className="max-sm:px-[5px] max-sm:py-[12px] px-6 py-4">
+          {formatCurrency(data.priceProduct)}
+        </td>
+        <td className="max-sm:px-[5px] max-sm:py-[12px] px-6 py-4 text-right">
           {/* btn dark mode  */}
           <BtnTurnOn data={data} isTurnLive={isTurnLive} />
         </td>

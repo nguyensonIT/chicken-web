@@ -78,7 +78,7 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
     const intervalId = setInterval(updateTimer, 1000);
 
     return () => clearInterval(intervalId); // Clean up on unmount
-  }, []);
+  }, [data]);
 
   return (
     <div
@@ -89,7 +89,7 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
     >
       <div className="w-1/2 flex flex-col border-r-[2px] border-r-borderColor">
         {/* STT đơn hàng, id đơn hàng, tên khách hàng  */}
-        <div className="flex items-center">
+        <div className="max-sm:text-smDesc flex items-center">
           <span className="flex text-white justify-center items-center w-[20px] h-[20px] bg-bgEmphasizeColor">
             {data.orderNumber}
           </span>
@@ -97,13 +97,13 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
             #{`${fncTakeIdEqualDayOrder()}-${fncTakeIdEqualIdOrder()}`}
           </span>
         </div>
-        <span className="text-[16px]">
+        <span className="max-sm:text-smDesc text-[16px]">
           Đã đặt vào <p className="inline-block font-bold">{timePart}</p> (Giao
           trong 30p)
         </span>
-        <h1 className="font-bold">{data.nameCustomers}</h1>
+        <h1 className="max-sm:text-[14px] font-bold">{data.nameCustomers}</h1>
       </div>
-      <div className="w-1/2 flex justify-around items-end">
+      <div className="max-sm:text-[14px] w-1/2 flex justify-around items-end ">
         <p className="font-bold">{data.data.length} món</p>
         <p className="font-bold">
           {formatCurrency(data.totalBill)}{" "}
@@ -117,7 +117,7 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
         <div
           className={`${
             isTimeUp && "time-timeup"
-          } absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor`}
+          } max-sm:text-smDesc absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor`}
         >
           <p>Chuẩn bị trong: </p>
           <p
@@ -128,14 +128,14 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
         </div>
       )}
       {data.statusOrder.isDelivered && (
-        <div className="absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor">
+        <div className="max-sm:text-smDesc absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor">
           <p>
             Đã giao hàng <FontAwesomeIcon icon={faCheck} />
           </p>
         </div>
       )}
       {data.statusOrder.isCanceled && (
-        <div className="absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor">
+        <div className="max-sm:text-smDesc absolute top-0 right-0 flex px-[20px] py-[5px] border-l-[1px] rounded-md border-b-[1px] border-l-borderColor border-b-borderColor">
           <p>Đơn hàng bị hủy</p>
         </div>
       )}

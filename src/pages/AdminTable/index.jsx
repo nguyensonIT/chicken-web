@@ -148,27 +148,27 @@ const AdminTable = () => {
     <div className="max-w-full">
       <h1 className="text-[32px] font-bold text-center">Quản lý sản phẩm</h1>
       <div className="shadow-md sm:rounded-lg">
-        <div className="flex justify-between p-4">
+        <div className="max-sm:w-full max-sm:flex-col max-sm:gap-[10px] flex justify-between p-4">
           {/* Search  */}
-          <div className="relative mt-1">
+          <div className="max-sm:w-full relative mt-1">
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <FontAwesomeIcon icon={faSearch} className="text-gray-500" />
             </div>
             <input
               type="text"
               id="table-search"
-              className="outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-80 pl-10 p-2.5"
+              className="max-sm:w-full outline-none bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-80 pl-10 p-2.5"
               placeholder="Search for items"
             />
           </div>
           {/* Create new  */}
 
-          <div className="relative mt-1">
+          <div className="max-sm:w-full max-sm:flex max-sm:flex-col max-sm:gap-[10px] relative mt-1">
             {/* Button Create new  */}
             <button
               onClick={handleCreateNew}
               type="button"
-              className="inline-block rounded bg-btnColor px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-sm transition duration-150 ease-in-out hover:bg-btnHoverColor hover:shadow-md focus:outline-none focus:ring-0 motion-reduce:transition-none "
+              className=" inline-block rounded bg-btnColor px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-sm transition duration-150 ease-in-out hover:bg-btnHoverColor hover:shadow-md focus:outline-none focus:ring-0 motion-reduce:transition-none "
             >
               <FontAwesomeIcon icon={faPlus} className="text-[12px]" /> Tạo mới
             </button>
@@ -176,7 +176,7 @@ const AdminTable = () => {
             <button
               onClick={handleTurnOnOffEditCategory}
               type="button"
-              className="inline-block ml-[20px] rounded bg-btnColor px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-sm transition duration-150 ease-in-out hover:bg-btnHoverColor hover:shadow-md focus:outline-none focus:ring-0 motion-reduce:transition-none "
+              className="max-sm:ml-0 inline-block ml-[20px] rounded bg-btnColor px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-sm transition duration-150 ease-in-out hover:bg-btnHoverColor hover:shadow-md focus:outline-none focus:ring-0 motion-reduce:transition-none "
             >
               <FontAwesomeIcon icon={faPenToSquare} className="text-[12px]" />{" "}
               Chỉnh sửa danh mục
@@ -192,10 +192,9 @@ const AdminTable = () => {
                 ref={provided.innerRef}
                 className="w-full text-sm text-left text-gray-500 dark:text-gray-400"
               >
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead className="max-sm:hidden text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                   <tr>
                     <th className="px-6 py-3">Danh mục</th>
-                    <th className="px-6 py-3">ID SP</th>
                     <th className="px-6 py-3">Ảnh SP</th>
                     <th className="px-6 py-3">Tên SP</th>
                     <th className="px-6 py-3">Giá tiền</th>
@@ -272,17 +271,20 @@ const AdminTable = () => {
       {/* popup create  */}
       {isPopup && (
         <PopupWrapper>
-          <div ref={refDialog} className="relative my-[40px] mx-[40px]">
-            <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
+          <div
+            ref={refDialog}
+            className="max-sm:m-0 max-sm:h-full relative my-[40px] mx-[40px]"
+          >
+            <div className="max-sm:h-full max-sm:pt-0 flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
               {option.map((data, index) => {
                 return (
-                  <div className="relative w-full " key={index}>
+                  <div className=" relative w-full " key={index}>
                     {data.isPrev ? (
-                      <div className=" w-full">
+                      <div className="max-sm:mt-[30px] w-full">
                         <h1 className="text-center text-[20px] uppercase font-bold mb-[40px]">
                           {data.title}
                         </h1>
-                        <div className="h-[350px] overflow-y-auto">
+                        <div className="max-sm:overflow-y-visible max-sm:h-[450px] h-[350px] overflow-y-auto">
                           {data.option}
                         </div>
                       </div>
@@ -328,7 +330,10 @@ const AdminTable = () => {
 
       {isPopupEdit && (
         <PopupWrapper>
-          <div ref={refDialogEdit} className="relative my-[40px] mx-[40px]">
+          <div
+            ref={refDialogEdit}
+            className="max-sm:m-0 max-sm:h-full relative my-[40px] mx-[40px]"
+          >
             <EditProduct data={dataEdit} handleClose={handleCloseDialogEdit} />
             {/* close popup  */}
             <div
@@ -348,7 +353,7 @@ const AdminTable = () => {
 
       {isPopupEditCategory && (
         <PopupWrapper>
-          <div ref={refDialogEdit} className="relative mx-[40px]">
+          <div ref={refDialogEdit} className="max-sm:m-0 relative mx-[40px]">
             <EditCategory />
             {/* close popup  */}
             <div
