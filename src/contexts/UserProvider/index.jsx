@@ -36,6 +36,7 @@ const UserProvider = ({ children }) => {
   const [dataAllProductContext, setDataAllProductContext] = useState([]);
   const [dataAllPostContext, setDataAllPostContext] = useState([]);
   const [dataOrderByIdUserContext, setDataOrderByIdUserContext] = useState([]);
+  const [dataAllOrderContext, setDataAllOrderContext] = useState([]);
 
   //có thể render lại trang order admin
   const handTakeDataSubId = (id) => {
@@ -74,6 +75,8 @@ const UserProvider = ({ children }) => {
         dataIsLoadingContext,
         dataOrderByIdUserContext,
         renderOrderByIdUserContext,
+        dataAllOrderContext,
+        setDataAllOrderContext,
         setRenderOrderByIdUserContext,
         setDataOrderByIdUserContext,
         setDataIsLoadingContext,

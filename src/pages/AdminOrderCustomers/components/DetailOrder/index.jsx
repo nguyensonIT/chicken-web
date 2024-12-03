@@ -143,7 +143,9 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
               </span>
               <span>
                 Thời gian đặt đơn:{" "}
-                <p className="inline italic font-bold">Hôm nay {timePart}</p>
+                <p className="inline italic font-bold">
+                  {timePart} ({datePart})
+                </p>
               </span>
               <br />
               <hr />

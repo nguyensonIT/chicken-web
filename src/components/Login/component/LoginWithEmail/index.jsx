@@ -25,9 +25,14 @@ function LoginWithEmail() {
   } = useForm();
 
   const handleLogin = (data) => {
+    const dataLogin = {
+      username: data.username.toLowerCase().trim(),
+      password: data.password.trim(),
+    };
+
     setIsLoading(true);
     loginService
-      .login(data)
+      .login(dataLogin)
       .then((res) => {
         if (res?.data?.status === 201) {
           localStorage.setItem("authToken", res.data.token);

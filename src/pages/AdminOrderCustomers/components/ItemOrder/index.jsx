@@ -101,7 +101,9 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
           Đã đặt vào <p className="inline-block font-bold">{timePart}</p> (Giao
           trong 30p)
         </span>
-        <h1 className="max-sm:text-[14px] font-bold">{data.nameCustomers}</h1>
+        <h1 className="max-sm:w-[150px] max-sm:text-[14px] max-sm:truncate font-bold">
+          {data.nameCustomers}
+        </h1>
       </div>
       <div className="max-sm:text-[14px] w-1/2 flex justify-around items-end ">
         <p className="font-bold">{data.data.length} món</p>

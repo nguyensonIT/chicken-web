@@ -9,6 +9,7 @@ import * as handleOrderService from "../../services/handleOrderService";
 const AppProvider = ({ children }) => {
   const {
     user,
+    setDataAllOrderContext,
     setDataAllProductContext,
     setDataSideBarContext,
     setDataAllPostContext,
@@ -100,6 +101,20 @@ const AppProvider = ({ children }) => {
         );
     }
   }, [user, renderOrderByIdUserContext]);
+
+  //API All Order
+  useEffect(() => {
+    if (user.roles.includes("admin")) {
+      handleOrderService
+        .getAllOrder()
+        .then((res) => {
+          if (res.status === 200) {
+            setDataAllOrderContext(res.data);
+          }
+        })
+        .catch((err) => console.log("Lỗi gọi API user order", err));
+    }
+  }, []);
   return <>{children}</>;
 };
 
