@@ -47,6 +47,7 @@ export default function Deposits({ selectedDate }) {
       }
       return total;
     }, 0);
+
     setTotalOfTheDay(totalPrice);
   }, [dataOrdersSelectDate]);
 
@@ -65,7 +66,7 @@ export default function Deposits({ selectedDate }) {
         </span>
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Hôm nay, 04 - 07 - 2024
+        Hôm nay, {datePart}
       </Typography>
     </React.Fragment>
   );

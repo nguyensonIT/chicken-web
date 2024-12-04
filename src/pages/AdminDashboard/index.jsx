@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { toast } from "react-toastify";
@@ -29,9 +29,9 @@ export default function AdminDashboard() {
     }
   };
 
-  useEffect(() => {
-    // console.log(selectedDate.getTime());
-  }, [selectedDate]);
+  const handleClickToday = () => {
+    setSelectedDate(new Date());
+  };
 
   return (
     <div className="h-[100vh]">
@@ -41,7 +41,7 @@ export default function AdminDashboard() {
             p: 2,
             display: "flex",
             flexDirection: "column",
-            height: 350,
+            height: 400,
           }}
         >
           {/* btn turn on  */}
@@ -62,12 +62,18 @@ export default function AdminDashboard() {
               onChange={(date) => setSelectedDate(date)}
               locale="vi"
               dateFormat="dd/MM/yyyy"
-              className="p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="p-2 mb-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               calendarClassName="bg-white shadow-lg rounded-lg border border-gray-200"
             />
+            <span
+              onClick={handleClickToday}
+              className="px-[10px] py-[5px] rounded-md bg-btnColor hover:bg-btnHoverColor text-white transition-all cursor-pointer"
+            >
+              Hôm nay
+            </span>
           </div>
           {/* chart  */}
-          <Chart />
+          <Chart selectedDate={selectedDate} />
         </Paper>
       </Grid>
       {/* Deposits */}
