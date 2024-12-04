@@ -104,7 +104,7 @@ const AppProvider = ({ children }) => {
 
   //API All Order
   useEffect(() => {
-    if (user.roles.includes("admin")) {
+    if (user && user?.roles.includes("admin")) {
       handleOrderService
         .getAllOrder()
         .then((res) => {
