@@ -213,16 +213,16 @@ function Header() {
 
         <Link
           to="/"
-          className="max-sm:w-[35%] max-sm:gap-[8px] max-sm:flex-col w-[25%] flex justify-center items-center gap-[20px]"
+          className="max-sm:w-[35%] max-sm:justify-start w-[25%] flex justify-center items-center gap-[20px]"
         >
-          <div className="max-sm:size-[30px] logo size-[50px] ">
+          <div className="logo max-sm:size-[75px] size-[50px] ">
             <img
               className="w-full h-full rounded-[8px]"
               src={logo}
               alt="logo"
             />
           </div>
-          <p className="text-sm text-center brand text-[#FFD700] font-bold text-[20px]">
+          <p className="max-sm:hidden text-sm text-center brand text-[#FFD700] font-bold">
             VUA GÀ TƯƠI
           </p>
         </Link>
@@ -460,7 +460,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className="sm:hidden shadow-sm">
+      <div className="sm:hidden shadow-sm mt-[-1px]">
         {!isInpFind && <BtnActiveDoor />}
         {isInpFind && (
           <FindProduct ref={refChild} handleFindProduct={handleFindProduct} />

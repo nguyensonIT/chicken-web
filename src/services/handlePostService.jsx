@@ -1,6 +1,17 @@
 import * as request from "../utils/request";
 const token = localStorage.getItem("authToken");
 
+export const createPost = async (data) => {
+  const obj = {
+    path: "post",
+    body: data,
+    token,
+  };
+
+  const response = await request.POST(obj);
+  return response;
+};
+
 export const getAllPost = async () => {
   const obj = {
     path: "post",

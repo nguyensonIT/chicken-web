@@ -53,24 +53,24 @@ const AdminLayout = () => {
         {/* sidebar mobile  */}
         <div
           ref={refSidebar}
-          className="fixed sm:hidden w-[0px] top-[120px] left-0 h-full overflow-y-auto z-[99] shadow-lg transition-all"
+          className="fixed sm:hidden w-[0px] top-[120px] left-0 h-full overflow-y-auto z-[999] shadow-lg transition-all"
         >
           <AdminSideBar />
         </div>
         <div
           ref={refBtn}
           onClick={handleClickSidebar}
-          className="sm:hidden max-sm:top-[140px] flex justify-center items-center fixed py-[9px] top-[120px] left-[0px] shadow-lg bg-[#34495e] border-[1px] border-[white] z-[999] transition-all fixedBtn"
+          className="sm:hidden max-sm:top-[120px] flex justify-center items-center fixed py-[9px] top-[120px] left-[0px] shadow-lg bg-[#34495e] border-[1px] border-[white] z-[999] transition-all fixedBtn"
         >
           {isSidebar ? (
             <FontAwesomeIcon
               icon={faChevronLeft}
-              className="text-[20px] px-[4px] text-textHoverColor"
+              className="text-[20px] px-[6px] text-textHoverColor"
             />
           ) : (
             <FontAwesomeIcon
               icon={faBars}
-              className="text-[20px] px-[4px] text-textHoverColor"
+              className="text-[20px] px-[6px] text-textHoverColor"
             />
           )}
         </div>

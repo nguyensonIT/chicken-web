@@ -105,7 +105,7 @@ export default function Chart({ selectedDate }) {
                 fill: theme.palette.text.primary,
               },
               tickLabelStyle: theme.typography.body2,
-              max: 99,
+              max: 30,
               tickNumber: 5,
             },
           ]}

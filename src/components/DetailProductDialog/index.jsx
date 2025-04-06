@@ -188,7 +188,7 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
         >
           <div
             ref={detailImgRef}
-            className="max-sm:w-[90%] max-sm:h-auto max-sm:my-[40%] mx-auto mt-[30px] w-[400px] h-[400px] bg-white "
+            className="max-sm:w-full max-sm:h-[40%] max-sm:mt-[50%] mx-auto mt-[30px] w-[400px] h-[400px] bg-black "
           >
             <img
               className="w-full h-full object-contain"

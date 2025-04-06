@@ -4,6 +4,14 @@ import { useSearchParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
 
+//Thư viện date
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { registerLocale } from "react-datepicker";
+import vi from "date-fns/locale/vi";
+
+import { isEqual, startOfDay } from "date-fns";
+
 import "./styles.css";
 import PopupWrapper from "../../components/PopupWrapper";
 import DetailOrder from "./components/DetailOrder";
@@ -13,10 +21,13 @@ import useSocket from "../../hooks/useSocket";
 import { useHandleContext } from "../../contexts/UserProvider";
 
 const AdminOrderCustomers = () => {
+  registerLocale("vi", vi);
+
   const { dataSubIdContext, handTakeDataSubId } = useHandleContext();
   const { messages } = useSocket();
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [dataOrderUser, setDataOrderUser] = useState([]);
   const [dataDetail, setDataDetail] = useState({});
 
@@ -40,53 +51,47 @@ const AdminOrderCustomers = () => {
     }
   };
 
+  //Hàm lọc sản phẩm theo ngày
+  const fncFillterDateOrders = (data, selected) => {
+    const fillterDateOrders = data.filter((order) =>
+      isEqual(startOfDay(order.orderDate), startOfDay(selected))
+    );
+    return fillterDateOrders;
+  };
+
+  const handleClickToday = () => {
+    setSelectedDate(new Date());
+  };
+
   useEffect(() => {
-    if (searchParams.get("order") === "new-order") {
-      setIsLoading(true);
-      handleOrderService
-        .getAllOrder()
-        .then((res) => {
-          const dataFilter = res.data.filter(
-            (item) => item.statusOrder.isPreparing === true
-          );
-          setDataOrderUser(dataFilter);
-        })
-        .catch((err) => console.log("Lỗi order new-order", err))
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else if (searchParams.get("order") === "history-order") {
-      setIsLoading(true);
-      handleOrderService
-        .getAllOrder()
-        .then((res) => {
-          const dataFilter = res.data.filter(
-            (item) => item.statusOrder.isDelivered === true
-          );
-          setDataOrderUser(dataFilter);
-        })
-        .catch((err) => console.log("Lỗi order new-order", err))
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else if (searchParams.get("order") === "canceled-order") {
-      setIsLoading(true);
-      handleOrderService
-        .getAllOrder()
-        .then((res) => {
-          const dataFilter = res.data.filter(
-            (item) => item.statusOrder.isCanceled === true
-          );
-          setDataOrderUser(dataFilter);
-        })
-        .catch((err) => console.log("Lỗi order new-order", err))
-        .finally(() => {
-          setIsLoading(false);
-        });
-    } else if (searchParams.get("order") === "pre-order") {
+    const orderType = searchParams.get("order");
+    const statusMap = {
+      "new-order": "isPreparing",
+      "history-order": "isDelivered",
+      "canceled-order": "isCanceled",
+    };
+
+    if (orderType === "pre-order") {
       setDataOrderUser([]);
+      return;
     }
-  }, [messages, searchParams, callbackAPI]);
+
+    if (statusMap[orderType]) {
+      setIsLoading(true);
+      handleOrderService
+        .getAllOrder()
+        .then((res) => {
+          const dataFilter = res.data.filter(
+            (item) => item.statusOrder[statusMap[orderType]] === true
+          );
+          const finalData = fncFillterDateOrders(dataFilter, selectedDate);
+
+          setDataOrderUser(finalData);
+        })
+        .catch((err) => console.log(`Lỗi order ${orderType}`, err))
+        .finally(() => setIsLoading(false));
+    }
+  }, [messages, searchParams, callbackAPI, selectedDate]);
 
   useEffect(() => {
     setCurrentPage(searchParams.get("order"));
@@ -116,54 +121,74 @@ const AdminOrderCustomers = () => {
         {/* table  */}
         <div className="flex flex-col">
           {/* Router đơn hàng: đặt trước, đơn mới, lịch sử */}
-          <div className="max-sm:left-0 max-sm:z-1 text-xs fixed top-[180px] right-0 left-[180px] mb-[20px] mx-[20px] flex text-gray-700 uppercase bg-gray-50 border-b-[2px] border-b-borderColor z-10">
-            {/* Đặt trước  */}
-            <div className="w-1/4 h-[40px] text-center border-r-[2px] border-r-borderColor">
-              <Link
-                className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
-                  currentPage === "pre-order" && "bg-bgHoverColor"
-                }`}
-                to="/admin/order?order=pre-order"
-              >
-                Đặt trước
-              </Link>
+          <div className="max-sm:left-0 max-sm:z-1 fixed top-[180px] right-0 left-[180px] mb-[20px] mx-[20px] z-10">
+            <div className=" flex text-xs text-gray-700 uppercase bg-gray-50 border-b-[2px] border-b-borderColor ">
+              {/* Đặt trước  */}
+              <div className="w-1/4 h-[40px] text-center border-r-[2px] border-r-borderColor">
+                <Link
+                  className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
+                    currentPage === "pre-order" && "bg-bgHoverColor"
+                  }`}
+                  to="/admin/order?order=pre-order"
+                >
+                  Đặt trước
+                </Link>
+              </div>
+              {/* Đơn mới  */}
+              <div className="w-1/4 text-center border-r-[2px] border-r-borderColor">
+                <Link
+                  className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
+                    currentPage === "new-order" && "bg-bgHoverColor"
+                  }`}
+                  to="/admin/order?order=new-order"
+                >
+                  Đơn mới
+                </Link>
+              </div>
+              {/* Lịch sử  */}
+              <div className="w-1/4 text-center border-r-[2px] border-r-borderColor">
+                <Link
+                  className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
+                    currentPage === "history-order" && "bg-bgHoverColor"
+                  }`}
+                  to="/admin/order?order=history-order"
+                >
+                  Lịch sử
+                </Link>
+              </div>
+              {/* Đơn hủy  */}
+              <div className="w-1/4 text-center">
+                <Link
+                  className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
+                    currentPage === "canceled-order" && "bg-bgHoverColor"
+                  }`}
+                  to="/admin/order?order=canceled-order"
+                >
+                  Đã hủy
+                </Link>
+              </div>
             </div>
-            {/* Đơn mới  */}
-            <div className="w-1/4 text-center border-r-[2px] border-r-borderColor">
-              <Link
-                className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
-                  currentPage === "new-order" && "bg-bgHoverColor"
-                }`}
-                to="/admin/order?order=new-order"
+            {/* Chọn ngày  */}
+            <div className="flex items-center justify-end gap-[20px] p-[5px] bg-white shadow-md">
+              <DatePicker
+                selected={selectedDate}
+                onChange={(date) => setSelectedDate(date)}
+                locale="vi"
+                dateFormat="dd/MM/yyyy"
+                className="p-[4px] border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                calendarClassName="bg-white shadow-lg rounded-lg border border-gray-200"
+              />
+              <span
+                onClick={handleClickToday}
+                className="max-sm:text-[14px] px-[10px] py-[5px] rounded-md bg-btnColor hover:bg-btnHoverColor text-white transition-all cursor-pointer"
               >
-                Đơn mới
-              </Link>
-            </div>
-            {/* Lịch sử  */}
-            <div className="w-1/4 text-center border-r-[2px] border-r-borderColor">
-              <Link
-                className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
-                  currentPage === "history-order" && "bg-bgHoverColor"
-                }`}
-                to="/admin/order?order=history-order"
-              >
-                Lịch sử
-              </Link>
-            </div>
-            {/* Đơn hủy  */}
-            <div className="w-1/4 text-center">
-              <Link
-                className={`block font-bold w-full h-full leading-[40px] hover:bg-bgHoverColor ${
-                  currentPage === "canceled-order" && "bg-bgHoverColor"
-                }`}
-                to="/admin/order?order=canceled-order"
-              >
-                Đã hủy
-              </Link>
+                Hôm nay
+              </span>
             </div>
           </div>
+
           {/* Box Item các đơn hàng */}
-          <div className="mt-[100px] max-sm:z-0">
+          <div className="mt-[140px] max-sm:z-0">
             {/* Loading  */}
             {isLoading && (
               <div className="flex justify-center">

@@ -27,6 +27,8 @@ const Story = ({
       )
   );
 
+  const [content, setContent] = useState(JSON.parse(data?.content));
+
   //Comment Internal
   const handleCommentInternal = (id) => {
     if (!isDetailComment) {
@@ -35,6 +37,7 @@ const Story = ({
   };
 
   useEffect(() => {
+    setContent(JSON.parse(data.content));
     const lineHeight = parseFloat(getComputedStyle(textRef.current).lineHeight);
     const maxHeight = lineHeight * 3;
 
@@ -63,7 +66,7 @@ const Story = ({
       </div>
       {/* Content  */}
       <div ref={textRef} className={`${!isExpanded && "line-clamp-3"} mb-4 `}>
-        {data.content}
+        {content}
       </div>
       {isClamped && !isExpanded && (
         <span

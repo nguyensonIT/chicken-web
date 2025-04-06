@@ -8,7 +8,7 @@ const HeaderOnlyLayout = () => {
       <div className="fixed z-[999] h-[120px] w-full">
         <Header />
       </div>
-      <div className="max-sm:pt-[140px] pt-[120px] pb-[20px]">
+      <div className="max-sm:pt-[162px] pt-[120px] pb-[20px]">
         <Outlet />
       </div>
       <div className="">

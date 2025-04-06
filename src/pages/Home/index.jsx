@@ -7,10 +7,11 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-import bannerReal2 from "../../assets/img/BannerReal2.jpg";
+import bannerReal2 from "../../assets/img/bannerReal2.jpg";
 import bannerReal from "../../assets/img/bannerReal.jpg";
 import CardProduct from "../../components/CardProduct";
 import { useHandleContext } from "../../contexts/UserProvider";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const { dataAllProductContext, dataIsLoadingContext } = useHandleContext();
@@ -48,7 +49,7 @@ const Home = () => {
   return (
     <div className="px-[20px] py-[10px] bg-bgMainColor">
       {/* banner  */}
-      <div className="banner w-full h-auto">
+      <div className="banner h-full w-full">
         <Swiper
           modules={[Navigation, Autoplay]}
           autoplay={{
@@ -60,9 +61,9 @@ const Home = () => {
           slidesPerView={1}
         >
           <SwiperSlide>
-            <div className="w-full ">
+            <div className="w-full h-full">
               <img
-                className="w-full h-full object-contain"
+                className="w-full h-full object-fill"
                 src={bannerReal2}
                 alt="banner"
               />
@@ -71,7 +72,7 @@ const Home = () => {
           <SwiperSlide>
             <div className="w-full ">
               <img
-                className="w-full h-full object-contain"
+                className="w-full h-full object-fill"
                 src={bannerReal}
                 alt="banner"
               />
@@ -79,6 +80,7 @@ const Home = () => {
           </SwiperSlide>
         </Swiper>
       </div>
+
       {/* content  */}
       <div className="">
         {/* product sale  */}

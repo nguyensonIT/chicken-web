@@ -63,14 +63,14 @@ const FindProduct = forwardRef(
       <div className="relative">
         <div
           ref={resolvedRef}
-          className={`${className} max-sm:border-0 max-sm:rounded-none find  transition-all border focus:border-yellow-500 bg-white rounded-md flex items-center overflow-hidden`}
+          className={`${className} max-sm:border-0 max-sm:rounded-none find transition-all border focus:border-yellow-500 bg-white rounded-md flex items-center overflow-hidden`}
         >
           <input
             value={searchKeyword}
             onChange={handleChangeSearchKeyword}
             type="text"
             placeholder="Tìm kiếm món ăn..."
-            className="max-sm:text-sm py-2 px-3 focus:outline-none flex-1  "
+            className="max-sm:text-sm max-sm:py-4 py-2 px-3 focus:outline-none flex-1  "
           />
           {debounce.trim().length > 0 && (
             <FontAwesomeIcon
@@ -81,14 +81,14 @@ const FindProduct = forwardRef(
           )}
           <button
             onClick={handleFindProduct}
-            className="max-sm:text-smBtn max-sm:py-[4px] transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+            className="max-sm:text-smBtn max-sm:py-4 transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
           >
             Tìm kiếm
           </button>
         </div>
         {/* box item  */}
         {debounce.trim().length > 0 && (
-          <div className="absolute p-[10px] top-[42px] min-h-[80px] max-h-[300px] left-0 right-0 bg-white shadow-md overflow-y-auto">
+          <div className="absolute max-sm:top-[62px] p-[10px] top-[42px] min-h-[80px] max-h-[300px] left-0 right-0 bg-white shadow-xl overflow-y-auto">
             <div className="">
               {searchResult.length > 0 ? (
                 searchResult.map((item, index) => {

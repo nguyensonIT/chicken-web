@@ -65,9 +65,6 @@ export default function Deposits({ selectedDate }) {
           đ
         </span>
       </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
-        Hôm nay, {datePart}
-      </Typography>
     </React.Fragment>
   );
 }

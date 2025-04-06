@@ -6,9 +6,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 
+import Category from "../components/SideBar/components/Category";
+import { useHandleContext } from "../../contexts/UserProvider";
+
 const RootLayout = () => {
   const refBtn = useRef();
   const refSidebar = useRef();
+
+  const { dataSideBarContext, dataIsLoadingContext } = useHandleContext();
 
   const [isSidebar, setIsSidebar] = useState(false);
 
@@ -53,14 +58,15 @@ const RootLayout = () => {
         {/* sidebar mobile */}
         <div
           ref={refSidebar}
-          className="fixed sm:hidden max-sm:w-[0px] max-sm:top-[140px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all"
+          className="fixed sm:hidden max-sm:w-[0px] max-sm:top-[162px] w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all"
         >
           <SideBar />
         </div>
+        {/* btn sidebar */}
         <div
           ref={refBtn}
           onClick={handleClickSidebar}
-          className="sm:hidden max-sm:top-[140px] flex justify-center items-center fixed py-[9px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor border-[1px] border-[white] z-10  transition-all fixedBtn"
+          className="sm:hidden max-sm:top-[162px] flex justify-center items-center fixed py-[22px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor border-[1px] border-[white] z-10  transition-all fixedBtn"
         >
           {isSidebar ? (
             <FontAwesomeIcon
@@ -74,13 +80,25 @@ const RootLayout = () => {
             />
           )}
         </div>
+        <div className="sm:hidden fixed pl-[25px] mt-[-2px] top-[162px] flex w-full overflow-x-auto bg-white z-[9]">
+          {dataSideBarContext.map((item, index) => {
+            return (
+              <Category
+                className={"py-[15px] mr-[10px] text-smTitle"}
+                key={index}
+                id={item._id}
+                name={item.nameCategory}
+              />
+            );
+          })}
+        </div>
         {/* sidebar pc */}
         <div className="fixed max-sm:hidden w-[180px] top-[120px] left-0 h-full overflow-y-auto z-10 transition-all fixedSidebar">
           <SideBar />
         </div>
       </div>
 
-      <div className="max-sm:ml-0 max-sm:top-[140px] relative ml-[180px] overflow-y-auto top-[120px] transition-all">
+      <div className="max-sm:ml-0 max-sm:top-[230px] relative ml-[180px] overflow-y-auto top-[120px] transition-all">
         <Outlet />
         <div className="w-full">
           <Footer />
