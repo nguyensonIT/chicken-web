@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-import bannerReal2 from "../../assets/img/bannerReal2.jpg";
+import bannerReal2 from "../../assets/img/BannerReal2.jpg";
 import bannerReal from "../../assets/img/bannerReal.jpg";
 import CardProduct from "../../components/CardProduct";
 import { useHandleContext } from "../../contexts/UserProvider";
