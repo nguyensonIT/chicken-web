@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 
+import chickenGif from "../../assets/img/chicken.gif";
+
 import Category from "../components/SideBar/components/Category";
 import { useHandleContext } from "../../contexts/UserProvider";
 
@@ -81,6 +83,31 @@ const RootLayout = () => {
           )}
         </div>
         <div className="sm:hidden fixed pl-[25px] mt-[-2px] top-[162px] flex w-full overflow-x-auto bg-white z-[9]">
+          {dataSideBarContext?.length === 0 && (
+            <div className="h-[68px] w-full grid grid-cols-7">
+              <p></p>
+              <p></p>
+              <img
+                className="w-full h-full object-cover"
+                src={chickenGif}
+                alt="chickenGif"
+              />
+              <img
+                className="w-full h-full object-cover"
+                src={chickenGif}
+                alt="chickenGif"
+              />
+              <img
+                className="w-full h-full object-cover"
+                src={chickenGif}
+                alt="chickenGif"
+              />
+              <p className="flex items-center text-xl font-bold animate-pulse">
+                ...
+              </p>
+              <p></p>
+            </div>
+          )}
           {dataSideBarContext.map((item, index) => {
             return (
               <Category
