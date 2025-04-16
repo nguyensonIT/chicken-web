@@ -21,6 +21,7 @@ function SignupWithEmail() {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm();
 
@@ -36,12 +37,12 @@ function SignupWithEmail() {
   const handleSignup = (data) => {
     const infoSignUp = {
       name: data.nameuser,
-      username: data.username,
-      password: data.password,
+      username: data.username.toLowerCase().trim(),
+      password: data.password.trim(),
     };
     const infoLogin = {
-      username: data.username,
-      password: data.password,
+      username: data.username.toLowerCase().trim(),
+      password: data.password.trim(),
     };
 
     setIsLoading(true);
@@ -107,6 +108,11 @@ function SignupWithEmail() {
                 message: "Email không hợp lệ!",
               },
             })}
+            onKeyDown={(e) => {
+              if (e.key === " ") {
+                e.preventDefault(); // Ngăn nhập dấu cách
+              }
+            }}
           />
         </div>
         <div className="max-sm:h-smInpHeight inp-signup relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
@@ -123,9 +129,14 @@ function SignupWithEmail() {
                 value:
                   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
                 message:
-                  "Ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt",
+                  "Không dấu cách ,ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt",
               },
             })}
+            onKeyDown={(e) => {
+              if (e.key === " ") {
+                e.preventDefault(); // Ngăn nhập dấu cách
+              }
+            }}
           />
           <div
             className="icon-eye flex absolute right-[15px] top-[50%] translate-y-[-50%] cursor-pointer"
@@ -147,6 +158,11 @@ function SignupWithEmail() {
               validate: (value) =>
                 value === password || "Mật khẩu không trùng khớp",
             })}
+            onKeyDown={(e) => {
+              if (e.key === " ") {
+                e.preventDefault(); // Ngăn nhập dấu cách
+              }
+            }}
           />
           <div
             className="icon-eye flex absolute right-[15px] top-[50%] translate-y-[-50%] cursor-pointer"

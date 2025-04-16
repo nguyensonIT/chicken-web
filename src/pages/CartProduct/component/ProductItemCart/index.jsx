@@ -72,7 +72,7 @@ const ProductItemCart = ({ data, setReloadCart }) => {
   }, [isDialogDelete]);
 
   return (
-    <div className="max-sm:p-[8px] max-sm:gap-[5px] grid grid-cols-7 border-[2px] border-dashed border-borderColor items-center mb-6 rounded-lg p-6">
+    <div className="max-sm:p-[8px] max-sm:gap-[5px] grid grid-cols-7 border-[2px] border-dashed border-borderColor dark:border-borderDarkColor items-center mb-6 rounded-lg p-6">
       <div className="max-sm:col-span-2 max-sm:size-[60px] col-span-1 size-[80px] rounded-lg">
         <img
           src={data?.imgProduct || logo}
@@ -80,13 +80,13 @@ const ProductItemCart = ({ data, setReloadCart }) => {
           className="w-full h-full object-cover rounded-lg"
         />
       </div>
-      <div className="max-sm:col-[3/8] col-[2/8] sm:ml-4 sm:flex sm:w-full sm:justify-between">
+      <div className="max-sm:col-[3/8] col-[2/8] sm:ml-4 sm:flex sm:w-full sm:justify-between dark:text-textDarkColor">
         <div className="max-sm:mt-0 mt-5 sm:mt-0">
-          <h2 className="max-sm:text-sm text-lg font-bold text-gray-900">
+          <h2 className="max-sm:text-sm text-lg font-bold text-gray-900 dark:text-textDarkColor">
             {data?.nameProduct}
           </h2>
           {data?.note && (
-            <p className="max-sm:text-[8px] mt-1 italic text-[10px] text-gray-700">
+            <p className="max-sm:text-[8px] mt-1 italic text-[10px] text-gray-700 dark:text-textDarkColor">
               <span className="max-sm:text-smDesc text-[14px] italic underline">
                 Ghi chú:{" "}
               </span>

@@ -18,6 +18,7 @@ import AdminArticle from "./AdminArticle";
 import Profile from "./Profile";
 import PrivateRouteClient from "../routes/PrivateRouteClient";
 import LayoutCart from "../layouts/LayoutCart";
+import AdminSetting from "./AdminSetting";
 
 const router = createBrowserRouter([
   {
@@ -46,10 +47,10 @@ const router = createBrowserRouter([
   {
     element: <HeaderOnlyLayout />,
     children: [
-      {
-        path: "/news",
-        element: <News />,
-      },
+      // {
+      //   path: "/news",
+      //   element: <News />,
+      // },
       {
         path: "/introduce",
         element: <Introduce />,
@@ -81,9 +82,13 @@ const router = createBrowserRouter([
         element: <PrivateRoute element={<AdminOrderCustomers />} />,
       },
       {
-        path: "/admin/article",
-        element: <PrivateRoute element={<AdminArticle />} />,
+        path: "/admin/setting",
+        element: <PrivateRoute element={<AdminSetting />} />,
       },
+      // {
+      //   path: "/admin/article",
+      //   element: <PrivateRoute element={<AdminArticle />} />,
+      // },
     ],
   },
   {

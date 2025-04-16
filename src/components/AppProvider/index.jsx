@@ -5,6 +5,7 @@ import * as handleCategoryService from "../../services/handleCategoryService";
 import * as handleProductsService from "../../services/handleProductsService";
 import * as handlePostService from "../../services/handlePostService";
 import * as handleOrderService from "../../services/handleOrderService";
+import * as configSevice from "../../services/configSevice";
 
 const AppProvider = ({ children }) => {
   const {
@@ -13,10 +14,18 @@ const AppProvider = ({ children }) => {
     setDataAllProductContext,
     setDataSideBarContext,
     setDataAllPostContext,
+    setDataLogoContext,
     setDataIsLoadingContext,
     setDataOrderByIdUserContext,
     renderOrderByIdUserContext,
   } = useHandleContext();
+
+  useEffect(() => {
+    if (!localStorage.getItem("isThemeDark")) {
+      localStorage.setItem("isThemeDark", "false");
+    }
+  }, []);
+
   //Call API product
   useEffect(() => {
     setDataIsLoadingContext((prev) => ({ ...prev, isLoadingProduct: true }));
@@ -61,22 +70,22 @@ const AppProvider = ({ children }) => {
   }, []);
 
   //API Bài Post
-  useEffect(() => {
-    setDataIsLoadingContext((prev) => ({ ...prev, isLoadingPost: true }));
-    handlePostService
-      .getAllPost()
-      .then((res) => {
-        if (res.status === 200) {
-          setDataAllPostContext(res.data);
-        } else {
-          setDataAllPostContext([]);
-        }
-      })
-      .catch((err) => console.log("Lỗi gọi API bài viết", err))
-      .finally(() =>
-        setDataIsLoadingContext((prev) => ({ ...prev, isLoadingPost: false }))
-      );
-  }, []);
+  // useEffect(() => {
+  //   setDataIsLoadingContext((prev) => ({ ...prev, isLoadingPost: true }));
+  //   handlePostService
+  //     .getAllPost()
+  //     .then((res) => {
+  //       if (res.status === 200) {
+  //         setDataAllPostContext(res.data);
+  //       } else {
+  //         setDataAllPostContext([]);
+  //       }
+  //     })
+  //     .catch((err) => console.log("Lỗi gọi API bài viết", err))
+  //     .finally(() =>
+  //       setDataIsLoadingContext((prev) => ({ ...prev, isLoadingPost: false }))
+  //     );
+  // }, []);
 
   //API Order by id user
   useEffect(() => {
@@ -114,6 +123,20 @@ const AppProvider = ({ children }) => {
         })
         .catch((err) => console.log("Lỗi gọi API user order", err));
     }
+  }, []);
+
+  //API Logo Context
+  useEffect(() => {
+    configSevice
+      .getLogo()
+      .then((res) => {
+        if (res.status === 200) {
+          setDataLogoContext(res.data);
+        } else {
+          setDataLogoContext({ bannerUrls: [], logoUrl: "" });
+        }
+      })
+      .catch((err) => console.log(err));
   }, []);
   return <>{children}</>;
 };

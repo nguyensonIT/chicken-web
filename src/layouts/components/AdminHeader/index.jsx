@@ -14,7 +14,8 @@ import Notify from "./components/Notify";
 
 const AdminHeader = () => {
   const { messages } = useSocket();
-  const { user, renderPopupNotifyAdminContext } = useHandleContext();
+  const { user, renderPopupNotifyAdminContext, dataLogoContext } =
+    useHandleContext();
 
   const [notify, setNotify] = useState([]);
 
@@ -87,7 +88,15 @@ const AdminHeader = () => {
       {/* logo left  */}
       <div className="max-sm:flex-col max-sm:items-center max-sm:gap-[10px] flex items-center gap-[20px] col-[1/3]">
         <div className="max-sm:size-[30px] size-[50px] mr-[5px] text-black rounded-md overflow-hidden">
-          <img className="h-full w-full object-cover" src={logo} alt="logo" />
+          {dataLogoContext?.logoUrl ? (
+            <img
+              className="h-full w-full object-cover"
+              src={dataLogoContext.logoUrl}
+              alt="logo"
+            />
+          ) : (
+            <img className="h-full w-full object-cover" src={logo} alt="logo" />
+          )}
         </div>
         <p className="max-sm:text-[16px] block font-bold text-textHoverColor text-black">
           VUA GÀ TƯƠI

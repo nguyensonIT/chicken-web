@@ -19,10 +19,12 @@ import DialogQuestionYesNo from "../../../components/DialogQuestionYesNo";
 import PopupWrapper from "../../../components/PopupWrapper";
 import FindProduct from "./components/FindProduct";
 import BtnActiveDoor from "./components/BtnActiveDoor";
+import { toast } from "react-toastify";
 
 function Header() {
   const navigate = useNavigate();
-  const { user, quantityProductInCartContext } = useHandleContext();
+  const { user, quantityProductInCartContext, dataLogoContext } =
+    useHandleContext();
 
   const refDialog = useRef(null);
   const refMenu = useRef(null);
@@ -38,6 +40,7 @@ function Header() {
   const [isNavChild, setIsNavChild] = useState(false);
   const [isNavbar, setIsNavbar] = useState(false);
   const [isInpFind, setIsInpFind] = useState(false);
+  const [isDark, setIsDark] = useState(false);
 
   const [menuAvatar, setMenuAvatar] = useState(listMenuAvatar);
 
@@ -100,18 +103,29 @@ function Header() {
     }
   };
 
-  const handleDarkMode = (data) => {
-    console.log(data);
+  //hnadle dark light
+  const handleDarkMode = () => {
+    const newDarkMode = !isDark;
+    setIsDark(newDarkMode);
+
+    if (newDarkMode) {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("isThemeDark", "true");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("isThemeDark", "false");
+    }
   };
+  //
 
   const handleLanguage = (data) => {
     setMenuAvatar(data.children);
   };
   const handleEnglish = () => {
-    console.log("Tiếng anh");
+    toast.warn("In the process of development");
   };
   const handleVietnamese = () => {
-    console.log("Tiếng việt");
+    toast.warn("Đang trong chế độ tiếng việt");
   };
   const handleNavigateProfile = () => {
     navigate("/profile");
@@ -183,6 +197,20 @@ function Header() {
     console.log("Tìm kiếm!");
   };
 
+  // Đọc từ localStorage key: isThemeDark
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("isThemeDark");
+    const isDarkStored = storedTheme === "true"; // vì localStorage lưu kiểu string
+    setIsDark(isDarkStored);
+
+    if (isDarkStored) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, []);
+  // end THEME
+
   useEffect(() => {
     setQuantityProductInCart(quantityProductInCartContext);
   }, [quantityProductInCartContext]);
@@ -208,7 +236,7 @@ function Header() {
 
   return (
     <div>
-      <div className="max-sm:p-[10px] max-sm:h-auto h-[120px] w-full flex bg-bgHeaderColor ">
+      <div className="max-sm:p-[10px] max-sm:h-auto h-[120px] w-full flex bg-bgHeaderColor dark:text-textDarkColor dark:bg-bgDarkHeaderColor ">
         {/* LEFT HEADR */}
 
         <Link
@@ -218,7 +246,7 @@ function Header() {
           <div className="logo max-sm:size-[75px] size-[50px] ">
             <img
               className="w-full h-full rounded-[8px]"
-              src={logo}
+              src={dataLogoContext?.logoUrl || logo}
               alt="logo"
             />
           </div>
@@ -238,7 +266,7 @@ function Header() {
                 return (
                   <li key={index} className="relative nav-parent">
                     <NavLink
-                      className="nav-link transition-[2s] block mr-[8px] p-[2px] hover:text-textHoverColor"
+                      className="nav-link transition-[2s] block mr-[8px] p-[2px] hover:text-textHoverColor  "
                       style={navLinkStyle}
                       to={menu.href}
                       key={index}
@@ -249,9 +277,9 @@ function Header() {
                         className="ml-[5px] text-[12px]"
                       />
                     </NavLink>
-                    <ul className="active-nav absolute bg-[white] mt-[20px] p-[10px] shadow-md z-10">
+                    <ul className="active-nav absolute bg-[white] dark:bg-bgDarkSideBarColor mt-[20px] p-[10px] shadow-md z-10">
                       <li className="absolute h-[27px] w-full bg-[transparent]  top-[-26px] left-0"></li>
-                      <li className="absolute top-[-5px] left-[30px] border-solid border-x-[5px] border-x-[transparent] border-b-[5px] border-b-[white] "></li>
+                      <li className="absolute top-[-5px] left-[30px] border-solid border-x-[5px] border-x-[transparent] border-b-[5px] border-b-[white] dark:border-b-bgDarkSideBarColor"></li>
                       {/* map 2 */}
                       {menu.children.map((menu, index) => {
                         return (
@@ -324,7 +352,7 @@ function Header() {
                       {user?.name}
                     </p>
                     <img
-                      className="w-[40px] h-[40px] rounded-[50%] border"
+                      className="w-[40px] h-[40px] rounded-[50%] border object-cover"
                       onError={(e) => {
                         e.target.onerror = null;
                         e.target.src = logo;
@@ -336,12 +364,12 @@ function Header() {
                   {isListOptionBoxAvatar && (
                     <ul
                       ref={refMenu}
-                      className="py-[10px] absolute bg-white shadow-md min-w-[150px] top-full right-0 border border-solid z-20"
+                      className="py-[10px] absolute bg-white dark:bg-bgDarkSideBarColor dark:border-bgDarkSideBarColor shadow-md min-w-[150px] top-full right-0 border border-solid z-20"
                     >
                       {menuAvatar[0].prev && (
                         <li
                           onClick={handlePrevOption}
-                          className="bg-slate-200 hover:bg-bgHoverColor pl-[8px] cursor-pointer"
+                          className="bg-slate-200 hover:bg-bgHoverColor dark:bg-bgDarkSideBarColor pl-[8px] cursor-pointer"
                         >
                           <FontAwesomeIcon icon={faChevronLeft} />
                         </li>
@@ -356,7 +384,13 @@ function Header() {
                             <p className="text-[12px] mr-[10px] text-nowrap">
                               {item.option}
                             </p>
-                            <div className="block">{item?.icon}</div>
+                            <div className="block">
+                              {item?.icon &&
+                                item.icon({
+                                  isActiveExternal: isDark,
+                                  fncHandle: handleDarkMode,
+                                })}
+                            </div>
                           </li>
                         );
                       })}
@@ -395,9 +429,9 @@ function Header() {
               <PopupWrapper>
                 <div
                   ref={refNavbar}
-                  className=" absolute right-0 bg-white w-[200px] h-full "
+                  className=" absolute right-0 bg-white dark:bg-bgDarkSideBarColor w-[200px] h-full "
                 >
-                  <ul className="flex flex-col w-full">
+                  <ul className="flex flex-col w-full dark:text-textDarkColor">
                     {menus.map((menu, index) => {
                       if (menu.children) {
                         return (
@@ -417,7 +451,7 @@ function Header() {
                               />
                             </span>
                             {isNavChild && (
-                              <ul className=" bg-[white] transition-all">
+                              <ul className=" bg-[white] dark:bg-bgDarkSideBarColor transition-all">
                                 {menu.children.map((menu, index) => {
                                   return (
                                     <li

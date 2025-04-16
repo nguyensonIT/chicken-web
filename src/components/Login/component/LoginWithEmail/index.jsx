@@ -27,9 +27,8 @@ function LoginWithEmail() {
   const handleLogin = (data) => {
     const dataLogin = {
       username: data.username.toLowerCase().trim(),
-      password: data.password.trim(),
+      password: data.password,
     };
-
     setIsLoading(true);
     loginService
       .login(dataLogin)

@@ -17,7 +17,6 @@ const BtnStatusToggle = ({
   useEffect(() => {
     setIsActive(isActiveExternal);
   }, [isActiveExternal]);
-
   return (
     <div
       className={`relative h-[24px] w-[44px] rounded-[100px] transition-all duration-400 ease-in-out cursor-pointer ${

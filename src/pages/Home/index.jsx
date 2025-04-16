@@ -7,14 +7,12 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
-import bannerReal2 from "../../assets/img/BannerReal2.jpg";
-import bannerReal from "../../assets/img/bannerReal.jpg";
 import CardProduct from "../../components/CardProduct";
 import { useHandleContext } from "../../contexts/UserProvider";
-import { Link } from "react-router-dom";
 
 const Home = () => {
-  const { dataAllProductContext, dataIsLoadingContext } = useHandleContext();
+  const { dataAllProductContext, dataIsLoadingContext, dataLogoContext } =
+    useHandleContext();
 
   const [isProductSale, setIsProductSale] = useState(false);
   const [isProductHot, setIsProductHot] = useState(false);
@@ -47,45 +45,44 @@ const Home = () => {
   }, [dataAllProductContext]);
 
   return (
-    <div className="px-[20px] py-[10px] bg-bgMainColor">
+    <div className="px-[20px] py-[10px] bg-bgMainColor dark:bg-bgDarkMainColor">
       {/* banner  */}
       <div className="banner h-full w-full">
-        <Swiper
-          modules={[Navigation, Autoplay]}
-          autoplay={{
-            delay: 2500,
-            disableOnInteraction: false,
-          }}
-          loop={true}
-          spaceBetween={50}
-          slidesPerView={1}
-        >
-          <SwiperSlide>
-            <div className="w-full h-full">
-              <img
-                className="w-full h-full object-fill"
-                src={bannerReal2}
-                alt="banner"
-              />
-            </div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-full ">
-              <img
-                className="w-full h-full object-fill"
-                src={bannerReal}
-                alt="banner"
-              />
-            </div>
-          </SwiperSlide>
-        </Swiper>
+        {dataLogoContext?.bannerUrls?.length > 0 ? (
+          <Swiper
+            modules={[Navigation, Autoplay]}
+            autoplay={{
+              delay: 2500,
+              disableOnInteraction: false,
+            }}
+            loop={dataLogoContext.bannerUrls.length > 1} // Chỉ bật loop nếu có hơn 1 slide
+            spaceBetween={50}
+            slidesPerView={1}
+          >
+            {dataLogoContext.bannerUrls.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="w-full h-full">
+                  <img
+                    className="w-full h-full object-fill"
+                    src={item}
+                    alt={`banner-${index}`}
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className="text-center py-10 text-gray-500 dark:text-textDarkColor">
+            Không có banner để hiển thị
+          </div>
+        )}
       </div>
 
       {/* content  */}
       <div className="">
         {/* product sale  */}
         <div className="pt-[10px]">
-          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor dark:bg-bgDarkTitleColor dark:text-textDarkTitleColor">
             Sản Phẩm khuyến mại
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -95,7 +92,7 @@ const Home = () => {
           )}
           {isProductSale === false &&
             !dataIsLoadingContext.isLoadingProduct && (
-              <h1 className="max-sm:text-sm text-center">
+              <h1 className="max-sm:text-sm text-center dark:text-textDarkColor">
                 Hiện chưa có sản phẩm nào đang khuyến mại
               </h1>
             )}
@@ -112,7 +109,7 @@ const Home = () => {
         </div>
         {/* product hot  */}
         <div className="pt-[10px]">
-          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor dark:bg-bgDarkTitleColor dark:text-textDarkTitleColor">
             Sản Phẩm hot
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -121,7 +118,7 @@ const Home = () => {
             </span>
           )}
           {isProductHot === false && !dataIsLoadingContext.isLoadingProduct && (
-            <h1 className="max-sm:text-sm text-center">
+            <h1 className="max-sm:text-sm text-center dark:text-textDarkColor">
               Hiện chưa có sản phẩm nào hot
             </h1>
           )}
@@ -138,7 +135,7 @@ const Home = () => {
         </div>
         {/* product new  */}
         <div className="pt-[10px]">
-          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+          <h1 className="max-sm:text-sm p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor dark:bg-bgDarkTitleColor dark:text-textDarkTitleColor">
             Sản phẩm mới
           </h1>
           {dataIsLoadingContext.isLoadingProduct && (
@@ -147,7 +144,7 @@ const Home = () => {
             </span>
           )}
           {isProductNew === false && !dataIsLoadingContext.isLoadingProduct && (
-            <h1 className="max-sm:text-sm text-center">
+            <h1 className="max-sm:text-sm text-center dark:text-textDarkColor">
               Hiện chưa có sản phẩm nào mới
             </h1>
           )}

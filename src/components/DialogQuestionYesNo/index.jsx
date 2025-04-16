@@ -16,12 +16,12 @@ const DialogQuestionYesNo = ({
         ref={refDialog}
         className="max-sm:w-[90%] max-sm:my-[50%] relative w-[400px] my-[40px] mx-auto"
       >
-        <div className=" pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className=" pt-[60px] pb-[20px] px-[20px] bg-white dark:bg-bgDarkMainColor dark:text-textDarkColor shadow-lg rounded-lg overflow-hidden">
           <p className=" mb-[50px] text-[28px]">{title}</p>
           <div className="flex justify-end">
             <button
               onClick={handleNo}
-              className="mr-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor hover:bg-btnHoverColor cursor-pointer transition-all"
+              className="mr-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor cursor-pointer transition-all"
             >
               {textNo}
             </button>

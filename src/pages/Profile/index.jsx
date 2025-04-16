@@ -17,13 +17,14 @@ const Profile = () => {
   const { user } = useHandleContext();
 
   const [tab, setTab] = useState(searchParams.get("tab"));
+
   useEffect(() => {
     setTab(searchParams.get("tab"));
   }, [searchParams]);
 
   return (
-    <div className="w-full mb-[-20px] bg-bgMainColor min-h-screen ">
-      <div className="wrapper mx-auto max-w-[600px] h-auto bg-white rounded-md">
+    <div className="w-full mb-[-20px] bg-bgMainColor dark:bg-bgDarkFooterColor min-h-screen ">
+      <div className="wrapper mx-auto max-w-[600px] h-auto bg-white dark:bg-bgDarkMainColor dark:text-textDarkColor rounded-md">
         {/* top */}
         <div className="top relative">
           <div className="w-full h-[120px] rounded-md overflow-hidden">
@@ -56,7 +57,7 @@ const Profile = () => {
                   className={`${
                     tab === "introduce" || tab === null
                       ? "text-textHoverColor border-b-[2px] border-borderColor"
-                      : ""
+                      : "dark:text-textDarkColor"
                   } text-gray-600 whitespace-nowrap`}
                 >
                   Giới thiệu
@@ -66,7 +67,7 @@ const Profile = () => {
                   className={`${
                     tab === "order"
                       ? "text-textHoverColor border-b-[2px] border-borderColor"
-                      : ""
+                      : "dark:text-textDarkColor"
                   } text-gray-600 whitespace-nowrap`}
                 >
                   Đơn hàng
@@ -76,7 +77,7 @@ const Profile = () => {
                   className={`${
                     tab === "edit-profile"
                       ? "text-textHoverColor border-b-[2px] border-borderColor"
-                      : ""
+                      : "dark:text-textDarkColor"
                   } text-gray-600 whitespace-nowrap`}
                 >
                   Chỉnh sửa trang cá nhân
@@ -86,7 +87,7 @@ const Profile = () => {
                   className={`${
                     tab === "change-password"
                       ? "text-textHoverColor border-b-[2px] border-borderColor"
-                      : ""
+                      : "dark:text-textDarkColor"
                   } text-gray-600 whitespace-nowrap`}
                 >
                   Đổi mật khẩu

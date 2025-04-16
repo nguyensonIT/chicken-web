@@ -34,6 +34,9 @@ const ProfileOrder = () => {
 
   return (
     <div>
+      {dataOrderByIdUserContext?.length === 0 && (
+        <div className="flex justify-center">Chưa có đơn hàng nào!</div>
+      )}
       {dataOrderByIdUserContext?.map((item, index) => {
         return (
           <ItemOrderTracking

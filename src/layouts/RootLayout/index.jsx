@@ -51,6 +51,7 @@ const RootLayout = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div>
       <div className="fixed top-0 left-0 right-0 z-[20]">
@@ -68,23 +69,24 @@ const RootLayout = () => {
         <div
           ref={refBtn}
           onClick={handleClickSidebar}
-          className="sm:hidden max-sm:top-[162px] flex justify-center items-center fixed py-[22px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor border-[1px] border-[white] z-10  transition-all fixedBtn"
+          className="sm:hidden max-sm:top-[162px] flex justify-center items-center fixed py-[22px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor dark:bg-bgDarkSideBarColor border-[1px] border-[white] z-10  transition-all fixedBtn"
         >
           {isSidebar ? (
             <FontAwesomeIcon
               icon={faChevronLeft}
-              className="text-[20px] px-[4px] text-textEmphasizeColor"
+              className="text-[20px] px-[4px] text-textEmphasizeColor dark:text-textDarkColor"
             />
           ) : (
             <FontAwesomeIcon
               icon={faBars}
-              className="text-[20px] px-[4px] text-textEmphasizeColor"
+              className="text-[20px] px-[4px] text-textEmphasizeColor dark:text-textDarkColor"
             />
           )}
         </div>
-        <div className="sm:hidden fixed pl-[25px] mt-[-2px] top-[162px] flex w-full overflow-x-auto bg-white z-[9]">
+        {/* detail sidebar mobile  */}
+        <div className="sm:hidden fixed pl-[25px] mt-[-2px] top-[162px] flex w-full overflow-x-auto bg-white dark:bg-bgDarkSideBarColor dark:text-textDarkColor z-[9]">
           {dataSideBarContext?.length === 0 && (
-            <div className="h-[68px] w-full grid grid-cols-7">
+            <div className="h-[68px] w-full grid grid-cols-7 bg-white">
               <p></p>
               <p></p>
               <img
@@ -102,6 +104,7 @@ const RootLayout = () => {
                 src={chickenGif}
                 alt="chickenGif"
               />
+
               <p className="flex items-center text-xl font-bold animate-pulse">
                 ...
               </p>

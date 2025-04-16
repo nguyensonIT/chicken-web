@@ -21,7 +21,7 @@ const ItemOrderTracking = ({
   return (
     <div
       onClick={() => handleClickItemOrderTracking(data)}
-      className="max-sm:flex-col bg-white relative p-[10px] mb-[10px] flex border border-borderColor hover:bg-gray-50 cursor-pointer"
+      className="max-sm:flex-col bg-white dark:bg-bgDarkCardProduct relative p-[10px] mb-[10px] flex border border-borderColor hover:bg-gray-50 cursor-pointer"
     >
       <div className="max-sm:w-full max-sm:border-0 w-1/2 flex flex-col border-r-[2px] border-r-borderColor">
         {/* STT đơn hàng, id đơn hàng, tên khách hàng  */}

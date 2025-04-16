@@ -8,18 +8,48 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
 import moment from "moment";
+import { useEffect, useRef, useState } from "react";
 
 import { useHandleContext } from "../../../../contexts/UserProvider";
+import DialogQuestionYesNo from "../../../../components/DialogQuestionYesNo";
 
 const ProfileIntroduce = () => {
   const { user } = useHandleContext();
 
+  const refDialog = useRef(null);
+
+  const [isDialogLogout, setIsDialogLogout] = useState(false);
+
+  const handleDialogLogout = () => {
+    if (isDialogLogout) {
+      refDialog.current.classList.add("isClose");
+      setTimeout(() => {
+        setIsDialogLogout(false);
+      }, 300);
+    } else {
+      setIsDialogLogout(true);
+    }
+  };
+
+  const handleLogout = () => {
+    refDialog.current.classList.add("isClose");
+    setTimeout(() => {
+      setIsDialogLogout(false);
+    }, 400);
+    localStorage.clear();
+    window.location.reload();
+  };
+
   // Parse chuỗi ngày giờ
-  const m = moment(user.orderDate);
+  const m = moment(user.createdAt);
 
   // Tách ngày tháng
   const monthJoin = m.format("MM");
   const yearJoin = m.format("YYYY");
+
+  useEffect(() => {
+    isDialogLogout && refDialog.current.classList.add("isDetail");
+  }, [isDialogLogout]);
 
   return (
     <div className="">
@@ -75,17 +105,31 @@ const ProfileIntroduce = () => {
         <div className="">
           <Link
             to="/profile?tab=edit-profile"
-            className="inline-block px-[20px] py-[8px] text-[12px] bg-slate-200 hover:bg-slate-300 rounded-md cursor-pointer"
+            className="inline-block px-[20px] py-[8px] text-[12px] bg-slate-200 dark:bg-btnDarkColor hover:bg-slate-300 rounded-md cursor-pointer"
           >
             Chỉnh sửa thông tin
           </Link>
         </div>
         <div>
-          <span className="inline-block px-[20px] py-[8px] text-white text-[12px] bg-red-500 hover:bg-red-300 rounded-md cursor-pointer">
+          <span
+            onClick={handleDialogLogout}
+            className="inline-block px-[20px] py-[8px] text-white text-[12px] bg-red-500 hover:bg-red-300 rounded-md cursor-pointer"
+          >
             Đăng xuất
           </span>
         </div>
       </div>
+      {/* Dialog Logout  */}
+      {isDialogLogout && (
+        <DialogQuestionYesNo
+          refDialog={refDialog}
+          title="Bạn có chắc muốn đăng xuất không"
+          textNo="Hủy"
+          textYes="Đăng xuất"
+          handleYes={handleLogout}
+          handleNo={handleDialogLogout}
+        />
+      )}
     </div>
   );
 };

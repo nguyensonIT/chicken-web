@@ -112,9 +112,9 @@ const Product = () => {
   }, [searchParams, dataAllProductContext]);
 
   return (
-    <div className="px-[20px] py-[10px] bg-bgMainColor">
+    <div className="px-[20px] py-[10px] bg-bgMainColor dark:bg-bgDarkMainColor">
       <div className="pt-[10px]">
-        <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor ">
+        <h1 className="max-sm:text-[14px] p-[5px] uppercase text-center font-bold text-textEmphasizeColor bg-bgEmphasizeColor dark:bg-bgDarkTitleColor dark:text-textDarkTitleColor">
           {nameCategory.title}
         </h1>
         {searchParams.get("category") === "sale" && isProductSale === false && (
@@ -147,7 +147,7 @@ const Product = () => {
           dataAllsProductsArranged?.map((data, index) => {
             return (
               <div key={index} className="">
-                <h1 className="max-sm:text-[14px] text-[24px] text-textEmphasizeColor py-[15px] font-bold">
+                <h1 className="max-sm:text-[14px] text-[24px] text-textEmphasizeColor dark:text-textDarkTitleColor py-[15px] font-bold">
                   {data.nameCategory}
                 </h1>
                 <div className="max-sm:grid-cols-1 grid grid-cols-3 gap-[10px] mt-[20px]">

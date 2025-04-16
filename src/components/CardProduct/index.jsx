@@ -64,7 +64,7 @@ const CardProduct = ({ data = [] }) => {
       className={`${
         (data.isActive === false || !statusOpenDoor) &&
         "pointer-events-none opacity-[0.6]"
-      } card-wrap relative cursor-pointer border-transparent border-[2px] hover:border-textHoverColor hover:border-solid relative rounded-md grid grid-cols-3 gap-[8px] p-[12px] bg-white`}
+      } card-wrap relative cursor-pointer border-transparent border-[2px] hover:border-textHoverColor hover:border-solid relative rounded-md grid grid-cols-3 gap-[8px] p-[12px] bg-white dark:bg-bgDarkCardProduct dark:text-textDarkColor`}
     >
       <div className="image-product flex justify-center items-center relative col-span-1 overflow-hidden">
         <img
@@ -107,7 +107,7 @@ const CardProduct = ({ data = [] }) => {
       <button
         onClick={(e) => handleAddCart(e, data)}
         type="button"
-        className="absolute hover:bg-btnHoverColor transition-[2s] flex justify-center items-center bg-btnColor text-[16px] text-[white] rounded-[50%] right-[12px] bottom-[12px] w-[22px] h-[22px]"
+        className="absolute hover:bg-btnHoverColor transition-[2s] flex justify-center items-center bg-btnColor dark:bg-btnDarkColor text-[16px] text-[white] rounded-[50%] right-[12px] bottom-[12px] w-[22px] h-[22px]"
       >
         <FontAwesomeIcon icon={faPlus} className="text-[12px]" />
       </button>
@@ -121,7 +121,7 @@ const CardProduct = ({ data = [] }) => {
       )}
       {/* hiện tem hết hàng */}
       {data.isActive === false && (
-        <span className="absolute px-[8px] py-[3px] bg-[#E6E6FA] left-[-20px] rotate-[-45deg] text-[12px] font-bold">
+        <span className="absolute px-[8px] py-[3px] bg-[#E6E6FA] dark:bg-bgDarkCardProduct left-[-20px] rotate-[-45deg] text-[12px] font-bold">
           Hết hàng
         </span>
       )}

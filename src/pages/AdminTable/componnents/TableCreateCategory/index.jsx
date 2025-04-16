@@ -50,7 +50,7 @@ const TableCreateCategory = () => {
     <div className="flex flex-col justify-center items-center">
       {/* box error */}
       {errNameCategory && (
-        <div className="box-err h-[30px] w-[400px] my-[10px] mx-auto border border-dashed border-textEmphasizeColor">
+        <div className="box-err max-sm:w-auto px-[10px] h-[30px] w-[400px] mt-[20px] mb-[10px] mx-auto border border-dashed border-textEmphasizeColor">
           <p className="text-center">{errNameCategory}</p>
         </div>
       )}

@@ -81,14 +81,14 @@ const FindProduct = forwardRef(
           )}
           <button
             onClick={handleFindProduct}
-            className="max-sm:text-smBtn max-sm:py-4 transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+            className="max-sm:text-smBtn max-sm:py-4 transition-[2s] bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor text-white px-4 py-2 "
           >
             Tìm kiếm
           </button>
         </div>
         {/* box item  */}
         {debounce.trim().length > 0 && (
-          <div className="absolute max-sm:top-[62px] p-[10px] top-[42px] min-h-[80px] max-h-[300px] left-0 right-0 bg-white shadow-xl overflow-y-auto">
+          <div className="absolute max-sm:top-[62px] p-[10px] top-[42px] min-h-[80px] max-h-[300px] left-0 right-0 bg-white dark:bg-bgDarkMainColor shadow-xl overflow-y-auto">
             <div className="">
               {searchResult.length > 0 ? (
                 searchResult.map((item, index) => {

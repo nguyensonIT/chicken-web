@@ -5,7 +5,7 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-import BtnTurnOn from "../../../../components/BtnTurnOn";
+import BtnStatusToggle from "../../../../components/BtnStatusToggle";
 
 export const menus = [
   {
@@ -34,10 +34,10 @@ export const menus = [
       },
     ],
   },
-  {
-    name: "Tin tức",
-    href: "/news",
-  },
+  // {
+  //   name: "Tin tức",
+  //   href: "/news",
+  // },
   {
     name: "Giới thiệu",
     href: "/introduce",
@@ -51,38 +51,30 @@ export const listMenuAvatar = [
   {
     id: 6,
     option: "Trang cá nhân",
-    icon: <FontAwesomeIcon icon={faUser} />,
+    icon: () => <FontAwesomeIcon icon={faUser} />,
   },
   {
     id: 7,
     option: "Quản trị Admin",
-    icon: <FontAwesomeIcon icon={faUser} />,
+    icon: () => <FontAwesomeIcon icon={faUser} />,
   },
   {
     id: 3,
     option: "Ngôn ngữ",
-    icon: <FontAwesomeIcon icon={faLanguage} />,
+    icon: () => <FontAwesomeIcon icon={faLanguage} />,
     children: [
-      {
-        id: 4,
-        option: "Tiếng Anh",
-        prev: true,
-      },
-      {
-        id: 5,
-        option: "Tiếng Việt",
-        prev: true,
-      },
+      { id: 4, option: "Tiếng Anh", prev: true },
+      { id: 5, option: "Tiếng Việt", prev: true },
     ],
   },
   {
     id: 2,
     option: "Chế độ tối",
-    icon: <BtnTurnOn />,
+    icon: (props) => <BtnStatusToggle {...props} />,
   },
   {
     id: 1,
     option: "Đăng xuất",
-    icon: <FontAwesomeIcon icon={faRightFromBracket} />,
+    icon: () => <FontAwesomeIcon icon={faRightFromBracket} />,
   },
 ];

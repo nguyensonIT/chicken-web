@@ -160,7 +160,7 @@ const ProfileEdit = () => {
           <div className="">
             <span
               onClick={handleClickEdit}
-              className="inline-block px-[20px] py-[8px] text-[12px] bg-slate-200 hover:bg-slate-300 rounded-md cursor-pointer"
+              className="inline-block px-[20px] py-[8px] text-[12px] bg-slate-200 dark:bg-btnDarkColor hover:bg-slate-300 rounded-md cursor-pointer"
             >
               Nhấn để chỉnh sửa
             </span>
@@ -187,7 +187,7 @@ const ProfileEdit = () => {
                   <div className="max-sm:h-smInpHeight mt-[10px] border border-borderColor rounded-sm px-[5px]">
                     <input
                       type="text"
-                      className="max-sm:text-inputSize max-sm:h-full w-full text-[12px] outline-none"
+                      className="max-sm:text-inputSize max-sm:h-full w-full text-[12px] outline-none dark:bg-bgDarkMainColor"
                       value={item.info}
                       onChange={(e) => handleChangeInfo(item.id, e)}
                     />
@@ -207,10 +207,8 @@ const ProfileEdit = () => {
             <span
               onClick={handleSubmit}
               className={`${
-                isLoading || !isEdit
-                  ? "bg-btnHoverColor pointer-events-none"
-                  : ""
-              } inline-block px-[20px] py-[8px] text-white text-[12px] bg-btnColor hover:bg-btnHoverColor rounded-md cursor-pointer`}
+                isLoading ? "bg-btnHoverColor pointer-events-none" : ""
+              } inline-block px-[20px] py-[8px] text-white text-[12px] bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor rounded-md cursor-pointer`}
             >
               {isLoading ? (
                 <FontAwesomeIcon className="loading" icon={faSpinner} />

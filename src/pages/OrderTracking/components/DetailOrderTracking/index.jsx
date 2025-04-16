@@ -108,8 +108,8 @@ const DetailOrderTracking = ({
   }, [isLogCancel]);
 
   return (
-    <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
-      <div className="max-sm:h-[500px] max-sm:overflow-y-auto max-sm:flex-col w-full flex border border-borderColor">
+    <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white dark:bg-bgDarkCardProduct dark:text-textDarkColor shadow-lg rounded-lg overflow-hidden">
+      <div className="max-sm:h-[500px] max-sm:overflow-y-auto max-sm:flex-col w-full flex border border-borderColor dark:border-borderDarkColor">
         {/* Left  */}
         <div className="max-sm:w-full max-sm:border-0 w-1/2 border border-borderColor">
           <h1 className="max-sm:text-[14px] max-sm:py-[10px] py-[20px] text-[20px] text-center font-bold">

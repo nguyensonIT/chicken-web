@@ -97,18 +97,18 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
     <div
       onClick={(e) => handleClose(e)}
       ref={dialogRef}
-      className="fixed z-[999] top-0 bottom-0 right-0 left-0 bg-bgDialogColor    "
+      className="fixed z-[999] top-0 bottom-0 right-0 left-0 bg-bgDialogColor "
     >
       <div
         ref={detailRef}
         className="max-sm:w-[90%] max-sm:my-[50%] my-[40px] w-[400px] mx-auto "
       >
-        <div className="p-[8px] bg-white shadow-lg rounded-lg overflow-hidden max-w-md">
+        <div className="p-[8px] bg-white dark:bg-bgDarkMainColor shadow-lg rounded-lg overflow-hidden max-w-md">
           <div className="flex ">
             <div className="w-1/3 flex justify-center items-center">
               <div
                 onClick={handleClickImg}
-                className="w-[120px] h-[120px] p-[5px] border-solid border-[1px] border-borderColor cursor-pointer"
+                className="w-[120px] h-[120px] p-[5px] border-solid border-[1px] border-borderColor dark:border-borderDarkColor cursor-pointer"
               >
                 <img
                   src={data.imgProduct || logo}
@@ -118,16 +118,16 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
               </div>
             </div>
             <div className="w-2/3 p-4">
-              <h1 className="max-sm:text-smTitle text-gray-900 font-bold text-2xl">
+              <h1 className="max-sm:text-smTitle text-gray-900 dark:text-textDarkColor font-bold text-2xl">
                 {data.nameProduct}
               </h1>
-              <p className="max-sm:text-smDesc mt-2 text-gray-600 text-sm italic">
+              <p className="max-sm:text-smDesc mt-2 text-gray-600 dark:text-textDarkColor text-sm italic">
                 {data.descProduct}
               </p>
-              <div className="flex item-center justify-between mt-3">
+              <div className="flex item-center justify-between mt-3 dark:text-textDarkColor">
                 {data.sale ? (
-                  <div className="flex items-center">
-                    <span className="mr-[2px] line-through text-[12px] opacity-30 italic">
+                  <div className="flex items-center ">
+                    <span className="mr-[2px] line-through text-[12px] opacity-30 italic ">
                       {priceProduct}
                     </span>
                     <span className="mr-[8px] relative top-[-4px] line-through font-normal text-[10px] opacity-30 italic">
@@ -141,7 +141,7 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
                     </span>
                   </div>
                 ) : (
-                  <div className="flex items-center">
+                  <div className="flex items-center dark:text-textDarkColor">
                     <span className="text-[15px] font-normal">
                       {priceProduct}
                     </span>
@@ -158,19 +158,19 @@ function DetailProductDialog({ data, setDisplayDetail, displayDetail }) {
               currentValue={currentValue}
               setCurrentValue={setCurrentValue}
             />
-            <div className="w-full my-[20px]">
+            <div className="w-full my-[20px] dark:text-textDarkColor">
               <span className="italic underline">Ghi chú:</span>
               <textarea
                 value={note}
                 onChange={handleChangeNote}
-                className="max-sm:text-inputSize w-full px-[10px] py-[10px] mt-[10px] italic text-[12px] outline-none border border-borderColor rounded-md"
+                className="max-sm:text-inputSize w-full px-[10px] py-[10px] mt-[10px] italic text-[12px] outline-none border border-borderColor dark:border-borderDarkColor rounded-md dark:bg-bgDarkMainColor"
                 rows="2"
                 placeholder="VD: Không cay,..."
               ></textarea>
             </div>
             <button
               onClick={() => handleAddCart(data)}
-              className="px-3 py-2 transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white text-xs font-bold uppercase rounded"
+              className="px-3 py-2 transition-[2s] bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor text-white text-xs font-bold uppercase rounded"
             >
               <span className="mr-[4px]">
                 <FontAwesomeIcon icon={faCartPlus} />

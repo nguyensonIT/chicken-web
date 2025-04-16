@@ -106,7 +106,7 @@ const OrderTracking = () => {
   }, [isDisplayDetailOrderTracking]);
 
   return (
-    <div className="px-[20px] py-[30px] mb-[-20px] bg-bgMainColor">
+    <div className="px-[20px] py-[30px] mb-[-20px] bg-bgMainColor dark:bg-bgDarkMainColor dark:text-textDarkColor">
       {/* Mã đơn hàng  */}
       <div className="max-sm:flex-col flex gap-[10px]">
         <span className="max-sm:text-[12px]">
@@ -133,7 +133,7 @@ const OrderTracking = () => {
           ) : (
             <span
               onClick={handleTakeCodeOrder}
-              className="select-none px-[10px] py-[5px] rounded-md bg-btnColor hover:bg-btnHoverColor text-white transition-[2s] cursor-pointer"
+              className="select-none px-[10px] py-[5px] rounded-md bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor text-white transition-[2s] cursor-pointer"
             >
               Lấy mã
             </span>
@@ -146,13 +146,13 @@ const OrderTracking = () => {
           <input
             type="text"
             placeholder="Nhập mã đơn hàng..."
-            className="max-sm:text-inputSize py-2 px-3 focus:outline-none flex-1 "
+            className="max-sm:text-inputSize py-2 px-3 focus:outline-none flex-1 dark:bg-bgDarkMainColor"
             value={valueCode}
             onChange={handleChangeCode}
           />
           <button
             onClick={handleFindOrder}
-            className="max-sm:text-sm transition-[2s] bg-btnColor hover:bg-btnHoverColor text-white px-4 py-2 "
+            className="max-sm:text-sm transition-[2s] bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor text-white px-4 py-2 "
           >
             {isLoading ? (
               <FontAwesomeIcon className="loading" icon={faSpinner} />

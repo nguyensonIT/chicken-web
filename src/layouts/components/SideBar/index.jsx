@@ -8,14 +8,16 @@ const SideBar = () => {
   const { dataSideBarContext, dataIsLoadingContext } = useHandleContext();
 
   return (
-    <div className="flex flex-col h-[100%] bg-bgSideBarColor">
+    <div className="flex flex-col h-[100%] bg-bgSideBarColor dark:bg-bgDarkSideBarColor dark:text-textDarkColor">
       {/* Title */}
-      <div className="flex items-center py-[8px] pl-[10px] bg-bgEmphasizeColor">
+      <div className="flex items-center py-[8px] pl-[10px] bg-bgEmphasizeColor dark:bg-bgDarkTitleColor">
         <FontAwesomeIcon
           icon={faList}
-          className="mr-[8px] text-textEmphasizeColor"
+          className="mr-[8px] text-textEmphasizeColor dark:text-textDarkTitleColor"
         />
-        <h1 className="font-bold text-textEmphasizeColor">Danh mục</h1>
+        <h1 className="font-bold text-textEmphasizeColor dark:text-textDarkTitleColor">
+          Danh mục
+        </h1>
       </div>
       {/* list  */}
       <div className="flex h-[70%] flex-col px-[10px] pt-[10px] overflow-y-auto">

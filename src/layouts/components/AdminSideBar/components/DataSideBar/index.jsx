@@ -23,8 +23,13 @@ export const dataSideBarAdmin = [
     icon: <FontAwesomeIcon icon={faReceipt} />,
   },
   {
-    name: "Bài viết",
-    href: "/admin/article",
-    icon: <FontAwesomeIcon icon={faNewspaper} />,
+    name: "Cài đặt",
+    href: "/admin/setting",
+    icon: <FontAwesomeIcon icon={faReceipt} />,
   },
+  // {
+  //   name: "Bài viết",
+  //   href: "/admin/article",
+  //   icon: <FontAwesomeIcon icon={faNewspaper} />,
+  // },
 ];

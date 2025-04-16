@@ -123,13 +123,13 @@ const ProfileChangePassword = () => {
           <div className="flex mt-[10px] border border-borderColor rounded-sm px-[5px]">
             <input
               type={`${isSeeOld ? "text" : "password"}`}
-              className="w-full text-[12px] outline-none"
+              className="w-full text-[12px] outline-none dark:bg-bgDarkMainColor"
               value={oldPass}
               onChange={handleChangeOldPassword}
             />
             <span onClick={() => handleSeePass(1)}>
               {isSeeOld ? (
-                <EyeIcon className="w-[24px] cursor-pointer" />
+                <EyeIcon className="w-[24px] cursor-pointer " />
               ) : (
                 <EyeSlashIcon className="w-[24px] cursor-pointer" />
               )}
@@ -149,7 +149,7 @@ const ProfileChangePassword = () => {
           <div className="flex mt-[10px] border border-borderColor rounded-sm px-[5px]">
             <input
               type={`${isSeeNewPass ? "text" : "password"}`}
-              className="w-full text-[12px] outline-none"
+              className="w-full text-[12px] outline-none dark:bg-bgDarkMainColor"
               value={newPass}
               onChange={handleChangeNewPassword}
             />
@@ -175,7 +175,7 @@ const ProfileChangePassword = () => {
           <div className="flex mt-[10px] border border-borderColor rounded-sm px-[5px]">
             <input
               type={`${isSeeReNewPass ? "text" : "password"}`}
-              className="w-full text-[12px] outline-none"
+              className="w-full text-[12px] outline-none dark:bg-bgDarkMainColor"
               value={reNewPass}
               onChange={handleChangeRenenterPassword}
             />
@@ -195,7 +195,7 @@ const ProfileChangePassword = () => {
           onClick={handleSubmit}
           className={`${
             isLoading ? "bg-btnHoverColor pointer-events-none" : ""
-          } inline-block px-[20px] py-[8px] text-white text-[12px] bg-btnColor hover:bg-btnHoverColor rounded-md cursor-pointer`}
+          } inline-block px-[20px] py-[8px] text-white dark:bg-btnDarkColor text-[12px] bg-btnColor hover:bg-btnHoverColor rounded-md cursor-pointer`}
         >
           {isLoading ? (
             <FontAwesomeIcon className="loading" icon={faSpinner} />

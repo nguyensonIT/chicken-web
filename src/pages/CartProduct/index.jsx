@@ -82,7 +82,7 @@ const CartProduct = () => {
   }, [isPopupCheckOrder]);
 
   return (
-    <div className="max-sm:h-auto h-screen pt-[40px]">
+    <div className="max-sm:h-auto h-screen pt-[40px] mb-[-40px] dark:bg-bgDarkMainColor overflow-hidden">
       {dataProductCart.length === 0 && (
         <div className="flex justify-center mt-[-40px]">
           <div className="w-1/2 flex justify-center">
@@ -94,8 +94,8 @@ const CartProduct = () => {
           </div>
         </div>
       )}
-      <div className="max-sm:mb-[180px] mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-        <div className=" sm:h-screen overflow-scroll rounded-lg md:w-2/3">
+      <div className="max-sm:pb-[180px] mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
+        <div className="sm:h-screen sm:overflow-scroll rounded-lg md:w-2/3 pb-[20px]">
           {/* item  */}
           {dataProductCart.length > 0 &&
             dataProductCart.map((data, index) => {
@@ -110,19 +110,23 @@ const CartProduct = () => {
         </div>
         {/* Sub total */}
         {dataProductCart.length > 0 && (
-          <div className="max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:h-auto max-sm:z-20 max-sm:mt-0 max-sm:p-[10px] mt-6 h-full rounded-lg border bg-white p-6 shadow-md md:mt-0 md:w-1/3">
+          <div className="max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:h-auto max-sm:z-20 max-sm:mt-0 max-sm:p-[10px] mt-6 h-full rounded-lg border bg-white dark:bg-bgDarkMainColor dark:text-textDarkColor p-6 shadow-md md:mt-0 md:w-1/3">
             <div className="mb-2 flex justify-between">
-              <p className="max-sm:text-smTitle text-gray-700">Tổng phụ</p>
-              <p className="text-gray-700">
+              <p className="max-sm:text-smTitle text-gray-700 dark:text-textDarkColor">
+                Tổng phụ
+              </p>
+              <p className="text-gray-700 dark:text-textDarkColor">
                 {formatCurrency(subTotal())}
                 <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                   đ
                 </span>
               </p>
             </div>
-            <div className="mb-2 flex justify-between">
-              <p className="max-sm:text-smTitle text-gray-700">Giảm giá</p>
-              <p className="text-gray-700 italic">
+            <div className="mb-2 flex justify-between ">
+              <p className="max-sm:text-smTitle text-gray-700 dark:text-textDarkColor">
+                Giảm giá
+              </p>
+              <p className="text-gray-700 dark:text-textDarkColor italic">
                 {formatCurrency(priceSaleProduct())}
                 <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                   đ
@@ -130,8 +134,10 @@ const CartProduct = () => {
               </p>
             </div>
             <div className=" flex justify-between">
-              <p className="max-sm:text-smTitle text-gray-700">Phí ship</p>
-              <p className="text-gray-700 italic line-through">
+              <p className="max-sm:text-smTitle text-gray-700 dark:text-textDarkColor">
+                Phí ship
+              </p>
+              <p className="text-gray-700 dark:text-textDarkColor italic line-through">
                 25.000
                 <span className="mr-[8px] relative top-[-4px] font-normal text-[12px] italic">
                   đ
@@ -153,7 +159,7 @@ const CartProduct = () => {
               </div>
               <button
                 onClick={handleCheckOrder}
-                className="max-sm:mt-0 max-sm:w-auto max-sm:px-[20px] mt-6 w-full rounded-md transition-all bg-btnColor py-1.5 font-medium text-blue-50 hover:bg-btnHoverColor"
+                className="max-sm:mt-0 max-sm:w-auto max-sm:px-[20px] mt-6 w-full rounded-md transition-all bg-btnColor dark:bg-btnDarkColor py-1.5 font-medium text-blue-50 hover:bg-btnHoverColor"
               >
                 Kiểm tra
               </button>

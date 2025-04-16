@@ -223,7 +223,7 @@ const TableCreateDish = ({ data = {}, handleClose }) => {
         errImage ||
         errors.descProduct?.message ||
         errors.priceProduct?.message) && (
-        <div className="box-err h-[30px] w-[400px] my-[10px] mx-auto border border-dashed border-textEmphasizeColor">
+        <div className="box-err max-sm:w-auto h-[30px] w-[400px] my-[10px] mx-auto border border-dashed border-textEmphasizeColor">
           <p className="text-center">
             {errors.nameProduct?.message ||
               errCategory ||

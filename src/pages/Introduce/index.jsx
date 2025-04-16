@@ -7,7 +7,7 @@ import imgGaPng from "../../assets/img/garight.png";
 const Introduce = () => {
   return (
     <>
-      <div className="max-sm:px-0 px-[40px] pb-[40px] mb-[-20px] bg-bgMainColor">
+      <div className="max-sm:px-0 px-[40px] pb-[40px] mb-[-20px] bg-bgMainColor dark:bg-bgDarkMainColor dark:text-textDarkColor">
         <div className="max-sm:gap-[10px] max-sm:border-[2px] max-sm:border-white flex justify-center items-center gap-[20px] py-[20px] bg-bgEmphasizeColor">
           <div className="max-sm:size-[50px] flex justify-center items-center bg-white size-[80px] rounded-[50%] border-[2px] border-[red]">
             <img
@@ -28,6 +28,7 @@ const Introduce = () => {
           </div>
         </div>
         <div className="max-sm:grid-cols-1 max-sm:px-[8px] pt-[30px] grid grid-cols-2 gap-[20px] items-center">
+          {/* text */}
           <div className="max-sm:order-1 text-justify">
             <p>
               <b>Vua Gà Tươi</b> tiền thân là một quá gà ven quốc lộ 5 từ năm
@@ -41,20 +42,15 @@ const Introduce = () => {
               nào.
             </p>
           </div>
-          <div className="max-sm:order-2 flex justify-start">
+          {/* img  */}
+          <div className="max-sm:order-2 flex justify-end">
             <img
               className="max-sm:w-full w-[300px]"
               src={imgChicken}
               alt="imgChicken"
             />
           </div>
-          <div className="max-sm:order-4 flex justify-end">
-            <img
-              className="max-sm:w-full w-[300px]"
-              src={imgGaluoc}
-              alt="imgGaluoc"
-            />
-          </div>
+          {/* text */}
           <div className="max-sm:order-3 text-justify">
             <p>
               Tự hào phát huy những món ăn truyền thống dân tộc,{" "}
@@ -66,6 +62,15 @@ const Introduce = () => {
               nguyên liệu cho từng món ăn.
             </p>
           </div>
+          {/* img  */}
+          <div className="max-sm:order-4 flex justify-end">
+            <img
+              className="max-sm:w-full w-[300px]"
+              src={imgGaluoc}
+              alt="imgGaluoc"
+            />
+          </div>
+          {/* text */}
           <div className="max-sm:order-5 text-justify">
             <p>
               Để tạo ra được một món gà ngon, nguyên liệu cho món gà tươi 100%
@@ -74,20 +79,15 @@ const Introduce = () => {
               bở, nhạt và khô.
             </p>
           </div>
-          <div className="max-sm:order-6 flex justify-start">
+          {/* img  */}
+          <div className="max-sm:order-6 flex justify-end">
             <img
               className="max-sm:w-full w-[300px]"
               src={imgGaran}
               alt="imgGaran"
             />
           </div>
-          <div className="max-sm:order-8 flex justify-end">
-            <img
-              className="max-sm:w-full w-[300px]"
-              src={imgGaransuat}
-              alt="imgGaransuat"
-            />
-          </div>
+          {/* text */}
           <div className="max-sm:order-7 text-justify">
             <p>
               Tại sao gọi là "Gà Tươi"? Những chú gà sáng chạy bộ chiều ăn ngô
@@ -98,6 +98,14 @@ const Introduce = () => {
               ăn tươi ngon nhất, sự phục vụ tận tình nhất là sứ mệnh của chúng
               tôi.
             </p>
+          </div>
+          {/* img  */}
+          <div className="max-sm:order-8 flex justify-end">
+            <img
+              className="max-sm:w-full w-[300px]"
+              src={imgGaransuat}
+              alt="imgGaransuat"
+            />
           </div>
         </div>
       </div>
