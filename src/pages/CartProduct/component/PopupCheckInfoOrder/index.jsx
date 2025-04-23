@@ -135,7 +135,7 @@ const PopupCheckInfoOrder = ({
   }, []);
 
   return (
-    <div className="flex flex-col w-9/12 mx-auto items-center justify-center pt-[20px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="flex flex-col w-9/12 mx-auto items-center justify-center pt-[20px] pb-[20px] px-[20px] bg-white dark:bg-bgDarkMainColor dark:text-textDarkColor shadow-lg rounded-lg overflow-hidden">
       <h1 className="text-[20px] uppercase font-bold">Xem lại đơn hàng</h1>
       {/* Đơn hàng  */}
       <div className="w-full mt-[20px]">
@@ -150,7 +150,7 @@ const PopupCheckInfoOrder = ({
             Giá tiền
           </p>
         </div>
-        <div className="border border-bgEmphasizeColor bg-[#FFF9E3]">
+        <div className="border border-bgEmphasizeColor dark:border-borderDarkColor bg-[#FFF9E3] dark:bg-bgDarkMainColor">
           {/* Item product  */}
           <div className="p-[5px] h-[130px] mt-[10px] overflow-y-auto">
             {dataProductInCart.map((data, index) => {
@@ -169,7 +169,7 @@ const PopupCheckInfoOrder = ({
         </div>
       </div>
       {/* Địa chỉ  */}
-      <div className="max-sm:px-[12px] w-full p-[5px] h-[150px] mt-[10px] overflow-y-auto border border-bgEmphasizeColor ">
+      <div className="max-sm:px-[12px] w-full p-[5px] h-[150px] mt-[10px] overflow-y-auto border border-bgEmphasizeColor dark:border-borderDarkColor ">
         <h1 className="max-sm:text-sm uppercase font-bold">Địa chỉ</h1>
         <div className="ml-[20px]">
           <p className="text-left font-bold">
@@ -204,7 +204,7 @@ const PopupCheckInfoOrder = ({
           onClick={handleOrder}
           className={`${
             isLoading && " bg-btnHoverColor pointer-events-none"
-          } max-sm:px-[10px] ml-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor hover:bg-btnHoverColor cursor-pointer transition-all`}
+          } max-sm:px-[10px] ml-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor cursor-pointer transition-all`}
         >
           {isLoading ? (
             <FontAwesomeIcon className="loading" icon={faSpinner} />

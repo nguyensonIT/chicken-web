@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 
 import ProductItemCart from "./component/ProductItemCart";
 import { formatCurrency } from "../../components/FormatCurrency";
-import cartEmptyImg from "../../assets/img/Empty_Cart.jpg";
+import cartEmptyImg from "../../assets/img/Empty_Cart.png";
 import PopupWrapper from "../../components/PopupWrapper";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -83,31 +83,30 @@ const CartProduct = () => {
 
   return (
     <div className="max-sm:h-auto h-screen pt-[40px] mb-[-40px] dark:bg-bgDarkMainColor overflow-hidden">
-      {dataProductCart.length === 0 && (
-        <div className="flex justify-center mt-[-40px]">
-          <div className="w-1/2 flex justify-center">
-            <img
-              className="max-w-[350px] max-h-[350px] "
-              src={cartEmptyImg}
-              alt="empty"
-            />
-          </div>
-        </div>
-      )}
       <div className="max-sm:pb-[180px] mx-auto max-w-5xl justify-center px-6 md:flex md:space-x-6 xl:px-0">
-        <div className="sm:h-screen sm:overflow-scroll rounded-lg md:w-2/3 pb-[20px]">
-          {/* item  */}
-          {dataProductCart.length > 0 &&
-            dataProductCart.map((data, index) => {
-              return (
-                <ProductItemCart
-                  key={index}
-                  data={data}
-                  setReloadCart={setReloadCart}
-                />
-              );
-            })}
-        </div>
+        {dataProductCart.length === 0 && (
+          <div className="flex justify-center mt-[-40px]">
+            <div className="w-1/2 flex justify-center">
+              <img
+                className="max-w-[350px] max-h-[350px]"
+                src={cartEmptyImg}
+                alt="empty"
+              />
+            </div>
+          </div>
+        )}
+        {/* item  */}
+        {dataProductCart.length > 0 && (
+          <div className="sm:h-screen sm:overflow-scroll rounded-lg md:w-2/3 pb-[20px]">
+            {dataProductCart.map((data, index) => (
+              <ProductItemCart
+                key={index}
+                data={data}
+                setReloadCart={setReloadCart}
+              />
+            ))}
+          </div>
+        )}
         {/* Sub total */}
         {dataProductCart.length > 0 && (
           <div className="max-sm:fixed max-sm:bottom-0 max-sm:left-0 max-sm:right-0 max-sm:h-auto max-sm:z-20 max-sm:mt-0 max-sm:p-[10px] mt-6 h-full rounded-lg border bg-white dark:bg-bgDarkMainColor dark:text-textDarkColor p-6 shadow-md md:mt-0 md:w-1/3">
@@ -178,7 +177,7 @@ const CartProduct = () => {
             {/* close popup  */}
             <div
               onClick={handleCheckOrder}
-              className="close-dialog absolute w-[40px] h-[40px] right-[16px] top-[18px] flex items-center justify-center rounded-[50%] z-10 bg-bgDialogColor hover:bg-bgHoverColor transition-all cursor-pointer"
+              className="close-dialog absolute w-[40px] h-[40px] right-[16px] top-[18px] flex items-center justify-center rounded-[50%] z-10 bg-bgDialogColor hover:bg-bgHoverColor transition-all cursor-pointer dark:text-textDarkColor"
             >
               <FontAwesomeIcon
                 icon={faXmark}

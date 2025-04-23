@@ -4,12 +4,17 @@ import { faPrint } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { useEffect, useRef, useState } from "react";
 
+import { useReactToPrint } from "react-to-print";
+
 import { formatCurrency } from "../../../../components/FormatCurrency";
 import * as handleOrderService from "../../../../services/handleOrderService";
 import DialogQuestionYesNo from "../../../../components/DialogQuestionYesNo";
+import OrderPrintComp from "../OrderPrintComp";
 
 const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
   const refDialogCancel = useRef(null);
+
+  const componentPrintRef = useRef();
 
   const [isLogCancel, setIsLogCancel] = useState(false);
 
@@ -86,6 +91,12 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
     return lastFiveChars;
   };
 
+  //Print
+  const handlePrint = useReactToPrint({
+    contentRef: componentPrintRef, // Chỉ định `contentRef` thay vì `content`
+    documentTitle: "HoaDonKhachHang",
+  });
+
   useEffect(() => {
     isLogCancel && refDialogCancel.current.classList.add("isDetail");
   }, [isLogCancel]);
@@ -94,7 +105,6 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
     <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="max-sm:flex-col max-sm:h-[550px] w-full flex border border-borderColor overflow-y-auto">
         <div className="max-sm:flex-col h-full w-full flex">
-          {/* Left  */}
           <div className="max-sm:w-full w-1/2 border border-borderColor">
             <h1 className="max-sm:py-[5px] max-sm:text-[18px] py-[20px] text-[20px] text-center font-bold">
               Thông tin khách hàng
@@ -128,13 +138,11 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
             </div>
           </div>
 
-          {/* Right  */}
           <div className="max-sm:w-full w-1/2 border border-borderColor">
             <h1 className="max-sm:py-[5px] max-sm:text-[18px] py-[20px] text-[20px] text-center font-bold">
               Đơn hàng
             </h1>
             <div className="max-sm:py-0 px-[20px] py-[20px] flex flex-col">
-              {/* Top  */}
               <span>
                 Mã đơn hàng:{" "}
                 <p className="max-sm:text-[10px] inline italic font-bold">
@@ -150,7 +158,6 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
               <br />
               <hr />
               <br />
-              {/* Các mặt hàng  */}
               <div className="max-sm:max-h-[200px] w-full max-h-[100px] overflow-y-auto">
                 {dataDetail.data.map((item, index) => {
                   return (
@@ -194,7 +201,6 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
               </div>
               <hr />
               <br />
-              {/* Bottom  */}
               <div className="w-full flex flex-col">
                 <div className="w-full flex">
                   <span className="block w-8/12">
@@ -231,9 +237,13 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
                   </p>
                 </div>
                 <hr />
-                {/* Button  */}
                 <div className="max-sm:text-[14px] flex gap-[10px] justify-end mt-[10px]">
-                  <span className="max-sm:hidden block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-textHoverColor bg-bgEmphasizeColor border border-borderColor transition-all cursor-pointer">
+                  <span
+                    onClick={() => {
+                      handlePrint();
+                    }}
+                    className="max-sm:hidden block rounded-md font-bold px-[10px] py-[5px] text-white hover:bg-white hover:text-textHoverColor bg-bgEmphasizeColor border border-borderColor transition-all cursor-pointer"
+                  >
                     <FontAwesomeIcon className="mr-[5px]" icon={faPrint} />
                     In
                   </span>
@@ -257,6 +267,10 @@ const DetailOrder = ({ dataDetail, handleDetail, setCallbackApi }) => {
               </div>
             </div>
           </div>
+        </div>
+        {/* Component print order */}
+        <div className="absolute left-[9999px] top-0">
+          <OrderPrintComp ref={componentPrintRef} dataDetail={dataDetail} />
         </div>
         {isLogCancel && (
           <DialogQuestionYesNo

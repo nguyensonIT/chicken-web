@@ -19,6 +19,7 @@ import Profile from "./Profile";
 import PrivateRouteClient from "../routes/PrivateRouteClient";
 import LayoutCart from "../layouts/LayoutCart";
 import AdminSetting from "./AdminSetting";
+import AdminUsers from "./AdminUsers";
 
 const router = createBrowserRouter([
   {
@@ -84,6 +85,10 @@ const router = createBrowserRouter([
       {
         path: "/admin/setting",
         element: <PrivateRoute element={<AdminSetting />} />,
+      },
+      {
+        path: "/admin/customer",
+        element: <PrivateRoute element={<AdminUsers />} />,
       },
       // {
       //   path: "/admin/article",

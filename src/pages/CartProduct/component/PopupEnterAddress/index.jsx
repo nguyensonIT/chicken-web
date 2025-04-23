@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import PopupWrapper from "../../../../components/PopupWrapper";
 import PopupCheckInfoOrder from "../PopupCheckInfoOrder";
 import { useHandleContext } from "../../../../contexts/UserProvider";
+import LocationChecker from "./components/LocationChecker";
+import { toast } from "react-toastify";
 
 const PopupEnterAddress = ({
   handleCheckOrder,
@@ -25,11 +27,24 @@ const PopupEnterAddress = ({
   const [address, setAddress] = useState(user ? user?.address : "");
   const [note, setNote] = useState("");
 
+  //Check Distance
+  const [distance, setDistance] = useState(null);
+  const [isValidDistance, setIsValidDistance] = useState(null);
+  //end Distance
+
   const [errName, setErrName] = useState("");
   const [errPhone, setErrPhone] = useState("");
   const [errAddress, setErrAddress] = useState("");
+  const [errDistance, setErrDistance] = useState("");
 
   const phoneRegex = /^(086|096|097|098|032|033|034|035|036|037|038|039)\d{7}$/;
+
+  //handleCheckDistance
+  const handleCheckDistance = (resultDistance) => {
+    setDistance(resultDistance);
+    setIsValidDistance(resultDistance <= 5); // Đơn vị km
+  };
+  console.log(distance, isValidDistance);
 
   const validateInputs = () => {
     let isValid = true;
@@ -59,6 +74,16 @@ const PopupEnterAddress = ({
       isValid = false;
     } else {
       setErrAddress("");
+    }
+
+    if (isValidDistance === null) {
+      isValid = false;
+      setErrDistance("Bạn cần kiểm tra vị trí giao hàng");
+    } else if (isValidDistance === false) {
+      isValid = false;
+      setErrDistance("Bạn đang ở khá xa với quán");
+    } else {
+      setErrDistance("");
     }
 
     return isValid;
@@ -164,7 +189,7 @@ const PopupEnterAddress = ({
   }, [isPopupCheckInfoOrder]);
 
   return (
-    <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="flex flex-col items-center justify-center pt-[60px] pb-[20px] px-[20px] bg-white dark:bg-bgDarkMainColor dark:text-textDarkColor shadow-lg rounded-lg overflow-hidden">
       <h1 className="text-[20px] uppercase font-bold">Nhập địa chỉ</h1>
       <h1 className="text-[12px] opacity-[0.6]">
         Để đặt hàng, vui lòng thêm địa chỉ nhận hàng
@@ -172,7 +197,8 @@ const PopupEnterAddress = ({
 
       <div className="max-sm:w-full max-sm:items-start flex flex-col items-center justify-center">
         <div className="max-sm:flex-col max-sm:w-full max-sm:mt-0 max-sm:gap-[0px] mt-[20px] flex gap-4">
-          <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+          {/* name  */}
+          <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor dark:border-borderDarkColor">
             <input
               onChange={handleChangeName}
               value={name}
@@ -183,7 +209,7 @@ const PopupEnterAddress = ({
             />
             {!errName && (
               <label
-                className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
+                className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] dark:bg-bgDarkMainColor transition-all ${
                   isFocusName
                     ? "top-[-10px] opacity-[1]"
                     : "top-[8px] opacity-[0.3]"
@@ -195,7 +221,7 @@ const PopupEnterAddress = ({
             )}
             {errName && (
               <label
-                className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
+                className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] dark:bg-bgDarkMainColor transition-all ${
                   isFocusName ? "top-[-10px] opacity-[1]" : "top-[8px] "
                 }`}
                 htmlFor="name"
@@ -204,18 +230,19 @@ const PopupEnterAddress = ({
               </label>
             )}
           </div>
-          <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+          {/* phone  */}
+          <div className="max-sm:h-smInpHeight inp-login relative h-[35px] mt-[9px] bg-transparent border-[1px] border-solid border-borderColor dark:border-borderDarkColor">
             <input
               onChange={hanldeChangePhone}
               value={phone}
               onBlur={handleBlurPhone}
               onFocus={handleFocusPhone}
               id="phone"
-              className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent"
+              className="max-sm:text-inputSize h-[100%] w-[100%] text-[12px] placeholder:italic pl-[12px] border-none outline-none bg-transparent dark:bg-bgDarkMainColor"
             />
             {!errPhone && (
               <label
-                className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
+                className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] dark:bg-bgDarkMainColor transition-all ${
                   isFocusPhone
                     ? "top-[-10px] opacity-[1]"
                     : "top-[8px] opacity-[0.3]"
@@ -227,7 +254,7 @@ const PopupEnterAddress = ({
             )}
             {errPhone && (
               <label
-                className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
+                className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] dark:bg-bgDarkMainColor transition-all ${
                   isFocusPhone ? "top-[-10px] opacity-[1]" : "top-[8px] "
                 }`}
                 htmlFor="phone"
@@ -237,7 +264,16 @@ const PopupEnterAddress = ({
             )}
           </div>
         </div>
-        <div className=" max-sm:w-full inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        {/* address check toast  */}
+        <LocationChecker
+          distance={distance}
+          isValidDistance={isValidDistance}
+          onCheckDistance={handleCheckDistance}
+          errDistance={errDistance}
+        />
+
+        {/* address  */}
+        <div className=" max-sm:w-full inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor dark:border-borderDarkColor">
           <textarea
             onChange={hanldeChangeAddress}
             value={address}
@@ -248,7 +284,7 @@ const PopupEnterAddress = ({
           />
           {!errAddress && (
             <label
-              className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
+              className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] dark:bg-bgDarkMainColor transition-all ${
                 isFocusAddress
                   ? "top-[-10px] opacity-[1]"
                   : "top-[8px] opacity-[0.3]"
@@ -260,7 +296,7 @@ const PopupEnterAddress = ({
           )}
           {errAddress && (
             <label
-              className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] transition-all ${
+              className={`absolute cursor-text text-[12px] text-[red] italic left-[12px] bg-[#ffff] dark:bg-bgDarkMainColor transition-all ${
                 isFocusAddress ? "top-[-10px] opacity-[1]" : "top-[8px] "
               }`}
               htmlFor="address"
@@ -269,10 +305,10 @@ const PopupEnterAddress = ({
             </label>
           )}
         </div>
-        {/* Ghi chú  */}
-        <div className=" max-sm:w-full inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor">
+        {/* Note */}
+        <div className=" max-sm:w-full inp-login w-[70%] relative mt-[9px] bg-transparent border-[1px] border-solid border-borderColor dark:border-borderDarkColor">
           <label
-            className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] transition-all ${
+            className={`absolute cursor-text text-[12px] italic left-[12px] bg-[#ffff] dark:bg-bgDarkMainColor transition-all ${
               isFocusNote
                 ? "top-[-10px] opacity-[1]"
                 : "top-[8px] opacity-[0.3]"
@@ -302,7 +338,7 @@ const PopupEnterAddress = ({
         </span>
         <span
           onClick={handleCheckInfoOder}
-          className="ml-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor hover:bg-btnHoverColor cursor-pointer transition-all"
+          className="ml-[15px] text-white uppercase font-bold px-[20px] py-[8px] rounded-md bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor cursor-pointer transition-all"
         >
           Xem lại
         </span>

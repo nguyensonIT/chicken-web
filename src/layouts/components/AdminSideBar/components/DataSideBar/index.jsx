@@ -3,6 +3,8 @@ import {
   faReceipt,
   faTable,
   faNewspaper,
+  faGear,
+  faUsers,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -25,7 +27,12 @@ export const dataSideBarAdmin = [
   {
     name: "Cài đặt",
     href: "/admin/setting",
-    icon: <FontAwesomeIcon icon={faReceipt} />,
+    icon: <FontAwesomeIcon icon={faGear} />,
+  },
+  {
+    name: "Khách hàng",
+    href: "/admin/customer",
+    icon: <FontAwesomeIcon icon={faUsers} />,
   },
   // {
   //   name: "Bài viết",

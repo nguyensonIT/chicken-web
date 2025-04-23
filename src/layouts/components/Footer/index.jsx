@@ -64,7 +64,7 @@ const Footer = () => {
           <div className="w-full md:w-4/12 px-4 mx-auto text-center">
             <div className="text-sm text-blueGray-500 font-semibold py-1 dark:text-textDarkColor">
               Copyright © <span id="get-current-year">2024 </span>
-              <span className="text-textEmphasizeColor font-bold dark:text-textDarkTitleColor">
+              <span className="text-textEmphasizeColor font-bold dark:text-btnDarkColor">
                 Nguyễn Sơn
               </span>
             </div>

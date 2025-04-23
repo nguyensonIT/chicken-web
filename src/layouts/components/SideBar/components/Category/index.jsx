@@ -10,7 +10,7 @@ const Category = ({ sideTop = false, name, id, className }) => {
         className +
         `${
           searchParams.get("category") === id ? " text-textHoverColor" : ""
-        } flex items-center font-bold my-[5px] transition-[2s] hover:text-textHoverColor border-b-[1px] border-b-borderColor`
+        } flex items-center font-bold my-[5px] transition-[2s] hover:text-textHoverColor border-b-[1px] border-b-borderColor dark:border-borderDarkColor`
       }
       to={`/products?category=${id}`}
     >
