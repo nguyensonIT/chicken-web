@@ -26,6 +26,9 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
   // Tách giờ
   const timePart = m.format("HH:mm"); // vd "07:47:46"
 
+  //Đếm đơn
+  const [count] = data.orderNumber.split("-");
+
   const handleDetailFnc = () => {
     const dataLocal = JSON.parse(localStorage.getItem("notify"));
 
@@ -91,7 +94,7 @@ const ItemOrder = ({ data, handleDetail, dataOrderUser }) => {
         {/* STT đơn hàng, id đơn hàng, tên khách hàng  */}
         <div className="max-sm:text-smDesc flex items-center">
           <span className="flex text-white justify-center items-center w-[20px] h-[20px] bg-bgEmphasizeColor">
-            {data.orderNumber}
+            {count}
           </span>
           <span className="font-bold ml-[5px]">
             #{`${fncTakeIdEqualDayOrder()}-${fncTakeIdEqualIdOrder()}`}

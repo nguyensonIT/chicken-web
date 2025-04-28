@@ -3,7 +3,6 @@ import PopupWrapper from "../../../../components/PopupWrapper";
 import PopupCheckInfoOrder from "../PopupCheckInfoOrder";
 import { useHandleContext } from "../../../../contexts/UserProvider";
 import LocationChecker from "./components/LocationChecker";
-import { toast } from "react-toastify";
 
 const PopupEnterAddress = ({
   handleCheckOrder,
@@ -28,23 +27,20 @@ const PopupEnterAddress = ({
   const [note, setNote] = useState("");
 
   //Check Distance
-  const [distance, setDistance] = useState(null);
-  const [isValidDistance, setIsValidDistance] = useState(null);
+  const [isValidLocation, setIsValidLocation] = useState(null);
   //end Distance
 
   const [errName, setErrName] = useState("");
   const [errPhone, setErrPhone] = useState("");
   const [errAddress, setErrAddress] = useState("");
-  const [errDistance, setErrDistance] = useState("");
+  const [errLocation, setErrLocation] = useState("");
 
   const phoneRegex = /^(086|096|097|098|032|033|034|035|036|037|038|039)\d{7}$/;
 
   //handleCheckDistance
-  const handleCheckDistance = (resultDistance) => {
-    setDistance(resultDistance);
-    setIsValidDistance(resultDistance <= 5); // Đơn vị km
+  const handleCheckLocation = (area, isvalid) => {
+    setIsValidLocation(isvalid);
   };
-  console.log(distance, isValidDistance);
 
   const validateInputs = () => {
     let isValid = true;
@@ -76,14 +72,16 @@ const PopupEnterAddress = ({
       setErrAddress("");
     }
 
-    if (isValidDistance === null) {
+    if (isValidLocation === null) {
       isValid = false;
-      setErrDistance("Bạn cần kiểm tra vị trí giao hàng");
-    } else if (isValidDistance === false) {
+      setErrLocation("Bạn cần lựa chọn khu vực giao hàng");
+    } else if (isValidLocation === false) {
       isValid = false;
-      setErrDistance("Bạn đang ở khá xa với quán");
+      setErrLocation(
+        "Chúng tôi chỉ nhận giao hàng trong phạm vi 5km quanh quán."
+      );
     } else {
-      setErrDistance("");
+      setErrLocation("");
     }
 
     return isValid;
@@ -266,10 +264,8 @@ const PopupEnterAddress = ({
         </div>
         {/* address check toast  */}
         <LocationChecker
-          distance={distance}
-          isValidDistance={isValidDistance}
-          onCheckDistance={handleCheckDistance}
-          errDistance={errDistance}
+          onCheckArea={handleCheckLocation}
+          errText={errLocation}
         />
 
         {/* address  */}

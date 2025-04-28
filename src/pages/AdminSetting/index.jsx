@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSpinner, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -20,6 +20,10 @@ const AdminSetting = () => {
   const [isDialog, setIsDialog] = useState(false);
   const [dataDialog, setDataDialog] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const [areaInput, setAreaInput] = useState("");
+  const [loadinglocation, setLoadingLocation] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleChangeFileLogo = (e) => {
     const file = e.target.files[0];
@@ -136,6 +140,30 @@ const AdminSetting = () => {
       });
     }
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const areas = areaInput
+      .split(",")
+      .map((area) => area.trim())
+      .filter((area) => area !== ""); // Xóa khoảng trắng thừa và bỏ chuỗi rỗng
+
+    if (areas.length === 0) {
+      setMessage("❌ Vui lòng nhập ít nhất một phường.");
+      return;
+    }
+
+    setLoadingLocation(true);
+    setMessage("");
+
+    configSevice
+      .updateLocations({ locations: areas })
+      .then((res) => console.log(res))
+      .catch((err) => setMessage("❌ Lỗi kết nối server."))
+      .finally(() => setLoadingLocation(false));
+  };
+
   useEffect(() => {
     isDialog && refDialog.current.classList.add("isDetail");
   }, [isDialog]);
@@ -181,7 +209,7 @@ const AdminSetting = () => {
         <div className="py-[10px] text-right">
           <span
             onClick={() => handleDialog(1)}
-            className="bg-bgEmphasizeColor text-white rounded-md px-[10px] py-[5px] mr-[5px] hover:opacity-[0.4] hover:cursor-pointer"
+            className="bg-bgEmphasizeColor hover:bg-btnHoverColor text-white rounded-md px-[10px] py-[5px] mr-[5px] hover:cursor-pointer"
           >
             Lưu
           </span>
@@ -314,10 +342,45 @@ const AdminSetting = () => {
         <div className="py-[10px] text-right">
           <span
             onClick={() => handleDialog(2)}
-            className="bg-bgEmphasizeColor text-white rounded-md px-[10px] py-[5px] mr-[5px] hover:opacity-[0.4] hover:cursor-pointer"
+            className="bg-bgEmphasizeColor text-white rounded-md px-[10px] py-[5px] mr-[5px] hover:bg-btnHoverColor hover:cursor-pointer"
           >
             Lưu
           </span>
+        </div>
+
+        {/* Change location */}
+        <div className="p-[10px] border border-dashed border-borderColor">
+          <div className="p-4 ">
+            <h1 className="text-smTitle mb-4">Quản lý Phường</h1>
+
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <textarea
+                value={areaInput}
+                onChange={(e) => setAreaInput(e.target.value)}
+                placeholder="Nhập tên các phường, cách nhau bằng dấu phẩy"
+                rows="5"
+                className="p-2 border rounded"
+              />
+
+              <button
+                type="submit"
+                disabled={loadinglocation}
+                className="px-4 py-2 bg-btnColor hover:bg-btnHoverColor text-white rounded"
+              >
+                {loadinglocation ? (
+                  <FontAwesomeIcon icon={faSpinner} className="loading" />
+                ) : (
+                  "Cập nhật danh sách"
+                )}
+              </button>
+
+              {message && (
+                <div className="mt-2 text-smDesc text-center font-semibold text-red-600">
+                  {message}
+                </div>
+              )}
+            </form>
+          </div>
         </div>
       </div>
       {/* Dialog  */}

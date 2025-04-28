@@ -3,6 +3,8 @@ import ItemUserRow from "./components/ItemUserRow";
 import * as handleUsersAdmin from "../../services/handleUsersAdmin";
 import DialogQuestionYesNo from "../../components/DialogQuestionYesNo";
 import { toast } from "react-toastify";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 
 const AdminUsers = () => {
   const [users, setUsers] = useState([]);
@@ -25,8 +27,6 @@ const AdminUsers = () => {
     handleUsersAdmin
       .deleteUser(idUser.id)
       .then((res) => {
-        console.log(res);
-
         if (res.status === 200) {
           toast.success("Xóa thành công!");
           setRenderApi(res.data.data._id);
@@ -81,6 +81,14 @@ const AdminUsers = () => {
             </tr>
           </thead>
           <tbody>
+            {users.length === 0 && (
+              <tr className=" bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 cursor-pointer">
+                <td></td>
+                <td>
+                  <FontAwesomeIcon icon={faSpinner} className="loading" />
+                </td>
+              </tr>
+            )}
             {users.length > 0 &&
               users.map((item, index) => {
                 return (

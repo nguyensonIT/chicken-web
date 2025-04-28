@@ -18,6 +18,7 @@ const AppProvider = ({ children }) => {
     setDataIsLoadingContext,
     setDataOrderByIdUserContext,
     renderOrderByIdUserContext,
+    setDataLocationsContext,
   } = useHandleContext();
 
   useEffect(() => {
@@ -134,6 +135,20 @@ const AppProvider = ({ children }) => {
           setDataLogoContext(res.data);
         } else {
           setDataLogoContext({ bannerUrls: [], logoUrl: "" });
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  //API Locations
+  useEffect(() => {
+    configSevice
+      .getLocations()
+      .then((res) => {
+        if (res.status) {
+          setDataLocationsContext(res.data.data);
+        } else {
+          setDataLocationsContext([]);
         }
       })
       .catch((err) => console.log(err));

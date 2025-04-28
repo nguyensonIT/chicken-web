@@ -1,96 +1,67 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMapPin,
-  faLocationCrosshairs,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMapPin } from "@fortawesome/free-solid-svg-icons";
+import { useHandleContext } from "../../../../../../contexts/UserProvider";
 
-const QUAN_LAT = 21.006047;
-const QUAN_LNG = 105.936548;
+const LocationChecker = ({ onCheckArea = () => {}, errText }) => {
+  const { dataLocationsContext } = useHandleContext();
 
-const LocationChecker = ({
-  distance = 0,
-  isValidDistance = false,
-  onCheckDistance = () => {},
-  errDistance = "",
-}) => {
-  const [loading, setLoading] = useState(false);
+  const [selectedArea, setSelectedArea] = useState("");
+  const [isValid, setIsValid] = useState(null); // null: chưa chọn, true/false: đã chọn
 
-  const handleGetLocation = () => {
-    if (!navigator.geolocation) {
-      alert("Trình duyệt của bạn không hỗ trợ định vị.");
+  const handleSelectArea = (e) => {
+    const area = e.target.value;
+    setSelectedArea(area);
+
+    if (area === "Khác") {
+      setIsValid(false);
+      onCheckArea(area, false);
       return;
     }
 
-    setLoading(true);
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const { latitude, longitude } = pos.coords;
-        const d = calculateDistance(latitude, longitude, QUAN_LAT, QUAN_LNG);
-        onCheckDistance(parseFloat(d.toFixed(2)));
-        setLoading(false);
-      },
-      () => {
-        alert("Không thể lấy vị trí. Hãy bật định vị.");
-        setLoading(false);
-      }
-    );
-  };
-
-  const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const toRad = (v) => (v * Math.PI) / 180;
-    const R = 6371;
-    const dLat = toRad(lat2 - lat1);
-    const dLon = toRad(lon2 - lon1);
-    const a =
-      Math.sin(dLat / 2) ** 2 +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
-    return R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    const valid = dataLocationsContext.includes(area);
+    setIsValid(valid);
+    onCheckArea(area, valid);
   };
 
   return (
-    <div className="w-full mt-[10px] px-4 py-[4px] border border-borderColor dark:border-borderDarkColor">
-      {errDistance && (
-        <span className="text-[12px] text-textEmphasizeColor">
-          *{errDistance}
-        </span>
+    <div className="w-full mt-[10px] px-4 py-[8px] border border-borderColor dark:border-borderDarkColor rounded">
+      {errText && (
+        <p className="text-textEmphasizeColor italic text-smDesc">*{errText}</p>
       )}
-      <div className="flex items-center gap-2 mb-2">
-        <FontAwesomeIcon icon={faMapPin} className="text-xl text-red-600" />
-        <span className="text-[16px] font-medium">
-          Kiểm tra vị trí giao hàng
-        </span>
+      <div className="flex items-center gap-2 mb-[8px]">
+        <FontAwesomeIcon
+          icon={faMapPin}
+          className="text-xl text-red-600 dark:text-bgDarkTitleColor"
+        />
+        <span className="text-[16px] font-medium">Chọn khu vực giao hàng</span>
       </div>
 
-      <p className="text-[10px] italic mb-[4px]">
-        Bán kính giao hàng tối đa: <strong>5km ( &lt; 5km )</strong> từ quán
-        (Trâu Quỳ)
-      </p>
-
-      <button
-        className="w-full py-[4px] rounded text-white text-[14px] bg-btnColor dark:bg-btnDarkColor border-borderColor dark:border-borderDarkColor font-semibold flex justify-center items-center gap-2 transition"
-        onClick={handleGetLocation}
-        onMouseOver={(e) =>
-          e.currentTarget.classList.add("hover:bg-btnHoverColor")
-        }
-        onMouseOut={(e) =>
-          e.currentTarget.classList.remove("hover:bg-btnColor")
-        }
+      <select
+        value={selectedArea}
+        onChange={handleSelectArea}
+        className="w-full px-3 py-2 rounded border border-borderColor dark:border-borderDarkColor text-[14px] bg-white dark:bg-bgDarkMainColor dark:bg-darkColor"
       >
-        <FontAwesomeIcon icon={faLocationCrosshairs} />
-        {loading ? "Đang xác định vị trí..." : "Kiểm tra vị trí hiện tại"}
-      </button>
+        <option value="">-- Chọn khu vực --</option>
+        {dataLocationsContext.map((area) => (
+          <option key={area} value={area}>
+            {area}
+          </option>
+        ))}
+        <option value="Khác">Khác</option>
+      </select>
 
-      {distance !== null && (
+      {isValid !== null && (
         <p
           className={`mt-3 text-smDesc font-medium ${
-            isValidDistance ? "text-green-600" : "text-red-600"
+            isValid ? "text-green-600" : "text-red-600"
           }`}
         >
-          📍 Khoảng cách đến quán: <strong>{distance} km</strong> –{" "}
-          {isValidDistance
-            ? "Trong phạm vi giao hàng"
-            : "Ngoài phạm vi giao hàng"}
+          {isValid
+            ? `✅ Khu vực ${selectedArea} được hỗ trợ giao hàng.`
+            : selectedArea === "Khác"
+            ? "❌ Khu vực của bạn không nằm trong phạm vi giao hàng."
+            : `❌ Khu vực ${selectedArea} không hỗ trợ giao hàng.`}
         </p>
       )}
     </div>

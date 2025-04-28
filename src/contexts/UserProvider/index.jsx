@@ -9,7 +9,11 @@ const UserProvider = ({ children }) => {
   const decoded = token ? jwtDecode(token) : "";
   const [user, setUser] = useState(decoded || null);
 
+  //Logo, Banner
   const [dataLogoContext, setDataLogoContext] = useState({});
+
+  //Locations
+  const [dataLocationsContext, setDataLocationsContext] = useState([]);
 
   //Lấy data id gửi lên server cập nhật món new,hot
   const [selectedProductsContext, setSelectedProductsContext] = useState([]);
@@ -79,6 +83,8 @@ const UserProvider = ({ children }) => {
         renderOrderByIdUserContext,
         dataAllOrderContext,
         dataLogoContext,
+        dataLocationsContext,
+        setDataLocationsContext,
         setDataLogoContext,
         setDataAllOrderContext,
         setRenderOrderByIdUserContext,

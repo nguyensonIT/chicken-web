@@ -125,7 +125,7 @@ const OrderTracking = () => {
               />
               <span
                 onClick={handleCopyCode}
-                className="max-sm:text-[12px] select-none px-[10px] py-[5px] rounded-md bg-btnColor hover:bg-btnHoverColor text-white transition-[2s] cursor-pointer"
+                className="max-sm:text-[12px] select-none px-[10px] py-[5px] rounded-md bg-btnColor dark:bg-btnDarkColor hover:bg-btnHoverColor text-white transition-[2s] cursor-pointer"
               >
                 {copied ? <FontAwesomeIcon icon={faCheck} /> : "Sao chép"}
               </span>
