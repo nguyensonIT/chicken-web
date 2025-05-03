@@ -14,7 +14,10 @@ const useSocket = () => {
 
   useEffect(() => {
     // Tạo kết nối WebSocket
-    socketRef.current = io(SOCKET_URL);
+    socketRef.current = io(SOCKET_URL, {
+      path: "/socket.io",
+      transports: ["websocket"], // ép dùng websocket
+    });
 
     if (socketRef.current) {
     }
