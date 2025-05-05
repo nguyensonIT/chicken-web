@@ -2,6 +2,7 @@ import useSocket from "../../../../../hooks/useSocket";
 
 const BtnActiveDoor = () => {
   const { statusOpenDoor } = useSocket();
+
   return (
     <div className="flex justify-between items-center h-[62px] bg-[white] dark:text-textDarkColor dark:bg-bgDarkActiveDoorColor px-[20px]">
       <marquee className="text-sm w-[200px]">

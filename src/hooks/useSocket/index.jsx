@@ -20,26 +20,26 @@ const useSocket = () => {
     });
 
     if (socketRef.current) {
+      // Xử lý sự kiện kết nối
+      socketRef.current.on("connect", () => {
+        setConnected(true);
+      });
+
+      // Xử lý sự kiện ngắt kết nối
+      socketRef.current.on("disconnect", () => {
+        setConnected(false);
+      });
+
+      // Xử lý tin nhắn đến từ máy chủ
+      socketRef.current.on("message", (messages) => {
+        setMessages([messages]);
+      });
+
+      // Xử lý tin nhắn đến từ máy chủ
+      socketRef.current.on("statusOpenDoor", (status) => {
+        setStatusOpenDoor(status);
+      });
     }
-    // Xử lý sự kiện kết nối
-    socketRef.current.on("connect", () => {
-      setConnected(true);
-    });
-
-    // Xử lý sự kiện ngắt kết nối
-    socketRef.current.on("disconnect", () => {
-      setConnected(false);
-    });
-
-    // Xử lý tin nhắn đến từ máy chủ
-    socketRef.current.on("message", (messages) => {
-      setMessages([messages]);
-    });
-
-    // Xử lý tin nhắn đến từ máy chủ
-    socketRef.current.on("statusOpenDoor", (status) => {
-      setStatusOpenDoor(status);
-    });
 
     // Cleanup khi component bị unmount
     return () => {

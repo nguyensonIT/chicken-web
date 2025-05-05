@@ -64,7 +64,7 @@ const ItemUserRow = ({ data = [], setIdUser = () => {} }) => {
           {data.phoneNumber}
         </td>
         <td className="max-sm:px-[5px] max-sm:py-[12px] px-6 py-4 text-right">
-          {data.orders}
+          {data.orders.length}
         </td>
         <td className="max-sm:px-[5px] max-sm:py-[12px] px-6 py-4 text-right">
           {createdAt}

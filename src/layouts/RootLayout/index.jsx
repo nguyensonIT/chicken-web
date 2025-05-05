@@ -3,7 +3,11 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import SideBar from "../components/SideBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faChevronLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faChevronLeft,
+  faChevronRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useRef, useState } from "react";
 
 import chickenGif from "../../assets/img/chicken.gif";
@@ -69,17 +73,17 @@ const RootLayout = () => {
         <div
           ref={refBtn}
           onClick={handleClickSidebar}
-          className="sm:hidden max-sm:top-[162px] flex justify-center items-center fixed py-[22px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor dark:bg-bgDarkSideBarColor border-[1px] border-[white] z-10  transition-all fixedBtn"
+          className="sm:hidden max-sm:top-[162px] flex justify-center items-center fixed py-[20px] top-[120px] left-[0px] shadow-lg bg-bgEmphasizeColor dark:bg-bgDarkSideBarColor border-[1px] border-[white] z-10  transition-all fixedBtn"
         >
           {isSidebar ? (
             <FontAwesomeIcon
               icon={faChevronLeft}
-              className="text-[20px] px-[4px] text-textEmphasizeColor dark:text-textDarkColor"
+              className="text-[24px] px-[6px] text-white dark:text-textDarkColor"
             />
           ) : (
             <FontAwesomeIcon
-              icon={faBars}
-              className="text-[20px] px-[4px] text-textEmphasizeColor dark:text-textDarkColor"
+              icon={faChevronRight}
+              className="text-[24px] font-bold px-[6px] text-white dark:text-textDarkColor"
             />
           )}
         </div>
